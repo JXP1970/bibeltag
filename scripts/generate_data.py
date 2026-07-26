@@ -93,6 +93,51 @@ def extract_json(text: str) -> dict:
     return json.loads(text[start:end + 1])
 
 
+# JSON-Schema erzwingt syntaktisch gültiges JSON (Structured Outputs),
+# unabhängig von Anführungszeichen o.ä. im Bibeltext.
+_VERSES = {"type": "array", "items": {"type": "array"}}
+_PASSAGE = {
+    "type": "object", "additionalProperties": False,
+    "required": ["ref", "title", "url", "LU17", "SCH2000"],
+    "properties": {
+        "ref": {"type": "string"}, "title": {"type": "string"},
+        "url": {"type": "string"}, "LU17": _VERSES, "SCH2000": _VERSES,
+    },
+}
+SCHEMA = {
+    "type": "object", "additionalProperties": False,
+    "required": ["updated", "season", "sunday", "daily"],
+    "properties": {
+        "updated": {"type": "string"},
+        "season": {"type": "string"},
+        "sunday": {
+            "type": "object", "additionalProperties": False,
+            "required": ["name", "date", "spruch", "predigt", "psalm", "impuls"],
+            "properties": {
+                "name": {"type": "string"},
+                "date": {"type": "string"},
+                "spruch": {
+                    "type": "object", "additionalProperties": False,
+                    "required": ["text", "cite"],
+                    "properties": {"text": {"type": "string"}, "cite": {"type": "string"}},
+                },
+                "predigt": _PASSAGE,
+                "psalm": {
+                    "type": "object", "additionalProperties": False,
+                    "required": ["ref", "note", "LU17", "SCH2000"],
+                    "properties": {
+                        "ref": {"type": "string"}, "note": {"type": "string"},
+                        "LU17": _VERSES, "SCH2000": _VERSES,
+                    },
+                },
+                "impuls": {"type": "string"},
+            },
+        },
+        "daily": _PASSAGE,
+    },
+}
+
+
 def main() -> int:
     today = datetime.now(BERLIN)
     client = anthropic.Anthropic()
@@ -100,12 +145,19 @@ def main() -> int:
     with client.messages.stream(
         model=MODEL,
         max_tokens=32000,
+        output_config={"format": {"type": "json_schema", "schema": SCHEMA}},
         messages=[{"role": "user", "content": build_prompt(today)}],
     ) as stream:
         message = stream.get_final_message()
 
+    if message.stop_reason == "refusal":
+        raise RuntimeError("API-Antwort wurde abgelehnt (refusal).")
+
     text = "".join(b.text for b in message.content if b.type == "text")
-    data = extract_json(text)
+    try:
+        data = json.loads(text)
+    except json.JSONDecodeError:
+        data = extract_json(text)
 
     # Pflichtfelder prüfen
     for key in ("updated", "season", "sunday", "daily"):
