@@ -118,6 +118,9 @@
   .entry .when{font-size:12px;color:var(--muted);margin-bottom:3px;
     display:flex;align-items:center;justify-content:space-between;gap:8px}
   .entry .what{font-family:var(--serif);font-size:15.5px;line-height:1.65;white-space:pre-wrap}
+  .entry .ref-tag{display:inline-block;font-family:var(--sans);font-size:11.5px;
+    color:var(--accent);background:var(--accent-soft);padding:3px 9px;
+    border-radius:999px;margin-bottom:6px}
   .entry .del{border:0;background:transparent;color:var(--faint);cursor:pointer;
     font-size:15px;line-height:1;padding:2px 4px;border-radius:6px}
   .entry .del:hover{color:#b4483c;background:var(--accent-soft)}
@@ -190,7 +193,7 @@
     <div class="band">
       <div class="kick">✎ Notiz</div>
       <div class="ref" id="noteDate">–</div>
-      <div class="sub">Was mir heute wichtig geworden ist</div>
+      <div class="sub" id="noteContext">Was mir heute wichtig geworden ist</div>
     </div>
     <div class="notes-body">
       <textarea id="noteText" aria-label="Meine Gedanken zum heutigen Tag"
@@ -560,6 +563,21 @@ function storeNotes(notes){
   catch { return false; }
 }
 
+/* Einträge sind Objekte {text, ref, sunday}. Ältere Einträge wurden als
+   reiner Text gespeichert – die werden hier verträglich umgewandelt. */
+function entryOf(value){
+  if (typeof value === "string") return { text: value, ref: "", sunday: "" };
+  return { text: value?.text || "", ref: value?.ref || "", sunday: value?.sunday || "" };
+}
+
+/* Bibelstelle(n) des heutigen Tages aus dem DATA-Block */
+function todayContext(){
+  return {
+    ref: DATA?.daily?.ref || "",
+    sunday: DATA?.sunday?.name || "",
+  };
+}
+
 const noteArea = $("#noteText");
 const noteState = $("#noteState");
 const archiveBox = $("#archive");
@@ -578,7 +596,12 @@ function saveNote(quiet){
   const notes = loadNotes();
   const key = todayKey();
   const val = noteArea.value.trim();
-  if (val) notes[key] = val; else delete notes[key];
+  if (val){
+    const ctx = todayContext();
+    notes[key] = { text: val, ref: ctx.ref, sunday: ctx.sunday };
+  } else {
+    delete notes[key];
+  }
   const ok = storeNotes(notes);
   if (!ok) { noteState.textContent = "Speichern nicht möglich (Browser-Speicher voll oder gesperrt)"; return; }
   if (!quiet) flash("Gespeichert ✓");
@@ -595,10 +618,21 @@ function renderArchive(){
   archiveList.innerHTML = keys.map(k =>
     `<div class="entry"><div class="when"><span>${prettyDate(k)}</span>` +
     `<button class="del" data-key="${k}" title="Eintrag löschen" aria-label="Eintrag vom ${prettyDate(k)} löschen">✕</button></div>` +
-    `<div class="what"></div></div>`).join("");
-  // Text sicher (ohne HTML-Interpretation) einsetzen
+    `<div class="ref-slot"></div><div class="what"></div></div>`).join("");
+  // Text und Bibelstelle sicher (ohne HTML-Interpretation) einsetzen
   archiveList.querySelectorAll(".entry").forEach((el, i) => {
-    el.querySelector(".what").textContent = notes[keys[i]];
+    const e = entryOf(notes[keys[i]]);
+    const slot = el.querySelector(".ref-slot");
+    const label = [e.ref, e.sunday].filter(Boolean).join(" · ");
+    if (label){
+      const tag = document.createElement("span");
+      tag.className = "ref-tag";
+      tag.textContent = label;
+      slot.appendChild(tag);
+    } else {
+      slot.remove();
+    }
+    el.querySelector(".what").textContent = e.text;
   });
   archiveList.querySelectorAll(".del").forEach(btn => {
     btn.onclick = () => {
@@ -615,7 +649,14 @@ function renderArchive(){
 
 // Initial laden
 $("#noteDate").textContent = prettyDate(todayKey());
-noteArea.value = loadNotes()[todayKey()] || "";
+noteArea.value = entryOf(loadNotes()[todayKey()]).text;
+(() => {
+  const ctx = todayContext();
+  const label = [ctx.ref, ctx.sunday].filter(Boolean).join(" · ");
+  $("#noteContext").textContent = label
+    ? "Zur Lese: " + label
+    : "Was mir heute wichtig geworden ist";
+})();
 renderArchive();
 
 // Automatisch speichern (kurz nach dem Tippen) + beim Verlassen
@@ -642,7 +683,13 @@ $("#exportBtn").onclick = () => {
   if (!keys.length){ flash("Noch nichts zum Sichern"); return; }
   const text = "Mein Bibeltag – Meine Gedanken\n" +
     "=".repeat(34) + "\n\n" +
-    keys.map(k => `${prettyDate(k)}\n${"-".repeat(prettyDate(k).length)}\n${notes[k]}\n`).join("\n") +
+    keys.map(k => {
+      const e = entryOf(notes[k]);
+      const label = [e.ref, e.sunday].filter(Boolean).join(" · ");
+      const head = prettyDate(k);
+      return `${head}\n${"-".repeat(head.length)}\n` +
+             (label ? `Lese: ${label}\n\n` : "") + `${e.text}\n`;
+    }).join("\n") +
     `\nGesichert am ${prettyDate(todayKey())}\n`;
   const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
   const a = document.createElement("a");
