@@ -31,6 +31,7 @@ jobs:
       - name: Tagesdaten erzeugen
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BIBELTAG_MODEL: claude-sonnet-5
         run: python scripts/generate_data.py
 
       - name: Änderungen committen & pushen
