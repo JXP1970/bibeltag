@@ -1,0 +1,46 @@
+name: Täglicher Bibeltag-Update
+
+on:
+  schedule:
+    # 03:00 UTC = 05:00 (Sommer) / 04:00 (Winter) Berliner Zeit
+    - cron: "0 3 * * *"
+  workflow_dispatch: {}  # erlaubt manuelles Auslösen
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bibeltag-daily
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repo auschecken
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Abhängigkeiten installieren
+        run: pip install "anthropic>=0.40"
+
+      - name: Tagesdaten erzeugen
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/generate_data.py
+
+      - name: Änderungen committen & pushen
+        run: |
+          git config user.name "Bibeltag Bot"
+          git config user.email "actions@github.com"
+          if [ -n "$(git status --porcelain index.html)" ]; then
+            git add index.html
+            git commit -m "Bibeltag: Daten für $(TZ=Europe/Berlin date +%Y-%m-%d)"
+            git push
+          else
+            echo "Keine Änderung – nichts zu committen."
+          fi

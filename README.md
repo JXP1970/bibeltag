@@ -24,12 +24,17 @@ const DATA = { ... };
 /* ==== DATA END ==== */
 ```
 
-Eine **geplante Claude-Code-Cloud-Routine** schreibt diesen Block täglich neu
-(Tageslese, Sonntagstexte, Bibeltext in beiden Übersetzungen, Impuls),
-committet und pusht. GitHub Pages veröffentlicht die aktualisierte Seite
-dann automatisch.
+Ein **GitHub-Actions-Workflow** ([.github/workflows/daily-update.yml](.github/workflows/daily-update.yml))
+läuft täglich um 03:00 UTC, ruft über die Anthropic-API ([scripts/generate_data.py](scripts/generate_data.py))
+Tageslese, Sonntagstexte, Bibeltext in beiden Übersetzungen und einen Impuls ab,
+schreibt den `DATA`-Block neu, committet und pusht. GitHub Pages veröffentlicht
+die aktualisierte Seite dann automatisch. Der Workflow läuft auf GitHubs
+Servern — unabhängig davon, ob ein PC an ist.
 
-Routinen verwalten: https://claude.ai/code/routines
+**Einrichtung (einmalig):** In den Repo-Einstellungen unter
+*Settings → Secrets and variables → Actions* ein Secret `ANTHROPIC_API_KEY`
+mit dem eigenen Anthropic-API-Schlüssel anlegen. Manuell auslösen:
+*Actions → Täglicher Bibeltag-Update → Run workflow*.
 
 ## Hinweis
 
