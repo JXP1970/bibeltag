@@ -89,6 +89,39 @@
   footer{text-align:center;color:var(--faint);font-size:11.5px;line-height:1.7;margin-top:10px}
   footer a{color:var(--muted)}
   .stamp{color:var(--faint);font-size:11px;text-align:center;margin:-16px 0 26px}
+
+  /* ---- Meine Gedanken ---- */
+  .notes-body{padding:18px 22px 20px}
+  .notes-body textarea{width:100%;min-height:140px;resize:vertical;
+    font-family:var(--serif);font-size:16.5px;line-height:1.7;color:var(--ink);
+    background:transparent;border:1px solid var(--line);border-radius:12px;
+    padding:14px 15px;outline:none;transition:border-color .15s}
+  .notes-body textarea:focus{border-color:var(--accent)}
+  .notes-body textarea::placeholder{color:var(--faint);font-style:italic}
+  .notes-bar{display:flex;align-items:center;justify-content:space-between;
+    gap:10px;margin-top:12px;flex-wrap:wrap}
+  .notes-state{font-size:12.5px;color:var(--faint)}
+  .notes-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .nbtn{border:1px solid var(--line);background:var(--card);color:var(--muted);
+    font-family:var(--sans);font-size:13px;font-weight:500;padding:8px 14px;
+    border-radius:10px;cursor:pointer;transition:.15s}
+  .nbtn:hover{color:var(--ink);border-color:var(--faint)}
+  .nbtn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  [data-theme="dark"] .nbtn.primary{color:#12140f}
+  .nbtn.primary:hover{filter:brightness(1.07)}
+
+  .archive{margin-top:16px;border-top:1px solid var(--line);padding-top:14px;display:none}
+  .archive.on{display:block}
+  .archive h4{font-family:var(--sans);font-size:12px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--faint);margin-bottom:10px;font-weight:600}
+  .entry{border-left:2px solid var(--accent-soft);padding:2px 0 2px 12px;margin-bottom:14px}
+  .entry .when{font-size:12px;color:var(--muted);margin-bottom:3px;
+    display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .entry .what{font-family:var(--serif);font-size:15.5px;line-height:1.65;white-space:pre-wrap}
+  .entry .del{border:0;background:transparent;color:var(--faint);cursor:pointer;
+    font-size:15px;line-height:1;padding:2px 4px;border-radius:6px}
+  .entry .del:hover{color:#b4483c;background:var(--accent-soft)}
+  .empty{color:var(--faint);font-size:13.5px;font-style:italic}
 </style>
 </head>
 <body>
@@ -152,11 +185,37 @@
     </div>
   </div>
 
+  <div class="sec-label">Meine Gedanken</div>
+  <div class="card">
+    <div class="band">
+      <div class="kick">✎ Notiz</div>
+      <div class="ref" id="noteDate">–</div>
+      <div class="sub">Was mir heute wichtig geworden ist</div>
+    </div>
+    <div class="notes-body">
+      <textarea id="noteText" aria-label="Meine Gedanken zum heutigen Tag"
+        placeholder="Was spricht mich heute an? Wofür bin ich dankbar? Worum möchte ich bitten?"></textarea>
+      <div class="notes-bar">
+        <span class="notes-state" id="noteState">Wird automatisch gespeichert</span>
+        <div class="notes-actions">
+          <button class="nbtn" id="archiveBtn">Frühere anzeigen</button>
+          <button class="nbtn" id="exportBtn">Alle sichern</button>
+          <button class="nbtn primary" id="saveBtn">Speichern</button>
+        </div>
+      </div>
+      <div class="archive" id="archive">
+        <h4>Frühere Einträge</h4>
+        <div id="archiveList"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="stamp">Aktualisiert am <span id="updated">–</span></div>
 
   <footer>
     Bibeltexte: Lutherbibel 2017 © Deutsche Bibelgesellschaft, Stuttgart · Schlachter 2000 © Genfer Bibelgesellschaft.<br>
-    Quelle der Leseordnung: <a href="https://www.die-bibel.de/leseplaene" target="_blank" rel="noopener">die-bibel.de</a>. Für den persönlichen, andächtlichen Gebrauch.
+    Quelle der Leseordnung: <a href="https://www.die-bibel.de/leseplaene" target="_blank" rel="noopener">die-bibel.de</a>. Für den persönlichen, andächtlichen Gebrauch.<br>
+    Eigene Gedanken bleiben nur auf diesem Gerät, in diesem Browser – sie werden nirgends hochgeladen. Mit „Alle sichern“ als Datei speichern.
   </footer>
 </div>
 
@@ -472,6 +531,129 @@ $("#themeBtn").onclick = () => {
 };
 
 paint();
+
+/* ===== Meine Gedanken – Notizen (lokal im Browser gespeichert) ===== */
+const NOTE_KEY = "bibeltag-notizen";
+const MONATE = ["Januar","Februar","März","April","Mai","Juni","Juli",
+                "August","September","Oktober","November","Dezember"];
+const TAGE = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+
+const todayKey = () => {
+  const d = new Date();
+  const p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+};
+
+const prettyDate = key => {
+  const [y, m, d] = key.split("-").map(Number);
+  const dt = new Date(y, m - 1, d);
+  return `${TAGE[dt.getDay()]}, ${d}. ${MONATE[m - 1]} ${y}`;
+};
+
+function loadNotes(){
+  try { return JSON.parse(localStorage.getItem(NOTE_KEY)) || {}; }
+  catch { return {}; }
+}
+
+function storeNotes(notes){
+  try { localStorage.setItem(NOTE_KEY, JSON.stringify(notes)); return true; }
+  catch { return false; }
+}
+
+const noteArea = $("#noteText");
+const noteState = $("#noteState");
+const archiveBox = $("#archive");
+const archiveList = $("#archiveList");
+let saveTimer = null;
+
+function flash(msg){
+  noteState.textContent = msg;
+  clearTimeout(flash._t);
+  flash._t = setTimeout(() => {
+    noteState.textContent = "Wird automatisch gespeichert";
+  }, 2500);
+}
+
+function saveNote(quiet){
+  const notes = loadNotes();
+  const key = todayKey();
+  const val = noteArea.value.trim();
+  if (val) notes[key] = val; else delete notes[key];
+  const ok = storeNotes(notes);
+  if (!ok) { noteState.textContent = "Speichern nicht möglich (Browser-Speicher voll oder gesperrt)"; return; }
+  if (!quiet) flash("Gespeichert ✓");
+  renderArchive();
+}
+
+function renderArchive(){
+  const notes = loadNotes();
+  const keys = Object.keys(notes).filter(k => k !== todayKey()).sort().reverse();
+  if (!keys.length){
+    archiveList.innerHTML = '<div class="empty">Noch keine früheren Einträge.</div>';
+    return;
+  }
+  archiveList.innerHTML = keys.map(k =>
+    `<div class="entry"><div class="when"><span>${prettyDate(k)}</span>` +
+    `<button class="del" data-key="${k}" title="Eintrag löschen" aria-label="Eintrag vom ${prettyDate(k)} löschen">✕</button></div>` +
+    `<div class="what"></div></div>`).join("");
+  // Text sicher (ohne HTML-Interpretation) einsetzen
+  archiveList.querySelectorAll(".entry").forEach((el, i) => {
+    el.querySelector(".what").textContent = notes[keys[i]];
+  });
+  archiveList.querySelectorAll(".del").forEach(btn => {
+    btn.onclick = () => {
+      const k = btn.dataset.key;
+      if (!confirm(`Eintrag vom ${prettyDate(k)} wirklich löschen?`)) return;
+      const n = loadNotes();
+      delete n[k];
+      storeNotes(n);
+      renderArchive();
+      flash("Eintrag gelöscht");
+    };
+  });
+}
+
+// Initial laden
+$("#noteDate").textContent = prettyDate(todayKey());
+noteArea.value = loadNotes()[todayKey()] || "";
+renderArchive();
+
+// Automatisch speichern (kurz nach dem Tippen) + beim Verlassen
+noteArea.addEventListener("input", () => {
+  clearTimeout(saveTimer);
+  noteState.textContent = "Schreibt …";
+  saveTimer = setTimeout(() => saveNote(true), 800);
+});
+noteArea.addEventListener("blur", () => saveNote(true));
+window.addEventListener("beforeunload", () => saveNote(true));
+
+$("#saveBtn").onclick = () => saveNote(false);
+
+$("#archiveBtn").onclick = () => {
+  const open = archiveBox.classList.toggle("on");
+  $("#archiveBtn").textContent = open ? "Frühere ausblenden" : "Frühere anzeigen";
+  if (open) renderArchive();
+};
+
+$("#exportBtn").onclick = () => {
+  saveNote(true);
+  const notes = loadNotes();
+  const keys = Object.keys(notes).sort();
+  if (!keys.length){ flash("Noch nichts zum Sichern"); return; }
+  const text = "Mein Bibeltag – Meine Gedanken\n" +
+    "=".repeat(34) + "\n\n" +
+    keys.map(k => `${prettyDate(k)}\n${"-".repeat(prettyDate(k).length)}\n${notes[k]}\n`).join("\n") +
+    `\nGesichert am ${prettyDate(todayKey())}\n`;
+  const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `bibeltag-gedanken-${todayKey()}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  flash("Datei gesichert ✓");
+};
 </script>
 </body>
 </html>
