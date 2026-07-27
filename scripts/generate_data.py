@@ -1,20 +1,29 @@
 #!/usr/bin/env python3
 """Aktualisiert den DATA-Block in index.html auf den heutigen Tag.
 
-Wird täglich von GitHub Actions ausgeführt. Ruft die Anthropic-API (Claude)
-auf, um Tageslese, Sonntagstexte, Wochenpsalm und Impuls in beiden
-Übersetzungen zu erzeugen, und spleißt das Ergebnis als JavaScript-Objekt
-zwischen die Marker  /* ==== DATA START ... */  und  /* ==== DATA END ==== */.
+Wird täglich von GitHub Actions ausgeführt.
+
+Ablauf:
+1. Die Tageslese wird von die-bibel.de geholt – Bibelstelle UND der
+   Luther-2017-Wortlaut stammen damit aus der maßgeblichen Quelle
+   (Ökumenische Bibellese), nicht aus Modellwissen.
+2. Die Anthropic-API ergänzt: Schlachter-2000-Wortlaut derselben Stelle,
+   die Sonntagstexte des Kirchenjahres und den Impuls.
+3. Das Ergebnis wird als JavaScript-Objekt zwischen die Marker
+   /* ==== DATA START ... */ und /* ==== DATA END ==== */ gespleißt.
 """
 
 import json
 import os
 import re
 import sys
+import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import anthropic
+
+OEAB_URL = "https://www.die-bibel.de/leseplaene/oeab-leseplan/oeab-{date}"
 
 MODEL = os.environ.get("BIBELTAG_MODEL", "claude-opus-5")
 HTML_PATH = os.path.join(os.path.dirname(__file__), "..", "index.html")
@@ -29,12 +38,89 @@ def de_long(d: datetime) -> str:
     return f"{d.day}. {MON[d.month - 1]} {d.year}"
 
 
-def build_prompt(today: datetime) -> str:
+# ---------------------------------------------------------------- Tageslese
+
+# Im Browser der Seite ausgeführt: liest Bibelstelle und Luther-2017-Verse.
+_EXTRACT_JS = r"""
+() => {
+  const refs = [...document.querySelectorAll('span.text-grayLight')]
+    .map(e => e.textContent.trim())
+    .filter(t => /\d/.test(t) && t.length < 60);
+  const map = new Map();
+  document.querySelectorAll('span.verse').forEach(e => {
+    const cls = (e.className.baseVal || e.className || '').toString();
+    const m = cls.match(/LU17\.([A-Z0-9]+)\.(\d+)\.(\d+)/);
+    if (!m) return;
+    const n = Number(m[3]);
+    const txt = e.textContent.replace(/\s+/g, ' ').trim();
+    if (!txt) return;
+    map.set(n, ((map.get(n) || '') + ' ' + txt).trim());
+  });
+  return {
+    ref: refs[0] || '',
+    verses: [...map.entries()].sort((a, b) => a[0] - b[0]),
+  };
+}
+"""
+
+
+def fetch_oeab(iso_date: str, attempts: int = 3) -> dict:
+    """Holt die Tageslese der Ökumenischen Bibellese von die-bibel.de.
+
+    Die Seite baut ihren Inhalt erst im Browser auf, deshalb ein echter
+    Browser (Playwright) statt eines einfachen Abrufs.
+    """
+    from playwright.sync_api import sync_playwright
+
+    url = OEAB_URL.format(date=iso_date)
+    last_err = None
+
+    for versuch in range(1, attempts + 1):
+        try:
+            with sync_playwright() as pw:
+                browser = pw.chromium.launch()
+                page = browser.new_page(locale="de-DE")
+                page.goto(url, wait_until="domcontentloaded", timeout=60000)
+                page.wait_for_selector("span.verse", timeout=45000)
+                page.wait_for_timeout(1200)  # Nachzügler-Verse abwarten
+                data = page.evaluate(_EXTRACT_JS)
+                browser.close()
+
+            ref = (data.get("ref") or "").strip()
+            verses = [[int(n), t] for n, t in data.get("verses", []) if t]
+            if not ref or not verses:
+                raise ValueError("Bibelstelle oder Verse nicht gefunden")
+            print(f"Tageslese von die-bibel.de: {ref} ({len(verses)} Verse)")
+            return {"ref": ref, "LU17": verses}
+
+        except Exception as e:  # noqa: BLE001 – bewusst breit, danach Neuversuch
+            last_err = e
+            print(f"Abruf-Versuch {versuch}/{attempts} fehlgeschlagen: {e}")
+            if versuch < attempts:
+                time.sleep(5 * versuch)
+
+    raise RuntimeError(f"Tageslese konnte nicht geladen werden: {last_err}")
+
+
+def build_prompt(today: datetime, daily: dict) -> str:
     iso = today.strftime("%Y-%m-%d")
     wochentag = WT[today.weekday()]
+    lu_text = "\n".join(f"{n} {t}" for n, t in daily["LU17"])
+    verse_nums = [n for n, _ in daily["LU17"]]
     return f"""Du erzeugst die Tagesdaten für die Andachts-App „Mein Bibeltag".
 
 HEUTE ist {wochentag}, der {de_long(today)} ({iso}), Zeitzone Europe/Berlin.
+
+Die Tageslese steht bereits fest (Quelle: Ökumenische Bibellese, die-bibel.de).
+Sie darf NICHT geändert werden:
+
+  Stelle: {daily["ref"]}
+  Verse:  {verse_nums[0]} bis {verse_nums[-1]} ({len(verse_nums)} Verse)
+
+Luther-2017-Wortlaut dieser Stelle (maßgeblich, unverändert übernehmen):
+---
+{lu_text}
+---
 
 Gib AUSSCHLIESSLICH ein gültiges JSON-Objekt zurück (kein Markdown, keine
 Code-Fences, kein erklärender Text davor oder danach), mit exakt diesen Feldern:
@@ -62,21 +148,24 @@ Code-Fences, kein erklärender Text davor oder danach), mit exakt diesen Feldern
     "impuls": "<4-6 Sätze zum Predigttext und Wochenspruch>"
   }},
   "daily": {{
-    "ref": "<Tageslese der Ökumenischen Bibellese (ÖAB) für HEUTE>",
-    "title": "<kurzer Titel>",
+    "ref": "{daily["ref"]}",
+    "title": "<kurzer, treffender Titel für diese Tageslese>",
     "url": "https://www.die-bibel.de/leseplaene/oeab-leseplan/oeab-{iso}",
-    "LU17": [[1, "..."]],
-    "SCH2000": [[1, "..."]]
+    "LU17": <exakt der oben vorgegebene Wortlaut, als [[Nr, "Text"], ...]>,
+    "SCH2000": [[{verse_nums[0]}, "derselbe Abschnitt nach Schlachter 2000"], ...]
   }}
 }}
 
 Regeln:
 - Verse als Arrays [Versnummer, "Text"], Vers für Vers, vollständig.
+- daily.ref und daily.LU17 sind vorgegeben – wortgleich übernehmen, nichts
+  ergänzen, nichts weglassen, Versnummern exakt beibehalten.
+- daily.SCH2000 ist DERSELBE Abschnitt ({daily["ref"]}) nach Schlachter 2000,
+  mit denselben Versnummern.
 - Bibeltext wortgetreu: Luther 2017 (LU17) und Schlachter 2000 (SCH2000).
 - Bestimme Kirchenjahreszeit, aktuellen Sonntag, Wochenspruch, Predigttext
   (Revidierte Perikopenordnung, Reihe des laufenden Kirchenjahres) und
   Wochenpsalm anhand des evangelischen Kirchenjahres.
-- Tageslese: die ÖAB-Lesung für genau das heutige Datum.
 - Deutsche Typografie im Fließtext (Anführungszeichen „ ", » «).
 - Nur das JSON-Objekt ausgeben."""
 
@@ -158,13 +247,16 @@ def main() -> int:
         print(f"Bereits aktuell für {de_long(today)} – kein API-Aufruf nötig.")
         return 0
 
+    # Tageslese aus der maßgeblichen Quelle holen
+    daily = fetch_oeab(today.strftime("%Y-%m-%d"))
+
     client = anthropic.Anthropic()
 
     with client.messages.stream(
         model=MODEL,
         max_tokens=32000,
         output_config={"format": {"type": "json_schema", "schema": SCHEMA}},
-        messages=[{"role": "user", "content": build_prompt(today)}],
+        messages=[{"role": "user", "content": build_prompt(today, daily)}],
     ) as stream:
         message = stream.get_final_message()
 
@@ -181,6 +273,20 @@ def main() -> int:
     for key in ("updated", "season", "sunday", "daily"):
         if key not in data:
             raise ValueError(f"Feld '{key}' fehlt im generierten JSON.")
+
+    # Tageslese und Luther-Wortlaut stammen aus der Quelle, nicht vom Modell:
+    # hier hart überschreiben, damit nichts abweichen kann.
+    data["daily"]["ref"] = daily["ref"]
+    data["daily"]["LU17"] = daily["LU17"]
+    data["updated"] = de_long(today)
+
+    # Schlachter-Fassung auf Plausibilität prüfen (gleiche Versnummern)
+    lu_nums = [n for n, _ in daily["LU17"]]
+    sch = data["daily"].get("SCH2000") or []
+    sch_nums = [n for n, _ in sch]
+    if sch_nums != lu_nums:
+        print(f"Hinweis: Schlachter-Verse weichen ab "
+              f"({sch_nums[:3]}… statt {lu_nums[:3]}…) – Luther bleibt maßgeblich.")
 
     json_text = json.dumps(data, ensure_ascii=False, indent=2)
     new_block = "const DATA = " + json_text + ";"
