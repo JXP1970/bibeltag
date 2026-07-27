@@ -38,6 +38,9 @@
     color:var(--accent);background:var(--accent-soft);padding:5px 12px;border-radius:999px;margin-bottom:12px}
   .hero h1{font-family:var(--serif);font-weight:600;font-size:26px;line-height:1.2}
   .hero .date{color:var(--muted);font-size:14px;margin-top:5px}
+  .hero .stale{display:inline-block;margin-top:10px;font-size:12.5px;
+    color:var(--gold);background:rgba(154,123,52,.10);border:1px solid rgba(154,123,52,.28);
+    padding:5px 12px;border-radius:999px}
 
   .toggle{display:flex;background:var(--card);border:1px solid var(--line);border-radius:12px;
     padding:4px;max-width:280px;margin:6px auto 26px}
@@ -140,8 +143,9 @@
 
   <div class="hero">
     <span class="season" id="season">Trinitatiszeit</span>
-    <h1 id="sundayName">–</h1>
-    <div class="date" id="sundayDate">–</div>
+    <h1 id="todayHead">–</h1>
+    <div class="date" id="weekHead">–</div>
+    <div class="stale" id="staleHint" hidden></div>
   </div>
 
   <div class="toggle" role="tablist" aria-label="Übersetzung">
@@ -164,6 +168,11 @@
 
   <div class="sec-label">Dieser Sonntag im Kirchenjahr</div>
   <div class="card">
+    <div class="band">
+      <div class="kick">✚ Kirchenwoche</div>
+      <div class="ref" id="sundayName">–</div>
+      <div class="sub" id="sundayDate">–</div>
+    </div>
     <div class="spruch">
       <p id="spruchText">–</p>
       <div class="cite" id="spruchCite"></div>
@@ -456,9 +465,36 @@ function renderVerses(el, verses, psalm){
     `<span class="verse"><span class="v">${n}</span>${t}</span>${psalm?"":" "}`).join("");
 }
 
+const MONATE = ["Januar","Februar","März","April","Mai","Juni","Juli",
+                "August","September","Oktober","November","Dezember"];
+const TAGE = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+
+/* Heutiges Datum – im Browser berechnet, also immer korrekt,
+   auch wenn ein Update einmal ausfallen sollte. */
+function heute(){
+  const d = new Date();
+  return {
+    lang: `${TAGE[d.getDay()]}, ${d.getDate()}. ${MONATE[d.getMonth()]} ${d.getFullYear()}`,
+    kurz: `${d.getDate()}. ${MONATE[d.getMonth()]} ${d.getFullYear()}`,
+  };
+}
+
 function paint(){
   const s = DATA.sunday;
+  const t = heute();
   $("#season").textContent = DATA.season;
+  $("#todayHead").textContent = t.lang;
+  $("#weekHead").textContent = s.name;
+
+  // Hinweis, falls die Texte nicht von heute sind
+  const hint = $("#staleHint");
+  if ((DATA.updated || "").trim() !== t.kurz){
+    hint.textContent = "Texte vom " + DATA.updated + " – noch nicht aktualisiert";
+    hint.hidden = false;
+  } else {
+    hint.hidden = true;
+  }
+
   $("#sundayName").textContent = s.name;
   $("#sundayDate").textContent = s.date;
   $("#spruchText").textContent = "„" + s.spruch.text + "“";
@@ -505,9 +541,7 @@ paint();
 
 /* ===== Meine Gedanken – Notizen (lokal im Browser gespeichert) ===== */
 const NOTE_KEY = "bibeltag-notizen";
-const MONATE = ["Januar","Februar","März","April","Mai","Juni","Juli",
-                "August","September","Oktober","November","Dezember"];
-const TAGE = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
+/* MONATE / TAGE sind weiter oben definiert und werden hier mitbenutzt. */
 
 const todayKey = () => {
   const d = new Date();
