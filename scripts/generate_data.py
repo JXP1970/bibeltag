@@ -151,10 +151,13 @@ Code-Fences, kein erklärender Text davor oder danach), mit exakt diesen Feldern
     "ref": "{daily["ref"]}",
     "title": "<kurzer, treffender Titel für diese Tageslese>",
     "url": "https://www.die-bibel.de/leseplaene/oeab-leseplan/oeab-{iso}",
-    "LU17": <exakt der oben vorgegebene Wortlaut, als [[Nr, "Text"], ...]>,
-    "SCH2000": [[{verse_nums[0]}, "derselbe Abschnitt nach Schlachter 2000"], ...]
+    "LU17": [[{verse_nums[0]}, "erster Vers wie oben vorgegeben"], [{verse_nums[1] if len(verse_nums) > 1 else verse_nums[0]}, "zweiter Vers wie oben vorgegeben"]],
+    "SCH2000": [[{verse_nums[0]}, "erster Vers nach Schlachter 2000"], [{verse_nums[1] if len(verse_nums) > 1 else verse_nums[0]}, "zweiter Vers nach Schlachter 2000"]]
   }}
 }}
+
+WICHTIG zu "daily": Beide Listen müssen ALLE {len(verse_nums)} Verse enthalten
+(Nummern {verse_nums[0]} bis {verse_nums[-1]}). Eine leere Liste ist ein Fehler.
 
 Regeln:
 - Verse als Arrays [Versnummer, "Text"], Vers für Vers, vollständig.
@@ -280,13 +283,37 @@ def main() -> int:
     data["daily"]["LU17"] = daily["LU17"]
     data["updated"] = de_long(today)
 
-    # Schlachter-Fassung auf Plausibilität prüfen (gleiche Versnummern)
+    # Schlachter-Fassung prüfen und notfalls gezielt nachfordern
     lu_nums = [n for n, _ in daily["LU17"]]
     sch = data["daily"].get("SCH2000") or []
-    sch_nums = [n for n, _ in sch]
-    if sch_nums != lu_nums:
-        print(f"Hinweis: Schlachter-Verse weichen ab "
-              f"({sch_nums[:3]}… statt {lu_nums[:3]}…) – Luther bleibt maßgeblich.")
+    if [n for n, _ in sch] != lu_nums:
+        print(f"Schlachter-Fassung unvollständig ({len(sch)} statt {len(lu_nums)} Verse) "
+              f"– wird gezielt nachgefordert.")
+        try:
+            nach = client.messages.create(
+                model=MODEL,
+                max_tokens=16000,
+                output_config={"format": {"type": "json_schema", "schema": {
+                    "type": "object", "additionalProperties": False,
+                    "required": ["SCH2000"],
+                    "properties": {"SCH2000": {"type": "array", "items": {"type": "array"}}},
+                }}},
+                messages=[{"role": "user", "content":
+                    f'Gib {daily["ref"]} nach der Schlachter-2000-Übersetzung als JSON zurück: '
+                    f'{{"SCH2000": [[Versnummer, "Verstext"], ...]}} – '
+                    f'genau die Verse {lu_nums[0]} bis {lu_nums[-1]} '
+                    f'({len(lu_nums)} Stück), vollständig und wortgetreu.'}],
+            )
+            zweit = json.loads("".join(b.text for b in nach.content if b.type == "text"))
+            kand = zweit.get("SCH2000") or []
+            if [n for n, _ in kand] == lu_nums:
+                data["daily"]["SCH2000"] = kand
+                print("Schlachter-Fassung nachgeliefert.")
+            else:
+                raise ValueError(f"weiterhin {len(kand)} statt {len(lu_nums)} Verse")
+        except Exception as e:  # noqa: BLE001
+            print(f"Nachforderung fehlgeschlagen ({e}) – App zeigt Luther als Ersatz.")
+            data["daily"]["SCH2000"] = []
 
     json_text = json.dumps(data, ensure_ascii=False, indent=2)
     new_block = "const DATA = " + json_text + ";"

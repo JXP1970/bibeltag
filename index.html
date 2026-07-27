@@ -79,6 +79,9 @@
     vertical-align:super;margin-right:3px;user-select:none}
   .scripture .verse{margin-bottom:2px}
   .psalm .verse{display:block;margin-bottom:9px;padding-left:16px;text-indent:-16px}
+  .fallback-note{font-family:var(--sans);font-size:12.5px;color:var(--gold);
+    background:rgba(154,123,52,.10);border:1px solid rgba(154,123,52,.28);
+    padding:7px 12px;border-radius:10px;margin-bottom:14px;text-indent:0}
 
   .impuls{font-family:var(--serif);font-size:17px;line-height:1.7}
   .impuls .lead{color:var(--accent);font-weight:600;font-family:var(--sans);font-size:12px;
@@ -454,9 +457,30 @@ const DATA = {
 let trans = "LU17";
 const $ = s => document.querySelector(s);
 
-function renderVerses(el, verses, psalm){
+/* Liefert die Verse der gewünschten Übersetzung. Fehlt sie ausnahmsweise,
+   wird die andere angezeigt – mit ehrlichem Hinweis statt leerer Fläche. */
+function versesFor(obj){
+  const wunsch = obj[trans];
+  if (Array.isArray(wunsch) && wunsch.length) return { verses: wunsch, ersatz: null };
+  const andere = trans === "LU17" ? "SCH2000" : "LU17";
+  const ausweich = obj[andere];
+  if (Array.isArray(ausweich) && ausweich.length){
+    return {
+      verses: ausweich,
+      ersatz: (trans === "LU17" ? "Luther 2017" : "Schlachter 2000") +
+              " liegt für diesen Text nicht vor – gezeigt wird " +
+              (andere === "LU17" ? "Luther 2017" : "Schlachter 2000") + ".",
+    };
+  }
+  return { verses: [], ersatz: "Für diesen Text liegt gerade keine Fassung vor." };
+}
+
+function renderVerses(el, obj, psalm){
+  const { verses, ersatz } = versesFor(obj);
   el.classList.toggle("psalm", !!psalm);
-  el.innerHTML = verses.map(([n,t]) =>
+  const hinweis = ersatz
+    ? `<div class="fallback-note">${ersatz}</div>` : "";
+  el.innerHTML = hinweis + verses.map(([n,t]) =>
     `<span class="verse"><span class="v">${n}</span>${t}</span>${psalm?"":" "}`).join("");
 }
 
@@ -499,14 +523,14 @@ function paint(){
   $("#dailyRef").textContent = DATA.daily.ref;
   $("#dailyTitle").textContent = DATA.daily.title || "";
   $("#dailyLive").href = DATA.daily.url;
-  renderVerses($("#dailyText"), DATA.daily[trans], true);
+  renderVerses($("#dailyText"), DATA.daily, true);
 
   $("#predigtHead").textContent = s.predigt.ref + " · " + s.predigt.title;
   $("#predigtLive").href = s.predigt.url;
-  renderVerses($("#predigtText"), s.predigt[trans], false);
+  renderVerses($("#predigtText"), s.predigt, false);
 
   $("#psalmHead").textContent = s.psalm.ref + (s.psalm.note ? "  —  " + s.psalm.note : "");
-  renderVerses($("#psalmText"), s.psalm[trans], true);
+  renderVerses($("#psalmText"), s.psalm, true);
 
   $("#impulsText").textContent = s.impuls;
 }
