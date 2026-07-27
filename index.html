@@ -86,6 +86,8 @@
   .impuls{font-family:var(--serif);font-size:17px;line-height:1.7}
   .impuls .lead{color:var(--accent);font-weight:600;font-family:var(--sans);font-size:12px;
     letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:8px}
+  .daily-impuls{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:16.5px}
 
   .live{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-family:var(--sans);
     font-size:13px;color:var(--accent);text-decoration:none;border:1px solid var(--line);
@@ -165,6 +167,9 @@
     </div>
     <div class="pane on">
       <div class="scripture psalm" id="dailyText"></div>
+      <div class="impuls daily-impuls" id="dailyImpulsBox" hidden>
+        <span class="lead">Gedanke zur Tageslese</span><span id="dailyImpuls"></span>
+      </div>
       <a class="live" id="dailyLive" href="#" target="_blank" rel="noopener">Auf die-bibel.de öffnen ↗</a>
     </div>
   </div>
@@ -592,6 +597,11 @@ function paint(){
   $("#dailyRef").textContent = DATA.daily.ref;
   $("#dailyTitle").textContent = DATA.daily.title || "";
   $("#dailyLive").href = DATA.daily.url;
+
+  // Gedanke zur Tageslese – nur zeigen, wenn vorhanden
+  const dImp = (DATA.daily.impuls || "").trim();
+  $("#dailyImpuls").textContent = dImp;
+  $("#dailyImpulsBox").hidden = !dImp;
   renderVerses($("#dailyText"), DATA.daily, true);
 
   $("#predigtHead").textContent = s.predigt.ref + " · " + s.predigt.title;

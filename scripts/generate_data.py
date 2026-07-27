@@ -243,7 +243,8 @@ Code-Fences, kein erklaerender Text davor oder danach):
     "title": "<kurzer, treffender Titel fuer diese Tageslese>",
     "url": "{OEAB_URL.format(date=iso)}",
     "LU17": [[{d_nums[0]}, "erster Vers wie oben vorgegeben"]],
-    "SCH2000": [[{d_nums[0]}, "erster Vers nach Schlachter 2000"]]
+    "SCH2000": [[{d_nums[0]}, "erster Vers nach Schlachter 2000"]],
+    "impuls": "<4-6 Saetze zur TAGESLESE {daily["ref"]}>"
   }}
 }}
 
@@ -255,6 +256,11 @@ Regeln:
 - Beim Psalm koennen Versnummern Luecken haben (z.B. 2,3,9,10) - genau diese
   Nummern uebernehmen, keine ergaenzen.
 - Bibeltext wortgetreu nach Schlachter 2000.
+- ZWEI verschiedene Impulse: "daily.impuls" bezieht sich auf die TAGESLESE
+  ({daily["ref"]}), "sunday.impuls" auf den Predigttext ({so["predigtRef"]})
+  und den Wochenspruch. Nicht denselben Text zweimal verwenden.
+- Beide Impulse: seelsorgerlich, alltagsnah, ohne Floskeln; kein Vers-Zitat
+  wiederholen, sondern den Text erschliessen.
 - Die LU17-Listen werden ohnehin ersetzt; gib sie kurz an, sie sind nicht wichtig.
 - Deutsche Typografie im Fliesstext.
 - Nur das JSON-Objekt ausgeben."""
@@ -281,6 +287,16 @@ _PASSAGE = {
     "properties": {
         "ref": {"type": "string"}, "title": {"type": "string"},
         "url": {"type": "string"}, "LU17": _VERSES, "SCH2000": _VERSES,
+    },
+}
+# Die Tageslese hat zusätzlich einen eigenen Impuls.
+_DAILY = {
+    "type": "object", "additionalProperties": False,
+    "required": ["ref", "title", "url", "LU17", "SCH2000", "impuls"],
+    "properties": {
+        "ref": {"type": "string"}, "title": {"type": "string"},
+        "url": {"type": "string"}, "LU17": _VERSES, "SCH2000": _VERSES,
+        "impuls": {"type": "string"},
     },
 }
 SCHEMA = {
@@ -312,7 +328,7 @@ SCHEMA = {
                 "impuls": {"type": "string"},
             },
         },
-        "daily": _PASSAGE,
+        "daily": _DAILY,
     },
 }
 
@@ -436,6 +452,17 @@ def main() -> int:
         except Exception as e:  # noqa: BLE001
             print(f"{label}: Nachforderung fehlgeschlagen ({e}) - App zeigt Luther als Ersatz.")
             ziel["SCH2000"] = []
+
+    # Impulse prüfen: zwei eigenständige Texte erwartet
+    d_imp = (data["daily"].get("impuls") or "").strip()
+    s_imp = (s_.get("impuls") or "").strip()
+    if not d_imp:
+        print("Hinweis: kein Impuls zur Tageslese – Bereich bleibt in der App ausgeblendet.")
+    elif d_imp == s_imp:
+        print("Hinweis: beide Impulse identisch – Tages-Impuls wird verworfen.")
+        data["daily"]["impuls"] = ""
+    else:
+        print(f"Impulse: Tageslese {len(d_imp)} Zeichen, Sonntag {len(s_imp)} Zeichen.")
 
     sichere_schlachter(data["daily"], daily["ref"], daily["LU17"], "Tageslese")
     sichere_schlachter(s_["predigt"], so["predigtRef"], so["predigtLU17"], "Predigttext")
