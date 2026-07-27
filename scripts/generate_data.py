@@ -255,13 +255,31 @@ def main() -> int:
 
     client = anthropic.Anthropic()
 
-    with client.messages.stream(
-        model=MODEL,
-        max_tokens=32000,
-        output_config={"format": {"type": "json_schema", "schema": SCHEMA}},
-        messages=[{"role": "user", "content": build_prompt(today, daily)}],
-    ) as stream:
-        message = stream.get_final_message()
+    # Die API ist gelegentlich überlastet – mit wachsender Wartezeit wiederholen.
+    message = None
+    letzte = None
+    for versuch in range(1, 5):
+        try:
+            with client.messages.stream(
+                model=MODEL,
+                max_tokens=32000,
+                output_config={"format": {"type": "json_schema", "schema": SCHEMA}},
+                messages=[{"role": "user", "content": build_prompt(today, daily)}],
+            ) as stream:
+                message = stream.get_final_message()
+            break
+        except (anthropic.APIStatusError, anthropic.APIConnectionError) as e:
+            letzte = e
+            status = getattr(e, "status_code", None)
+            if status is not None and status not in (408, 409, 429, 500, 502, 503, 504, 529):
+                raise  # echter Fehler – nicht wiederholen
+            wartezeit = 15 * versuch
+            print(f"API-Versuch {versuch}/4 fehlgeschlagen ({status or type(e).__name__}) "
+                  f"– neuer Versuch in {wartezeit}s")
+            time.sleep(wartezeit)
+
+    if message is None:
+        raise RuntimeError(f"API nicht erreichbar: {letzte}")
 
     if message.stop_reason == "refusal":
         raise RuntimeError("API-Antwort wurde abgelehnt (refusal).")
