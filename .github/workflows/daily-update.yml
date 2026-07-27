@@ -2,8 +2,12 @@ name: Täglicher Bibeltag-Update
 
 on:
   schedule:
-    # 03:00 UTC = 05:00 (Sommer) / 04:00 (Winter) Berliner Zeit
-    - cron: "0 3 * * *"
+    # Krumme Minuten: zur vollen Stunde ist GitHubs Warteschlange am vollsten,
+    # dann fallen geplante Läufe oft aus oder verspäten sich stark.
+    # 02:23 UTC = 04:23 (Sommer) / 03:23 (Winter) Berliner Zeit
+    - cron: "23 2 * * *"
+    # Sicherheitsnetz, falls der erste Lauf ausfällt: 04:47 UTC
+    - cron: "47 4 * * *"
   workflow_dispatch: {}  # erlaubt manuelles Auslösen
 
 permissions:

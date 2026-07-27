@@ -138,8 +138,26 @@ SCHEMA = {
 }
 
 
+def already_current(path: str, today: datetime) -> bool:
+    """True, wenn index.html bereits die Daten von heute enthält."""
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            html = f.read()
+    except OSError:
+        return False
+    m = re.search(r'"updated"\s*:\s*"([^"]+)"', html)
+    return bool(m) and m.group(1).strip() == de_long(today)
+
+
 def main() -> int:
     today = datetime.now(BERLIN)
+    path = os.path.abspath(HTML_PATH)
+
+    # Sicherheitsnetz-Lauf: nichts tun (und nichts bezahlen), wenn schon aktuell.
+    if already_current(path, today) and os.environ.get("BIBELTAG_FORCE") != "1":
+        print(f"Bereits aktuell für {de_long(today)} – kein API-Aufruf nötig.")
+        return 0
+
     client = anthropic.Anthropic()
 
     with client.messages.stream(
@@ -167,7 +185,6 @@ def main() -> int:
     json_text = json.dumps(data, ensure_ascii=False, indent=2)
     new_block = "const DATA = " + json_text + ";"
 
-    path = os.path.abspath(HTML_PATH)
     with open(path, "r", encoding="utf-8") as f:
         html = f.read()
 
