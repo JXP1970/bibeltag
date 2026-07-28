@@ -1,0 +1,63 @@
+name: Lesepläne holen (einmalig / jährlich)
+
+# Holt die Lesepläne von die-bibel.de und schreibt sie in daten.json.
+# Kostet nichts – es wird kein Sprachmodell verwendet.
+on:
+  workflow_dispatch:
+    inputs:
+      von:
+        description: "Startdatum (JJJJ-MM-TT), leer = heute"
+        type: string
+        default: ""
+      bis:
+        description: "Enddatum (JJJJ-MM-TT), leer = heute + 400 Tage"
+        type: string
+        default: ""
+  schedule:
+    # Einmal jährlich am 1. November nachfüllen, damit immer über ein Jahr
+    # im Voraus bereitliegt (das neue Kirchenjahr beginnt im Advent).
+    - cron: "0 4 1 11 *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bibeltag-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Repo auschecken
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Browser installieren
+        run: |
+          pip install playwright
+          playwright install --with-deps chromium
+
+      - name: Lesepläne holen
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.von }}" ]; then ARGS="$ARGS --von ${{ inputs.von }}"; fi
+          if [ -n "${{ inputs.bis }}" ]; then ARGS="$ARGS --bis ${{ inputs.bis }}"; fi
+          python scripts/build_data.py $ARGS
+
+      - name: Änderungen committen & pushen
+        run: |
+          git config user.name "Bibeltag Bot"
+          git config user.email "actions@github.com"
+          if [ -n "$(git status --porcelain daten.json)" ]; then
+            git add daten.json
+            git commit -m "Lesepläne: Daten aktualisiert ($(date +%Y-%m-%d))"
+            git push
+          else
+            echo "Keine Änderung."
+          fi
