@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
-"""Holt die Lesepläne für einen langen Zeitraum und schreibt sie in daten.json.
+"""Holt die Lesepläne für einen Zeitraum und schreibt sie in daten.json.
 
-Einmalig (bzw. einmal im Jahr) auszuführen. Danach braucht die App keine
-Aktualisierung mehr und verursacht keine Kosten: alle Texte liegen fertig
-in der Datei, die App sucht sich nur noch den heutigen Tag heraus.
+Einmalig (bzw. wenn der Vorrat zur Neige geht) auszuführen. Danach braucht
+die App keine Aktualisierung mehr: alle Texte liegen fertig in der Datei,
+die App sucht sich nur noch den heutigen Tag heraus.
 
 Quelle: die-bibel.de
   - Tageslese   /leseplaene/oeab-leseplan/oeab-<JJJJ-MM-TT>
   - Sonntag     /leseplaene/predigttexte/predigttext-<JJJJ-MM-TT>
 
-Die Seiten bauen ihren Inhalt erst im Browser auf, deshalb Playwright.
+Die Leseordnung wird dort jahresweise veröffentlicht – irgendwann sind
+keine weiteren Tage mehr abrufbar. Das Skript erkennt das automatisch
+(zwei aufeinanderfolgende Abschnitte ganz ohne Treffer) und hört dann auf,
+statt stur bis zum Enddatum weiterzuversuchen. Ein späterer Lauf holt die
+neu veröffentlichten Tage einfach nach.
+
 Bereits vorhandene Einträge in daten.json werden übersprungen, ein
-abgebrochener Lauf kann also einfach wiederholt werden.
+abgebrochener Lauf kann also jederzeit wiederholt werden.
 
 Aufruf:
     python scripts/build_data.py [--von JJJJ-MM-TT] [--bis JJJJ-MM-TT]
@@ -20,6 +25,7 @@ Aufruf:
 from __future__ import annotations
 
 import argparse
+import asyncio
 import json
 import os
 import sys
@@ -34,9 +40,10 @@ OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "daten.json")
 MON = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
        "August", "September", "Oktober", "November", "Dezember"]
 
-# Wie viele Seiten gleichzeitig geladen werden. Bewusst niedrig gehalten,
-# um die Quelle nicht zu belasten.
-PARALLEL = 3
+CONCURRENCY = 8          # gleichzeitig geöffnete Seiten
+CHUNK = 12                # Daten pro Durchgang
+LEER_ABSCHNITTE_STOPP = 2  # so viele Durchgänge ganz ohne Treffer -> Ende erreicht
+PROBE_TIMEOUT_MS = 9000   # wie lange auf einen Treffer gewartet wird
 
 _JS_TAGESLESE = r"""
 () => {
@@ -139,33 +146,35 @@ def speichere(pfad: str, daten: dict) -> None:
     os.replace(tmp, pfad)
 
 
-def hole_seite(page, url: str, js: str, versuche: int = 3):
+async def hole_seite(context, url: str, js: str):
     """Lädt eine Seite und liest sie aus. None, wenn es keinen Eintrag gibt."""
-    for versuch in range(1, versuche + 1):
+    page = await context.new_page()
+    try:
+        await page.goto(url, wait_until="domcontentloaded", timeout=20000)
         try:
-            page.goto(url, wait_until="domcontentloaded", timeout=45000)
-            try:
-                page.wait_for_selector("span.verse", timeout=20000)
-            except Exception:
-                return None  # Für dieses Datum gibt es keinen Leseplan-Eintrag
-            page.wait_for_timeout(700)
-            return page.evaluate(js)
-        except Exception as e:  # noqa: BLE001
-            if versuch == versuche:
-                print(f"    Fehlgeschlagen ({url}): {e}")
-                return None
-            time.sleep(3 * versuch)
-    return None
+            await page.wait_for_selector("span.verse", timeout=PROBE_TIMEOUT_MS)
+        except Exception:
+            return None  # kein Leseplan-Eintrag für dieses Datum
+        await page.wait_for_timeout(500)
+        return await page.evaluate(js)
+    except Exception as e:  # noqa: BLE001
+        print(f"    Fehler ({url}): {e}")
+        return None
+    finally:
+        await page.close()
 
 
-def main() -> int:
+async def verarbeite(context, items, url_von, js, semaphore):
+    async def eins(item):
+        async with semaphore:
+            iso = item.isoformat()
+            res = await hole_seite(context, url_von(iso), js)
+            return item, res
+    return await asyncio.gather(*(eins(i) for i in items))
+
+
+async def main_async(args) -> int:
     heute = date.today()
-    p = argparse.ArgumentParser()
-    p.add_argument("--von", default=heute.isoformat())
-    p.add_argument("--bis", default=(heute + timedelta(days=400)).isoformat())
-    p.add_argument("--out", default=os.path.abspath(OUT_PATH))
-    args = p.parse_args()
-
     von = datetime.strptime(args.von, "%Y-%m-%d").date()
     bis = datetime.strptime(args.bis, "%Y-%m-%d").date()
     if bis < von:
@@ -174,93 +183,108 @@ def main() -> int:
 
     daten = lade_bestand(args.out)
 
-    # Welche Tage / Sonntage fehlen noch?
     offene_tage = [d for d in tage_zwischen(von, bis)
                    if d.isoformat() not in daten["tage"]]
     sonntage = sorted({(d - timedelta(days=(d.weekday() + 1) % 7))
                        for d in tage_zwischen(von, bis)})
     offene_sonntage = [d for d in sonntage if d.isoformat() not in daten["sonntage"]]
 
-    print(f"Zeitraum {von} bis {bis}")
-    print(f"  Tageslesen offen : {len(offene_tage)}")
-    print(f"  Sonntage offen   : {len(offene_sonntage)}")
+    print(f"Zeitraum {von} bis {bis} (Ende wird automatisch erkannt)")
+    print(f"  Tageslesen zu prüfen : {len(offene_tage)}")
+    print(f"  Sonntage zu prüfen   : {len(offene_sonntage)}")
     if not offene_tage and not offene_sonntage:
         print("Nichts zu tun – alles bereits vorhanden.")
         return 0
 
-    from playwright.sync_api import sync_playwright
+    from playwright.async_api import async_playwright
 
-    fehlend_tage, fehlend_sonntage = [], []
     begonnen = time.time()
+    semaphore = asyncio.Semaphore(CONCURRENCY)
 
-    with sync_playwright() as pw:
-        browser = pw.chromium.launch()
-        ctx = browser.new_context(locale="de-DE")
-        seiten = [ctx.new_page() for _ in range(PARALLEL)]
+    async with async_playwright() as pw:
+        browser = await pw.chromium.launch()
+        context = await browser.new_context(locale="de-DE")
 
         # --- Sonntage zuerst (wenige, wichtig) ---
-        for i, d in enumerate(offene_sonntage, 1):
-            iso = d.isoformat()
-            res = hole_seite(seiten[i % PARALLEL], PREDIGT_URL.format(d=iso), _JS_SONNTAG)
-            if not res or not res.get("name") or not res.get("predigtVerse"):
-                fehlend_sonntage.append(iso)
-                print(f"  [{i}/{len(offene_sonntage)}] {iso}  – kein Eintrag")
-                continue
-            daten["sonntage"][iso] = {
-                "name": res["name"],
-                "datum": res.get("datum") or de_long(d),
-                "spruch": {"text": res.get("spruchText", ""),
-                           "cite": res.get("spruchCite", "")},
-                "predigt": {"ref": res.get("predigtRef", ""),
-                            "verse": [[int(n), t] for n, t in res.get("predigtVerse", []) if t]},
-                "psalm": {"ref": res.get("psalmRef", ""),
-                          "verse": [[int(n), t] for n, t in res.get("psalmVerse", []) if t]},
-            }
-            print(f"  [{i}/{len(offene_sonntage)}] {iso}  {res['name']} "
-                  f"| {res.get('predigtRef')}")
-            if i % 10 == 0:
-                speichere(args.out, daten)
-
-        speichere(args.out, daten)
+        leere_abschnitte = 0
+        verarbeitet = 0
+        for start in range(0, len(offene_sonntage), CHUNK):
+            chunk = offene_sonntage[start:start + CHUNK]
+            ergebnisse = await verarbeite(
+                context, chunk, lambda i: PREDIGT_URL.format(d=i), _JS_SONNTAG, semaphore)
+            treffer = 0
+            for d, res in ergebnisse:
+                verarbeitet += 1
+                if not res or not res.get("name") or not res.get("predigtVerse"):
+                    continue
+                daten["sonntage"][d.isoformat()] = {
+                    "name": res["name"],
+                    "datum": res.get("datum") or de_long(d),
+                    "spruch": {"text": res.get("spruchText", ""),
+                               "cite": res.get("spruchCite", "")},
+                    "predigt": {"ref": res.get("predigtRef", ""),
+                                "verse": [[int(n), t] for n, t in res.get("predigtVerse", []) if t]},
+                    "psalm": {"ref": res.get("psalmRef", ""),
+                              "verse": [[int(n), t] for n, t in res.get("psalmVerse", []) if t]},
+                }
+                treffer += 1
+            print(f"  Sonntage [{verarbeitet}/{len(offene_sonntage)}] "
+                  f"{treffer}/{len(chunk)} Treffer in diesem Abschnitt")
+            speichere(args.out, daten)
+            leere_abschnitte = 0 if treffer else leere_abschnitte + 1
+            if leere_abschnitte >= LEER_ABSCHNITTE_STOPP:
+                print("  Ende des veröffentlichten Sonntagsplans erreicht.")
+                break
 
         # --- Tageslesen ---
-        for i, d in enumerate(offene_tage, 1):
-            iso = d.isoformat()
-            res = hole_seite(seiten[i % PARALLEL], OEAB_URL.format(d=iso), _JS_TAGESLESE)
-            if not res or not res.get("ref") or not res.get("verse"):
-                fehlend_tage.append(iso)
-                print(f"  [{i}/{len(offene_tage)}] {iso}  – kein Eintrag")
-                continue
-            daten["tage"][iso] = {
-                "ref": res["ref"],
-                "verse": [[int(n), t] for n, t in res["verse"] if t],
-            }
-            if i % 25 == 0 or i == len(offene_tage):
-                speichere(args.out, daten)
-                verstrichen = time.time() - begonnen
-                print(f"  [{i}/{len(offene_tage)}] {iso}  {res['ref']} "
-                      f"({verstrichen/60:.1f} min)")
+        leere_abschnitte = 0
+        verarbeitet = 0
+        for start in range(0, len(offene_tage), CHUNK):
+            chunk = offene_tage[start:start + CHUNK]
+            ergebnisse = await verarbeite(
+                context, chunk, lambda i: OEAB_URL.format(d=i), _JS_TAGESLESE, semaphore)
+            treffer = 0
+            for d, res in ergebnisse:
+                verarbeitet += 1
+                if not res or not res.get("ref") or not res.get("verse"):
+                    continue
+                daten["tage"][d.isoformat()] = {
+                    "ref": res["ref"],
+                    "verse": [[int(n), t] for n, t in res["verse"] if t],
+                }
+                treffer += 1
+            speichere(args.out, daten)
+            verstrichen = time.time() - begonnen
+            print(f"  Tageslesen [{verarbeitet}/{len(offene_tage)}] "
+                  f"{treffer}/{len(chunk)} Treffer ({verstrichen/60:.1f} min)")
+            leere_abschnitte = 0 if treffer else leere_abschnitte + 1
+            if leere_abschnitte >= LEER_ABSCHNITTE_STOPP:
+                print("  Ende des veröffentlichten Tagesplans erreicht.")
+                break
 
-        for s in seiten:
-            s.close()
-        ctx.close()
-        browser.close()
+        await context.close()
+        await browser.close()
 
     speichere(args.out, daten)
 
     groesse = os.path.getsize(args.out) / 1024
+    letzter_tag = max(daten["tage"]) if daten["tage"] else "–"
     print()
     print(f"Fertig in {(time.time()-begonnen)/60:.1f} Minuten.")
-    print(f"  Tageslesen : {len(daten['tage'])}")
+    print(f"  Tageslesen : {len(daten['tage'])}  (bis {letzter_tag})")
     print(f"  Sonntage   : {len(daten['sonntage'])}")
     print(f"  Datei      : {args.out} ({groesse:.0f} KB)")
-    if fehlend_tage:
-        print(f"  Ohne Eintrag (Tage)    : {len(fehlend_tage)} "
-              f"– z.B. {fehlend_tage[:3]}")
-    if fehlend_sonntage:
-        print(f"  Ohne Eintrag (Sonntage): {len(fehlend_sonntage)} "
-              f"– z.B. {fehlend_sonntage[:3]}")
     return 0
+
+
+def main() -> int:
+    heute = date.today()
+    p = argparse.ArgumentParser()
+    p.add_argument("--von", default=heute.isoformat())
+    p.add_argument("--bis", default=(heute + timedelta(days=1100)).isoformat())
+    p.add_argument("--out", default=os.path.abspath(OUT_PATH))
+    args = p.parse_args()
+    return asyncio.run(main_async(args))
 
 
 if __name__ == "__main__":
