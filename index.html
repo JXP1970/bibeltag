@@ -42,12 +42,6 @@
     color:var(--gold);background:rgba(154,123,52,.10);border:1px solid rgba(154,123,52,.28);
     padding:5px 12px;border-radius:999px}
 
-  .toggle{display:flex;background:var(--card);border:1px solid var(--line);border-radius:12px;
-    padding:4px;max-width:280px;margin:6px auto 26px}
-  .toggle button{flex:1;border:0;background:transparent;color:var(--muted);font-family:var(--sans);
-    font-size:13px;font-weight:500;padding:8px 6px;border-radius:9px;cursor:pointer;transition:.15s}
-  .toggle button.on{background:var(--accent);color:#fff;box-shadow:var(--shadow)}
-  [data-theme="dark"] .toggle button.on{color:#12140f}
 
   .sec-label{display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.12em;
     text-transform:uppercase;color:var(--faint);margin:0 4px 10px}
@@ -86,8 +80,6 @@
   .impuls{font-family:var(--serif);font-size:17px;line-height:1.7}
   .impuls .lead{color:var(--accent);font-weight:600;font-family:var(--sans);font-size:12px;
     letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:8px}
-  .daily-impuls{margin-top:20px;padding-top:18px;border-top:1px solid var(--line);
-    font-size:16.5px}
 
   .live{display:inline-flex;align-items:center;gap:7px;margin-top:14px;font-family:var(--sans);
     font-size:13px;color:var(--accent);text-decoration:none;border:1px solid var(--line);
@@ -153,11 +145,6 @@
     <div class="stale" id="staleHint" hidden></div>
   </div>
 
-  <div class="toggle" role="tablist" aria-label="Übersetzung">
-    <button id="btnLU" class="on">Luther 2017</button>
-    <button id="btnSCH">Schlachter 2000</button>
-  </div>
-
   <div class="sec-label">Heute · Ökumenische Bibellese</div>
   <div class="card" id="dailyCard">
     <div class="band">
@@ -167,9 +154,6 @@
     </div>
     <div class="pane on">
       <div class="scripture psalm" id="dailyText"></div>
-      <div class="impuls daily-impuls" id="dailyImpulsBox" hidden>
-        <span class="lead">Gedanke zur Tageslese</span><span id="dailyImpuls"></span>
-      </div>
       <a class="live" id="dailyLive" href="#" target="_blank" rel="noopener">Auf die-bibel.de öffnen ↗</a>
     </div>
   </div>
@@ -188,7 +172,6 @@
     <div class="tabs" role="tablist">
       <button data-tab="predigt" class="on">Predigttext</button>
       <button data-tab="psalm">Wochenpsalm</button>
-      <button data-tab="impuls">Impuls</button>
     </div>
 
     <div class="pane on" id="pane-predigt">
@@ -199,9 +182,6 @@
     <div class="pane" id="pane-psalm">
       <h3 id="psalmHead">–</h3>
       <div class="scripture psalm" id="psalmText"></div>
-    </div>
-    <div class="pane" id="pane-impuls">
-      <div class="impuls"><span class="lead">Kerngedanke für den Kirchgang</span><span id="impulsText"></span></div>
     </div>
   </div>
 
@@ -233,7 +213,7 @@
   <div class="stamp">Aktualisiert am <span id="updated">–</span></div>
 
   <footer>
-    Bibeltexte: Lutherbibel 2017 © Deutsche Bibelgesellschaft, Stuttgart · Schlachter 2000 © Genfer Bibelgesellschaft.<br>
+    Bibeltexte: Lutherbibel 2017 © Deutsche Bibelgesellschaft, Stuttgart.<br>
     Quelle der Leseordnung: <a href="https://www.die-bibel.de/leseplaene" target="_blank" rel="noopener">die-bibel.de</a>. Für den persönlichen, andächtlichen Gebrauch.<br>
     Eigene Gedanken bleiben nur auf diesem Gerät, in diesem Browser – sie werden nirgends hochgeladen. Mit „Alle sichern“ als Datei speichern.
   </footer>
@@ -241,388 +221,148 @@
 
 <script>
 /* ============================================================================
-   DATA START  —  Dieser gesamte Block wird täglich vom Cloud-Agent
-   (GitHub-Routine) komplett neu geschrieben. Alle Texte stehen INLINE im
-   DATA-Objekt; es gibt bewusst keine externen Konstanten mehr, damit sich
-   der Block als eine Einheit zuverlässig austauschen lässt.
-
-   Struktur:
-     updated : "26. Juli 2026"
-     season  : "Trinitatiszeit"
-     sunday  : { name, date, spruch:{text,cite},
-                 predigt:{ ref, title, url, LU17:[[v,txt]...], SCH2000:[[v,txt]...] },
-                 psalm  :{ ref, note, LU17:[[v,txt]...], SCH2000:[[v,txt]...] },
-                 impuls : "…" }
-     daily   : { ref, title, url, LU17:[[v,txt]...], SCH2000:[[v,txt]...] }
+   Die Texte liegen fertig in daten.json (Tageslesen und Sonntage fuer mehr
+   als ein Jahr, geholt von die-bibel.de). Die App sucht sich daraus nur den
+   heutigen Tag heraus - kein Server, keine Schnittstelle, keine Kosten.
+   Nachfuellen: Workflow "Lespleaene holen" im Repo starten.
    ============================================================================ */
-const DATA = {
-  "updated": "27. Juli 2026",
-  "season": "Trinitatiszeit",
-  "sunday": {
-    "name": "8. Sonntag nach Trinitatis",
-    "date": "Sonntag, 26. Juli 2026",
-    "spruch": {
-      "text": "Wandelt als Kinder des Lichts; die Frucht des Lichts ist lauter Güte und Gerechtigkeit und Wahrheit.",
-      "cite": "Eph 5,8b.9"
-    },
-    "predigt": {
-      "ref": "Joh 9,1-7",
-      "title": "Licht für einen Blindgeborenen",
-      "url": "https://www.die-bibel.de/leseplaene/predigttexte/predigttext-2026-07-26",
-      "LU17": [
-        [
-          1,
-          "Und Jesus ging vorüber und sah einen Menschen, der blind geboren war."
-        ],
-        [
-          2,
-          "Und seine Jünger fragten ihn und sprachen: Rabbi, wer hat gesündigt, dieser oder seine Eltern, dass er blind geboren ist?"
-        ],
-        [
-          3,
-          "Jesus antwortete: Es hat weder dieser gesündigt noch seine Eltern, sondern es sollen die Werke Gottes offenbar werden an ihm."
-        ],
-        [
-          4,
-          "Wir müssen die Werke dessen wirken, der mich gesandt hat, solange es Tag ist; es kommt die Nacht, da niemand wirken kann."
-        ],
-        [
-          5,
-          "Solange ich in der Welt bin, bin ich das Licht der Welt."
-        ],
-        [
-          6,
-          "Als er das gesagt hatte, spuckte er auf die Erde, machte daraus einen Brei und strich den Brei auf die Augen des Blinden"
-        ],
-        [
-          7,
-          "und sprach zu ihm: Geh zu dem Teich Siloah – das heißt übersetzt: gesandt – und wasche dich! Da ging er hin und wusch sich und kam sehend wieder."
-        ]
-      ],
-      "SCH2000": [
-        [
-          1,
-          "Und im Vorübergehen sah er einen Menschen, der von Geburt an blind war."
-        ],
-        [
-          2,
-          "Und seine Jünger fragten ihn und sprachen: Rabbi, wer hat gesündigt, dieser oder seine Eltern, dass er blind geboren wurde?"
-        ],
-        [
-          3,
-          "Jesus antwortete: Weder dieser hat gesündigt noch seine Eltern, sondern es sollten die Werke Gottes offenbar werden an ihm."
-        ],
-        [
-          4,
-          "Ich muss die Werke des wirken, der mich gesandt hat, solange es Tag ist; es kommt die Nacht, da niemand wirken kann."
-        ],
-        [
-          5,
-          "Solange ich in der Welt bin, bin ich das Licht der Welt."
-        ],
-        [
-          6,
-          "Als er dies gesagt hatte, spuckte er auf die Erde und machte einen Brei aus dem Speichel und strich den Brei auf die Augen des Blinden"
-        ],
-        [
-          7,
-          "und sprach zu ihm: Geh hin, wasche dich im Teich Siloah (das heißt übersetzt: Gesandter)! Da ging er hin und wusch sich und kam sehend zurück."
-        ]
-      ]
-    },
-    "psalm": {
-      "ref": "Ps 48,2-3a.9-15",
-      "note": "Wochenpsalm",
-      "LU17": [
-        [
-          2,
-          "Groß ist der Herr und hoch zu rühmen in der Stadt unsres Gottes, auf seinem heiligen Berge."
-        ],
-        [
-          3,
-          "Schön ragt empor sein Gipfel, daran sich freut die ganze Welt, der Berg Zion fern im Norden, die Stadt des großen Königs."
-        ],
-        [
-          9,
-          "Wie wir’s gehört haben, so sehen wir’s an der Stadt des Herrn Zebaoth, an der Stadt unsres Gottes: Gott erhält sie ewiglich. SELA."
-        ],
-        [
-          10,
-          "Gott, wir gedenken deiner Güte in deinem Tempel."
-        ],
-        [
-          11,
-          "Gott, wie dein Name, so ist auch dein Ruhm bis an der Welt Enden. Deine Rechte ist voll Gerechtigkeit."
-        ],
-        [
-          12,
-          "Es freue sich der Berg Zion, und die Töchter Juda seien fröhlich um deiner Rechte willen."
-        ],
-        [
-          13,
-          "Ziehet um den Zion herum und umschreitet ihn, zählt seine Türme;"
-        ],
-        [
-          14,
-          "habt gut acht auf seine Mauern, / durchwandert seine Paläste, dass ihr den Nachkommen davon erzählt:"
-        ],
-        [
-          15,
-          "Dieser ist Gott, unser Gott für immer und ewig. Er ist’s, der uns führet."
-        ]
-      ],
-      "SCH2000": [
-        [
-          2,
-          "Groß ist der HERR und hoch zu preisen in der Stadt unseres Gottes, auf seinem heiligen Berg."
-        ],
-        [
-          3,
-          "Schön ragt empor, eine Freude für die ganze Erde, der Berg Zion, [gelegen] gegen Norden, die Stadt des großen Königs."
-        ],
-        [
-          9,
-          "Wie wir es gehört hatten, so haben wir es gesehen in der Stadt des HERRN der Heerscharen, in der Stadt unseres Gottes: Gott lässt sie ewiglich bestehen. (Pause)"
-        ],
-        [
-          10,
-          "O Gott, wir gedenken deiner Gnade in deinem Tempel!"
-        ],
-        [
-          11,
-          "O Gott, wie dein Name, so ist auch dein Ruhm bis an die Enden der Erde; deine Rechte ist voll Gerechtigkeit."
-        ],
-        [
-          12,
-          "Der Berg Zion freut sich, die Töchter Judas frohlocken um deiner Gerichte willen."
-        ],
-        [
-          13,
-          "Umkreist den Zion, umwandelt ihn, zählt seine Türme!"
-        ],
-        [
-          14,
-          "Betrachtet seine Bollwerke, geht durch seine Palastanlagen, dass ihr es der Nachkommenschaft erzählt!"
-        ],
-        [
-          15,
-          "Denn dieser Gott ist unser Gott für immer und ewig; er wird uns führen."
-        ]
-      ]
-    },
-    "impuls": "Die Jünger fragen nach Schuld, Jesus fragt nach Herrlichkeit: An diesem Menschen soll Gottes Werk sichtbar werden. Nicht jedes Leid lässt sich mit Ursache und Wirkung erklären – manchmal will Gott gerade im Dunkel etwas Neues beginnen. Jesus nimmt sich Zeit, wird konkret, berührt die Augen des Blinden und schickt ihn los, seinen Glauben im Gehorsam zu erproben. So wird aus Finsternis Licht, aus Ohnmacht Sehen. Der Wochenspruch ruft uns, als Kinder des Lichts zu leben – nicht aus eigener Kraft leuchtend, sondern weil das Licht der Welt uns berührt hat und durch uns weiterwirken will."
-  },
-  "daily": {
-    "ref": "Johannes 6,28-40",
-    "title": "Das Brot des Lebens",
-    "url": "https://www.die-bibel.de/leseplaene/oeab-leseplan/oeab-2026-07-27",
-    "LU17": [
-      [
-        28,
-        "Da fragten sie ihn: Was sollen wir tun, dass wir Gottes Werke wirken?"
-      ],
-      [
-        29,
-        "Jesus antwortete und sprach zu ihnen: Das ist Gottes Werk, dass ihr an den glaubt, den er gesandt hat."
-      ],
-      [
-        30,
-        "Da sprachen sie zu ihm: Was tust du für ein Zeichen, auf dass wir sehen und dir glauben? Was wirkst du?"
-      ],
-      [
-        31,
-        "Unsre Väter haben Manna gegessen in der Wüste, wie geschrieben steht : »Brot vom Himmel gab er ihnen zu essen.«"
-      ],
-      [
-        32,
-        "Da sprach Jesus zu ihnen: Wahrlich, wahrlich, ich sage euch: Nicht Mose hat euch das Brot vom Himmel gegeben, sondern mein Vater gibt euch das wahre Brot vom Himmel."
-      ],
-      [
-        33,
-        "Denn dies ist das Brot Gottes, das vom Himmel kommt und gibt der Welt das Leben."
-      ],
-      [
-        34,
-        "Da sprachen sie zu ihm: Herr, gib uns allezeit solches Brot."
-      ],
-      [
-        35,
-        "Jesus aber sprach zu ihnen: Ich bin das Brot des Lebens. Wer zu mir kommt, den wird nicht hungern; und wer an mich glaubt, den wird nimmermehr dürsten."
-      ],
-      [
-        36,
-        "Aber ich habe euch gesagt: Ihr habt mich gesehen und glaubt doch nicht."
-      ],
-      [
-        37,
-        "Alles, was mir der Vater gibt, das kommt zu mir; und wer zu mir kommt, den werde ich nicht hinausstoßen."
-      ],
-      [
-        38,
-        "Denn ich bin vom Himmel gekommen, nicht damit ich meinen Willen tue, sondern den Willen dessen, der mich gesandt hat."
-      ],
-      [
-        39,
-        "Das ist aber der Wille dessen, der mich gesandt hat, dass ich nichts verliere von allem, was er mir gegeben hat, sondern dass ich’s auferwecke am Jüngsten Tage."
-      ],
-      [
-        40,
-        "Denn das ist der Wille meines Vaters, dass, wer den Sohn sieht und glaubt an ihn, das ewige Leben habe; und ich werde ihn auferwecken am Jüngsten Tage."
-      ]
-    ],
-    "SCH2000": [
-      [
-        28,
-        "Da sprachen sie zu ihm: Was sollen wir tun, damit wir die Werke Gottes wirken?"
-      ],
-      [
-        29,
-        "Jesus antwortete und sprach zu ihnen: Das ist das Werk Gottes, dass ihr an den glaubt, den er gesandt hat."
-      ],
-      [
-        30,
-        "Da sprachen sie zu ihm: Was tust du für ein Zeichen, damit wir es sehen und dir glauben? Was wirkst du?"
-      ],
-      [
-        31,
-        "Unsere Väter haben das Manna gegessen in der Wüste, wie geschrieben steht: »Brot vom Himmel gab er ihnen zu essen.«"
-      ],
-      [
-        32,
-        "Da sprach Jesus zu ihnen: Wahrlich, wahrlich, ich sage euch: Nicht Mose hat euch das Brot vom Himmel gegeben, sondern mein Vater gibt euch das wahre Brot vom Himmel."
-      ],
-      [
-        33,
-        "Denn das Brot Gottes ist der, welcher vom Himmel herabkommt und der Welt Leben gibt."
-      ],
-      [
-        34,
-        "Da sprachen sie zu ihm: Herr, gib uns allezeit dieses Brot!"
-      ],
-      [
-        35,
-        "Jesus aber sprach zu ihnen: Ich bin das Brot des Lebens. Wer zu mir kommt, den wird nicht hungern; und wer an mich glaubt, den wird nimmermehr dürsten."
-      ],
-      [
-        36,
-        "Aber ich habe es euch gesagt, dass ihr mich gesehen habt und doch nicht glaubt."
-      ],
-      [
-        37,
-        "Alles, was mir der Vater gibt, das wird zu mir kommen; und wer zu mir kommt, den werde ich nicht hinausstoßen."
-      ],
-      [
-        38,
-        "Denn ich bin vom Himmel herabgekommen, nicht damit ich meinen Willen tue, sondern den Willen des, der mich gesandt hat."
-      ],
-      [
-        39,
-        "Das ist aber der Wille des Vaters, der mich gesandt hat, dass ich keines von denen, die er mir gegeben hat, verliere, sondern dass ich sie auferwecke am letzten Tag."
-      ],
-      [
-        40,
-        "Das ist aber der Wille desjenigen, der mich gesandt hat, dass jeder, der den Sohn sieht und an ihn glaubt, ewiges Leben hat; und ich werde ihn auferwecken am letzten Tag."
-      ]
-    ],
-    "impuls": "Die Menge sucht nach einem Zeichen, das ihren Hunger stillt, doch Jesus verweist auf etwas Größeres: sich selbst als Brot des Lebens. Wer zu ihm kommt, wird satt – nicht für einen Tag, sondern für immer, weil er das Leben selbst schenkt. Erstaunlich ist die Zusage, dass niemand, der zu ihm kommt, abgewiesen wird; sein Halten ist stärker als jedes Verlieren. Das nimmt die Angst, nicht gut genug oder zu spät zu sein. Es lohnt sich, den eigenen Hunger nach Sinn und Halt heute bei ihm zu suchen, statt bei kurzlebigen Ersatzlösungen."
-  }
-};
-/* ==== DATA END ==== */
+let DATEN = null;
 
-let trans = "LU17";
 const $ = s => document.querySelector(s);
-
-/* Liefert die Verse der gewünschten Übersetzung. Fehlt sie ausnahmsweise,
-   wird die andere angezeigt – mit ehrlichem Hinweis statt leerer Fläche. */
-function versesFor(obj){
-  const wunsch = obj[trans];
-  if (Array.isArray(wunsch) && wunsch.length) return { verses: wunsch, ersatz: null };
-  const andere = trans === "LU17" ? "SCH2000" : "LU17";
-  const ausweich = obj[andere];
-  if (Array.isArray(ausweich) && ausweich.length){
-    return {
-      verses: ausweich,
-      ersatz: (trans === "LU17" ? "Luther 2017" : "Schlachter 2000") +
-              " liegt für diesen Text nicht vor – gezeigt wird " +
-              (andere === "LU17" ? "Luther 2017" : "Schlachter 2000") + ".",
-    };
-  }
-  return { verses: [], ersatz: "Für diesen Text liegt gerade keine Fassung vor." };
-}
-
-function renderVerses(el, obj, psalm){
-  const { verses, ersatz } = versesFor(obj);
-  el.classList.toggle("psalm", !!psalm);
-  const hinweis = ersatz
-    ? `<div class="fallback-note">${ersatz}</div>` : "";
-  el.innerHTML = hinweis + verses.map(([n,t]) =>
-    `<span class="verse"><span class="v">${n}</span>${t}</span>${psalm?"":" "}`).join("");
-}
 
 const MONATE = ["Januar","Februar","März","April","Mai","Juni","Juli",
                 "August","September","Oktober","November","Dezember"];
 const TAGE = ["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
 
-/* Heutiges Datum – im Browser berechnet, also immer korrekt,
-   auch wenn ein Update einmal ausfallen sollte. */
-function heute(){
-  const d = new Date();
-  return {
-    lang: `${TAGE[d.getDay()]}, ${d.getDate()}. ${MONATE[d.getMonth()]} ${d.getFullYear()}`,
-    kurz: `${d.getDate()}. ${MONATE[d.getMonth()]} ${d.getFullYear()}`,
-  };
+/* Datum als JJJJ-MM-TT, aus der lokalen Zeit des Geräts. */
+function isoVon(d){
+  const p = n => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}`;
+}
+function langVon(d){
+  return `${TAGE[d.getDay()]}, ${d.getDate()}. ${MONATE[d.getMonth()]} ${d.getFullYear()}`;
+}
+/* Sonntag der laufenden Kirchenwoche: der letzte Sonntag heute-oder-davor. */
+function sonntagVor(d){
+  const s = new Date(d);
+  s.setDate(s.getDate() - s.getDay());
+  return s;
+}
+/* Kirchenjahreszeit aus dem Namen des Sonntags ableiten. */
+function zeitAus(name){
+  const n = (name || "").toLowerCase();
+  if (n.includes("advent")) return "Adventszeit";
+  if (n.includes("weihnacht") || n.includes("christfest")) return "Weihnachtszeit";
+  if (n.includes("epiphan")) return "Epiphaniaszeit";
+  if (/(invokavit|reminiszere|okuli|lätare|laetare|judika|judica|palmarum|karfreitag|gründonnerstag|passion)/.test(n))
+    return "Passionszeit";
+  if (/(ostern|osters|quasimodogeniti|misericordias|jubilate|kantate|rogate|exaudi|himmelfahrt)/.test(n))
+    return "Osterzeit";
+  if (n.includes("pfingst") || n.includes("trinitatis")) return "Trinitatiszeit";
+  return "Kirchenjahr";
+}
+
+function renderVerses(el, verse, psalm){
+  el.classList.toggle("psalm", !!psalm);
+  if (!Array.isArray(verse) || !verse.length){
+    el.innerHTML = '<div class="fallback-note">Für diesen Text liegt kein Wortlaut vor.</div>';
+    return;
+  }
+  el.innerHTML = verse.map(([n,t]) =>
+    `<span class="verse"><span class="v">${n}</span>${t}</span>${psalm?"":" "}`).join("");
+}
+
+function hinweis(text){
+  const el = $("#staleHint");
+  if (!text){ el.hidden = true; return; }
+  el.textContent = text;
+  el.hidden = false;
 }
 
 function paint(){
-  const s = DATA.sunday;
-  const t = heute();
-  $("#season").textContent = DATA.season;
-  $("#todayHead").textContent = t.lang;
-  $("#weekHead").textContent = s.name;
+  const jetzt = new Date();
+  const heuteIso = isoVon(jetzt);
+  const so = sonntagVor(jetzt);
+  const soIso = isoVon(so);
 
-  // Hinweis, falls die Texte nicht von heute sind
-  const hint = $("#staleHint");
-  if ((DATA.updated || "").trim() !== t.kurz){
-    hint.textContent = "Texte vom " + DATA.updated + " – noch nicht aktualisiert";
-    hint.hidden = false;
+  $("#todayHead").textContent = langVon(jetzt);
+  $("#updated").textContent = DATEN && DATEN.erzeugt
+    ? new Date(DATEN.erzeugt).toLocaleDateString("de-DE",
+        {day:"numeric", month:"long", year:"numeric"})
+    : "–";
+
+  const tag = DATEN && DATEN.tage ? DATEN.tage[heuteIso] : null;
+  const woche = DATEN && DATEN.sonntage ? DATEN.sonntage[soIso] : null;
+
+  // --- Tageslese ---
+  if (tag){
+    $("#dailyRef").textContent = tag.ref;
+    $("#dailyTitle").textContent = "";
+    $("#dailyLive").href =
+      "https://www.die-bibel.de/leseplaene/oeab-leseplan/oeab-" + heuteIso;
+    $("#dailyLive").hidden = false;
+    renderVerses($("#dailyText"), tag.verse, true);
   } else {
-    hint.hidden = true;
+    $("#dailyRef").textContent = "–";
+    $("#dailyTitle").textContent = "";
+    $("#dailyLive").hidden = true;
+    $("#dailyText").innerHTML =
+      '<div class="fallback-note">Für heute liegt keine Tageslese in der App. ' +
+      'Direkt nachlesen: <a href="https://www.die-bibel.de/leseplaene/oeab-leseplan/oeab-' +
+      heuteIso + '" target="_blank" rel="noopener">ökumenischer Leseplan ↗</a></div>';
   }
 
-  $("#sundayName").textContent = s.name;
-  $("#sundayDate").textContent = s.date;
-  $("#spruchText").textContent = "„" + s.spruch.text + "“";
-  $("#spruchCite").textContent = s.spruch.cite;
-  $("#updated").textContent = DATA.updated;
+  // --- Sonntag ---
+  if (woche){
+    $("#season").textContent = zeitAus(woche.name);
+    $("#weekHead").textContent = woche.name;
+    $("#sundayName").textContent = woche.name;
+    $("#sundayDate").textContent = "Sonntag, " + (woche.datum || "");
+    $("#spruchText").textContent = woche.spruch && woche.spruch.text
+      ? "„" + woche.spruch.text + "“" : "";
+    $("#spruchCite").textContent = (woche.spruch && woche.spruch.cite) || "";
+    $("#predigtHead").textContent = woche.predigt.ref || "";
+    $("#predigtLive").href =
+      "https://www.die-bibel.de/leseplaene/predigttexte/predigttext-" + soIso;
+    $("#predigtLive").hidden = false;
+    renderVerses($("#predigtText"), woche.predigt.verse, false);
+    $("#psalmHead").textContent = (woche.psalm.ref || "") + "  —  Wochenpsalm";
+    renderVerses($("#psalmText"), woche.psalm.verse, true);
+  } else {
+    $("#season").textContent = "Kirchenjahr";
+    $("#weekHead").textContent = "–";
+    $("#sundayName").textContent = "–";
+    $("#sundayDate").textContent = "";
+    $("#spruchText").textContent = "";
+    $("#spruchCite").textContent = "";
+    $("#predigtHead").textContent = "";
+    $("#predigtLive").hidden = true;
+    $("#predigtText").innerHTML =
+      '<div class="fallback-note">Für diese Woche liegen keine Sonntagstexte in der App.</div>';
+    $("#psalmHead").textContent = "";
+    $("#psalmText").innerHTML = "";
+  }
 
-  $("#dailyRef").textContent = DATA.daily.ref;
-  $("#dailyTitle").textContent = DATA.daily.title || "";
-  $("#dailyLive").href = DATA.daily.url;
-
-  // Gedanke zur Tageslese – nur zeigen, wenn vorhanden
-  const dImp = (DATA.daily.impuls || "").trim();
-  $("#dailyImpuls").textContent = dImp;
-  $("#dailyImpulsBox").hidden = !dImp;
-  renderVerses($("#dailyText"), DATA.daily, true);
-
-  $("#predigtHead").textContent = s.predigt.ref + " · " + s.predigt.title;
-  $("#predigtLive").href = s.predigt.url;
-  renderVerses($("#predigtText"), s.predigt, false);
-
-  $("#psalmHead").textContent = s.psalm.ref + (s.psalm.note ? "  —  " + s.psalm.note : "");
-  renderVerses($("#psalmText"), s.psalm, true);
-
-  $("#impulsText").textContent = s.impuls;
+  // --- Hinweis, wenn der Vorrat zur Neige geht oder fehlt ---
+  if (!DATEN){
+    hinweis("Texte konnten nicht geladen werden – bitte später erneut öffnen.");
+  } else if (!tag){
+    hinweis("Der Textvorrat reicht nicht bis heute – bitte nachfüllen lassen.");
+  } else {
+    const letzte = Object.keys(DATEN.tage || {}).sort().pop();
+    const tageUebrig = letzte
+      ? Math.round((new Date(letzte) - jetzt) / 86400000) : 0;
+    hinweis(tageUebrig <= 21
+      ? `Textvorrat reicht noch ${Math.max(tageUebrig,0)} Tage – bitte nachfüllen lassen.`
+      : "");
+  }
 }
-
-$("#btnLU").onclick = () => { trans="LU17"; $("#btnLU").classList.add("on"); $("#btnSCH").classList.remove("on"); paint(); };
-$("#btnSCH").onclick = () => { trans="SCH2000"; $("#btnSCH").classList.add("on"); $("#btnLU").classList.remove("on"); paint(); };
 
 document.querySelectorAll(".tabs button").forEach(b=>{
   b.onclick = () => {
     const t = b.dataset.tab;
     document.querySelectorAll(".tabs button").forEach(x=>x.classList.toggle("on", x===b));
-    ["predigt","psalm","impuls"].forEach(p=>$("#pane-"+p).classList.toggle("on", p===t));
+    ["predigt","psalm"].forEach(p=>$("#pane-"+p).classList.toggle("on", p===t));
   };
 });
 
@@ -636,7 +376,25 @@ $("#themeBtn").onclick = () => {
   $("#themeBtn").textContent = dark ? "☾" : "☀";
 };
 
-paint();
+/* Texte laden. Einmal geholt, bleiben sie im Browser-Zwischenspeicher,
+   die App ist danach auch ohne Netz benutzbar. */
+async function ladeDaten(){
+  $("#dailyText").innerHTML =
+    '<div class="fallback-note">Texte werden geladen …</div>';
+  try {
+    const r = await fetch("daten.json", { cache: "default" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    DATEN = await r.json();
+  } catch (e) {
+    DATEN = null;
+    console.error("daten.json nicht ladbar:", e);
+  }
+  paint();
+  // Notiz-Kopfzeile kennt die Bibelstelle erst jetzt
+  if (typeof window.noteKopf === "function") window.noteKopf();
+}
+
+ladeDaten();
 
 /* ===== Meine Gedanken – Notizen (lokal im Browser gespeichert) ===== */
 const NOTE_KEY = "bibeltag-notizen";
@@ -671,12 +429,12 @@ function entryOf(value){
   return { text: value?.text || "", ref: value?.ref || "", sunday: value?.sunday || "" };
 }
 
-/* Bibelstelle(n) des heutigen Tages aus dem DATA-Block */
+/* Bibelstelle(n) des heutigen Tages aus den geladenen Daten */
 function todayContext(){
-  return {
-    ref: DATA?.daily?.ref || "",
-    sunday: DATA?.sunday?.name || "",
-  };
+  const jetzt = new Date();
+  const tag = DATEN?.tage?.[isoVon(jetzt)];
+  const woche = DATEN?.sonntage?.[isoVon(sonntagVor(jetzt))];
+  return { ref: tag?.ref || "", sunday: woche?.name || "" };
 }
 
 const noteArea = $("#noteText");
@@ -748,16 +506,21 @@ function renderArchive(){
   });
 }
 
-// Initial laden
-$("#noteDate").textContent = prettyDate(todayKey());
-noteArea.value = entryOf(loadNotes()[todayKey()]).text;
-(() => {
+/* Kopfzeile der Notiz mit der heutigen Bibelstelle. Wird nach dem Laden
+   der Texte erneut aufgerufen (siehe ladeDaten), da sie anfangs fehlt. */
+function noteKopf(){
   const ctx = todayContext();
   const label = [ctx.ref, ctx.sunday].filter(Boolean).join(" · ");
   $("#noteContext").textContent = label
     ? "Zur Lese: " + label
     : "Was mir heute wichtig geworden ist";
-})();
+}
+window.noteKopf = noteKopf;
+
+// Initial laden
+$("#noteDate").textContent = prettyDate(todayKey());
+noteArea.value = entryOf(loadNotes()[todayKey()]).text;
+noteKopf();
 renderArchive();
 
 // Automatisch speichern (kurz nach dem Tippen) + beim Verlassen
