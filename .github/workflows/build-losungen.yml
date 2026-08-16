@@ -1,0 +1,55 @@
+name: Losungen holen (monatlich)
+
+# Holt die Losungen der Herrnhuter Brüdergemeine von www.losungen.de
+# und schreibt sie in losungen.json. Kostet nichts – nur ein Download,
+# kein Browser, kein Sprachmodell.
+on:
+  workflow_dispatch:
+    inputs:
+      jahr:
+        description: "Einzelner Jahrgang (JJJJ), leer = laufendes + kommendes Jahr"
+        type: string
+        default: ""
+  schedule:
+    # Monatlich nachsehen: den Jahrgang für das kommende Jahr veröffentlicht
+    # die Brüder-Unität im Lauf des Herbstes. Ist nichts Neues da, wird auch
+    # nichts committet.
+    - cron: "20 4 2 * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bibeltag-losungen
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Repo auschecken
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Losungen holen
+        run: |
+          ARGS=""
+          if [ -n "${{ inputs.jahr }}" ]; then ARGS="--jahr ${{ inputs.jahr }}"; fi
+          python scripts/build_losungen.py $ARGS
+
+      - name: Änderungen committen & pushen
+        run: |
+          git config user.name "Bibeltag Bot"
+          git config user.email "actions@github.com"
+          if [ -n "$(git status --porcelain losungen.json)" ]; then
+            git add losungen.json
+            git commit -m "Losungen: Daten aktualisiert ($(date +%Y-%m-%d))"
+            git push
+          else
+            echo "Keine Änderung."
+          fi

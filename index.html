@@ -59,6 +59,15 @@
   .spruch p{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.6}
   .spruch .cite{font-family:var(--sans);font-style:normal;color:var(--muted);font-size:13px;margin-top:8px}
 
+  /* ---- Losung + Lehrtext (gehoeren immer zusammen) ---- */
+  #losungCard .band .kick{color:var(--gold)}
+  .los-body{padding:20px 22px}
+  .los-block + .los-block{margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
+  .los-block .mini{display:block;font-family:var(--sans);font-style:normal;font-size:11px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:7px}
+  .los-block p{font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.6}
+  .los-block .cite{font-family:var(--sans);font-style:normal;color:var(--muted);font-size:13px;margin-top:8px}
+
   .tabs{display:flex;gap:4px;padding:0 14px;border-bottom:1px solid var(--line)}
   .tabs button{flex:1;border:0;background:transparent;color:var(--muted);font-family:var(--sans);
     font-size:14px;font-weight:500;padding:13px 4px;cursor:pointer;border-bottom:2px solid transparent;
@@ -145,6 +154,31 @@
     <div class="stale" id="staleHint" hidden></div>
   </div>
 
+  <div class="sec-label">Die Losungen · Herrnhuter Brüdergemeine</div>
+  <div class="card" id="losungCard">
+    <div class="band">
+      <div class="kick">✦ Die Losungen</div>
+      <div class="ref" id="losungDate">–</div>
+      <div class="sub" id="losungSunday"></div>
+    </div>
+    <div class="los-body" id="losungBody">
+      <div class="los-block">
+        <span class="mini">Losung</span>
+        <p id="losungText"></p>
+        <div class="cite" id="losungCite"></div>
+      </div>
+      <div class="los-block">
+        <span class="mini">Lehrtext</span>
+        <p id="lehrText"></p>
+        <div class="cite" id="lehrCite"></div>
+      </div>
+    </div>
+    <div class="los-body" id="losungHinweis" hidden>
+      <div class="fallback-note">Für heute liegt keine Losung in der App.
+        Direkt nachlesen auf <a href="https://www.losungen.de" target="_blank" rel="noopener">losungen.de ↗</a></div>
+    </div>
+  </div>
+
   <div class="sec-label">Heute · Ökumenische Bibellese</div>
   <div class="card" id="dailyCard">
     <div class="band">
@@ -215,6 +249,8 @@
   <footer>
     Bibeltexte: Lutherbibel 2017 © Deutsche Bibelgesellschaft, Stuttgart.<br>
     Quelle der Leseordnung: <a href="https://www.die-bibel.de/leseplaene" target="_blank" rel="noopener">die-bibel.de</a>. Für den persönlichen, andächtlichen Gebrauch.<br>
+    Die Losungen: © <a href="https://www.herrnhuter.de" target="_blank" rel="noopener">Evangelische Brüder-Unität – Herrnhuter Brüdergemeine</a>.
+    Weitere Informationen finden Sie <a href="https://www.losungen.de" target="_blank" rel="noopener">hier</a>.<br>
     Eigene Gedanken bleiben nur auf diesem Gerät, in diesem Browser – sie werden nirgends hochgeladen. Mit „Alle sichern“ als Datei speichern.
   </footer>
 </div>
@@ -225,8 +261,14 @@
    als ein Jahr, geholt von die-bibel.de). Die App sucht sich daraus nur den
    heutigen Tag heraus - kein Server, keine Schnittstelle, keine Kosten.
    Nachfuellen: Workflow "Lespleaene holen" im Repo starten.
+
+   Dazu die Losungen der Herrnhuter Bruedergemeine aus losungen.json
+   (Workflow "Losungen holen", Quelle www.losungen.de). Losungsvers und
+   Lehrtext werden immer gemeinsam angezeigt - so verlangen es die
+   Nutzungsbedingungen der Bruedergemeine.
    ============================================================================ */
 let DATEN = null;
+let LOSUNGEN = null;
 
 const $ = s => document.querySelector(s);
 
@@ -279,6 +321,28 @@ function hinweis(text){
   el.hidden = false;
 }
 
+/* Losung des Tages. Losungsvers und Lehrtext gehoeren zusammen: fehlt einer
+   von beiden, wird statt halber Texte ein Hinweis auf losungen.de gezeigt. */
+function malLosung(jetzt, heuteIso){
+  const l = LOSUNGEN && LOSUNGEN.tage ? LOSUNGEN.tage[heuteIso] : null;
+  const vollstaendig = l && l.losung && l.lehrtext && l.losung.text && l.lehrtext.text;
+
+  $("#losungDate").textContent = langVon(jetzt);
+  $("#losungSunday").textContent = (l && l.sonntag) || "";
+
+  if (vollstaendig){
+    $("#losungText").textContent = "„" + l.losung.text + "“";
+    $("#losungCite").textContent = l.losung.vers || "";
+    $("#lehrText").textContent = "„" + l.lehrtext.text + "“";
+    $("#lehrCite").textContent = l.lehrtext.vers || "";
+    $("#losungBody").hidden = false;
+    $("#losungHinweis").hidden = true;
+  } else {
+    $("#losungBody").hidden = true;
+    $("#losungHinweis").hidden = false;
+  }
+}
+
 function paint(){
   const jetzt = new Date();
   const heuteIso = isoVon(jetzt);
@@ -293,6 +357,8 @@ function paint(){
 
   const tag = DATEN && DATEN.tage ? DATEN.tage[heuteIso] : null;
   const woche = DATEN && DATEN.sonntage ? DATEN.sonntage[soIso] : null;
+
+  malLosung(jetzt, heuteIso);
 
   // --- Tageslese ---
   if (tag){
@@ -381,14 +447,16 @@ $("#themeBtn").onclick = () => {
 async function ladeDaten(){
   $("#dailyText").innerHTML =
     '<div class="fallback-note">Texte werden geladen …</div>';
-  try {
-    const r = await fetch("daten.json", { cache: "default" });
+  const hole = async name => {
+    const r = await fetch(name, { cache: "default" });
     if (!r.ok) throw new Error("HTTP " + r.status);
-    DATEN = await r.json();
-  } catch (e) {
-    DATEN = null;
-    console.error("daten.json nicht ladbar:", e);
-  }
+    return r.json();
+  };
+  const [d, l] = await Promise.allSettled([hole("daten.json"), hole("losungen.json")]);
+  DATEN = d.status === "fulfilled" ? d.value : null;
+  LOSUNGEN = l.status === "fulfilled" ? l.value : null;
+  if (!DATEN) console.error("daten.json nicht ladbar:", d.reason);
+  if (!LOSUNGEN) console.error("losungen.json nicht ladbar:", l.reason);
   paint();
   // Notiz-Kopfzeile kennt die Bibelstelle erst jetzt
   if (typeof window.noteKopf === "function") window.noteKopf();
