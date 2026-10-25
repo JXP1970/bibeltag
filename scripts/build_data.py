@@ -1,22 +1,30 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """Holt die Lesepläne für einen Zeitraum und schreibt sie in daten.json.
 
 Einmalig (bzw. wenn der Vorrat zur Neige geht) auszuführen. Danach braucht
 die App keine Aktualisierung mehr: alle Texte liegen fertig in der Datei,
 die App sucht sich nur noch den heutigen Tag heraus.
 
-Quelle: die-bibel.de
-  - Tageslese   /leseplaene/oeab-leseplan/oeab-<JJJJ-MM-TT>
-  - Sonntag     /leseplaene/predigttexte/predigttext-<JJJJ-MM-TT>
+Quellen (alle frei zugänglich, kein Login, kein Playwright):
+  - Tageslese : die-bibel.de  /leseplaene/oeab-leseplan/oeab-<JJJJ-MM-TT>
+  - Sonntage  : Name+Datum aus der freien Predigttexte-Übersicht,
+                Bibelstellen aus der festen Tabelle scripts/perikopen.json,
+                der Bibeltext (Lutherbibel 2017) aus dem Bibel-Reader
+                die-bibel.de/bibel/LU17/<BUCH>.<KAPITEL>
 
-Die Leseordnung wird dort jahresweise veröffentlicht – irgendwann sind
-keine weiteren Tage mehr abrufbar. Das Skript erkennt das automatisch
-(zwei aufeinanderfolgende Abschnitte ganz ohne Treffer) und hört dann auf,
-statt stur bis zum Enddatum weiterzuversuchen. Ein späterer Lauf holt die
-neu veröffentlichten Tage einfach nach.
+Hintergrund: die-bibel.de hat seinen Sonntags-Leseplan Mitte 2025 hinter
+eine Anmeldung gelegt. Deshalb kommen die Bibelstellen der Sonntage jetzt
+aus der mitgelieferten Perikopen-Tabelle (perikopen.json, neu erzeugbar mit
+scripts/build_perikopen.py), während der eigentliche Bibeltext weiterhin
+aus dem frei lesbaren Bibel-Reader geholt wird. Die Perikopenreihe (I–VI)
+wird aus dem Kirchenjahr berechnet.
 
 Bereits vorhandene Einträge in daten.json werden übersprungen, ein
-abgebrochener Lauf kann also jederzeit wiederholt werden.
+abgebrochener Lauf kann also jederzeit wiederholt werden. Sonntage, für die
+keine Tabellenzeile existiert, werden NICHT stillschweigend übersprungen,
+sondern am Ende deutlich aufgelistet (das hat früher einzelne Lücken
+verursacht).
 
 Aufruf:
     python scripts/build_data.py [--von JJJJ-MM-TT] [--bis JJJJ-MM-TT]
@@ -25,106 +33,192 @@ Aufruf:
 from __future__ import annotations
 
 import argparse
-import asyncio
+import gzip
+import html as _html
 import json
 import os
+import re
 import sys
 import time
+import urllib.request
+import urllib.error
 from datetime import date, datetime, timedelta
 
 OEAB_URL = "https://www.die-bibel.de/leseplaene/oeab-leseplan/oeab-{d}"
-PREDIGT_URL = "https://www.die-bibel.de/leseplaene/predigttexte/predigttext-{d}"
+READER_URL = "https://www.die-bibel.de/bibel/LU17/{book}.{chap}"
+OVERVIEW_URL = "https://www.die-bibel.de/leseplaene/predigttexte?tab={tab}"
 
-OUT_PATH = os.path.join(os.path.dirname(__file__), "..", "daten.json")
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+OUT_PATH = os.path.join(SCRIPT_DIR, "..", "daten.json")
+PERIKOPEN_PATH = os.path.join(SCRIPT_DIR, "perikopen.json")
 
 MON = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
        "August", "September", "Oktober", "November", "Dezember"]
+MON_NR = {m: i + 1 for i, m in enumerate(MON)}
 
-CONCURRENCY = 8          # gleichzeitig geöffnete Seiten
-CHUNK = 12                # Daten pro Durchgang
-LEER_ABSCHNITTE_STOPP = 2  # so viele Durchgänge ganz ohne Treffer -> Ende erreicht
-PROBE_TIMEOUT_MS = 9000   # wie lange auf einen Treffer gewartet wird
+REIHEN = ["I", "II", "III", "IV", "V", "VI"]
 
-_JS_TAGESLESE = r"""
-() => {
-  const refs = [...document.querySelectorAll('span.text-grayLight')]
-    .map(e => e.textContent.trim())
-    .filter(t => /\d/.test(t) && t.length < 60);
-  const map = new Map();
-  document.querySelectorAll('span.verse').forEach(e => {
-    const cls = (e.className.baseVal || e.className || '').toString();
-    const m = cls.match(/LU17\.([A-Z0-9]+)\.(\d+)\.(\d+)/);
-    if (!m) return;
-    const n = Number(m[3]);
-    const t = e.textContent.replace(/\s+/g, ' ').trim();
-    if (!t) return;
-    map.set(n, ((map.get(n) || '') + ' ' + t).trim());
-  });
-  return { ref: refs[0] || '', verse: [...map.entries()].sort((a, b) => a[0] - b[0]) };
+CHUNK = 12                 # Tageslesen pro Zwischenspeicherung
+LEER_ABSCHNITTE_STOPP = 2  # so viele Durchgänge ohne Treffer -> Ende des Tagesplans
+
+HDR = {
+    "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                   "(KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "de-DE,de;q=0.9",
+    "Accept-Encoding": "gzip, deflate",
+    "Referer": "https://www.die-bibel.de/",
 }
-"""
 
-_JS_SONNTAG = r"""
-() => {
-  const txt = (document.querySelector('main')?.innerText || '').replace(/ /g, ' ');
-  const g = re => (txt.match(re) || [])[1]?.trim() || '';
-  const kopf = txt.match(/^\s*(\d{1,2}\.\s+\S+\s+\d{4}):\s*(.+?)\s*$/m) || [];
 
-  const gruppen = new Map();
-  document.querySelectorAll('span.verse').forEach(e => {
-    const cls = (e.className.baseVal || e.className || '').toString();
-    const m = cls.match(/LU17\.([A-Z0-9]+)\.(\d+)\.(\d+)/);
-    if (!m) return;
-    const key = m[1] + '.' + m[2];
-    const n = Number(m[3]);
-    const t = e.textContent.replace(/\s+/g, ' ').trim();
-    if (!t) return;
-    if (!gruppen.has(key)) gruppen.set(key, new Map());
-    gruppen.get(key).set(n, ((gruppen.get(key).get(n) || '') + ' ' + t).trim());
-  });
+# --------------------------------------------------------------------------- #
+#  HTTP / HTML
+# --------------------------------------------------------------------------- #
+def fetch(url: str) -> str | None:
+    """Lädt eine Seite. None bei 404 (kein Eintrag für dieses Datum)."""
+    try:
+        r = urllib.request.urlopen(urllib.request.Request(url, headers=HDR), timeout=30)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return None
+        raise
+    raw = r.read()
+    if r.headers.get("Content-Encoding") == "gzip":
+        raw = gzip.decompress(raw)
+    return raw.decode("utf-8", "replace")
 
-  const kapitelVon = r => { const m = r.match(/(\d+)\s*,/); return m ? Number(m[1]) : null; };
-  const liste = k => gruppen.has(k)
-    ? [...gruppen.get(k).entries()].sort((a, b) => a[0] - b[0]) : [];
 
-  const waehle = (ref, psalmBevorzugt) => {
-    const kap = kapitelVon(ref);
-    let treffer = [...gruppen.keys()].filter(k => Number(k.split('.')[1]) === kap);
-    if (treffer.length > 1) {
-      const psa = treffer.filter(k => k.startsWith('PSA'));
-      const rest = treffer.filter(k => !k.startsWith('PSA'));
-      treffer = psalmBevorzugt ? (psa.length ? psa : treffer)
-                               : (rest.length ? rest : treffer);
-    }
-    return treffer.length ? liste(treffer[0]) : [];
-  };
+def strip_tags(s: str) -> str:
+    s = re.sub(r"<[^>]+>", "", s)
+    s = _html.unescape(s).replace(" ", " ")
+    return re.sub(r"\s+", " ", s).strip()
 
-  const psalmRef = g(/Wochenpsalm:\s*(.+)/);
-  const predigtRef = g(/Predigttext:\s*(.+)/);
 
-  return {
-    datum: kopf[1] || '', name: kopf[2] || '',
-    spruchText: g(/Wochenspruch:\s*[„"«]?([^"„“»]+?)[”"“»]?\s*\(/),
-    spruchCite: g(/Wochenspruch:[^(]*\(([^)]+)\)/),
-    predigtRef, psalmRef,
-    predigtVerse: waehle(predigtRef, false),
-    psalmVerse: waehle(psalmRef, true),
-  };
+def chapter_verses(html: str, book: str, chap: int) -> dict[int, str]:
+    """Verse eines Kapitels aus einer Bibel-Reader-Seite (span.verse, LU17.<BUCH>.<KAP>.<V>)."""
+    verses: dict[int, str] = {}
+    for m in re.finditer(r'<span\b[^>]*\bclass="([^"]*\bverse\b[^"]*)"[^>]*>', html):
+        cm = re.search(r"LU17\.([A-Z0-9]+)\.(\d+)\.(\d+)", m.group(1))
+        if not cm or cm.group(1) != book or int(cm.group(2)) != chap:
+            continue
+        n = int(cm.group(3))
+        start = m.end()
+        depth, end = 1, start
+        for tm in re.finditer(r"<(/?)span\b[^>]*>", html[start:]):
+            depth += -1 if tm.group(1) else 1
+            if depth == 0:
+                end = start + tm.start()
+                break
+        inner = strip_tags(html[start:end])
+        if inner:
+            verses[n] = (verses[n] + " " + inner).strip() if n in verses else inner
+    return verses
+
+
+# --------------------------------------------------------------------------- #
+#  Kirchenjahr
+# --------------------------------------------------------------------------- #
+def advent1(year: int) -> date:
+    """1. Advent des Kalenderjahres: vierter Sonntag vor dem 25. Dezember."""
+    d24 = date(year, 12, 24)
+    vierter = d24 - timedelta(days=(d24.weekday() + 1) % 7)  # letzter Sonntag <= 24.12.
+    return vierter - timedelta(days=21)
+
+
+def reihe_fuer(d: date) -> str:
+    """Perikopenreihe (I–VI) des Kirchenjahres, in dem d liegt.
+    Anker: Kirchenjahr ab 1. Advent 2024 = Reihe I, 2025 = Reihe II, ..."""
+    start = d.year if d >= advent1(d.year) else d.year - 1
+    return REIHEN[(start - 2024) % 6]
+
+
+# die-bibel.de-Sonntagsname -> Slug in perikopen.json (= kirchenjahr-evangelisch.de)
+ALIAS = {
+    "Erntedank": "erntedank",
+    "Reformationstag": "reformationstag",
+    "Gedenktag der Reformation": "reformationstag",
+    "Ewigkeitssonntag": "ewigkeitssonntag",
+    "Letzter Sonntag des Kirchenjahres": "ewigkeitssonntag",
+    "Vorletzter Sonntag des Kirchenjahres": "vorletzter-sonntag-des-kirchenjahres",
+    "Vorletzter Sonntag d. Kj.": "vorletzter-sonntag-des-kirchenjahres",
+    "Drittletzter Sonntag des Kirchenjahres": "drittletzter-sonntag-des-kirchenjahres",
+    "Drittl.S.d.Kj.": "drittletzter-sonntag-des-kirchenjahres",
+    "Palmarum/Palmsonntag": "palmsonntag",
+    "Ostersonntag": "ostersonntag",
+    "Osternacht": "ostersonntag",
+    "Pfingstsonntag": "pfingstsonntag",
+    "Trinitatis": "trinitatis",
+    "Septuagesimä": "septuagesimae",
+    "Sexagesimä": "sexagesimae",
+    "Estomihi": "estomihi",
+    "Invokavit": "invokavit",
+    "Invocavit": "invokavit",
+    "Reminiszere": "reminiszere",
+    "Okuli": "okuli",
+    "Lätare": "laetare",
+    "Judika": "judika",
+    "Quasimodogeniti": "quasimodogeniti",
+    "Miserikordias Domini": "miserikordias-domini",
+    "Misericordias Domini": "miserikordias-domini",
+    "Jubilate": "jubilate",
+    "Kantate": "kantate",
+    "Rogate": "rogate",
+    "Exaudi": "exaudi",
 }
-"""
+
+
+def slugify(name: str) -> str | None:
+    n = name.strip()
+    if re.search(r"Israel", n, re.I):          # 10. So. n. Trin. = Israelsonntag "Kirche und Israel"
+        return "kirche-und-israel"
+    n = re.split(r":", n)[0].strip()
+    if n in ALIAS:
+        return ALIAS[n]
+    patterns = [
+        (r"(\d+)\.\s*(?:Sonntag|So\.?)\s*(?:nach|n\.?)\s*Trinitatis", "{}-sonntag-nach-trinitatis"),
+        (r"(\d+)\.\s*Advent", "{}-advent"),
+        (r"(\d+)\.\s*(?:Sonntag|So\.?)\s*(?:nach|n\.?)\s*Epiphanias", "{}-sonntag-nach-epiphanias"),
+        (r"(\d+)\.\s*(?:Sonntag|So\.?)\s*(?:nach|n\.?)\s*(?:dem\s*)?Christfest", "{}-sonntag-nach-christfest"),
+        (r"(\d+)\.\s*(?:Sonntag|So\.?)\s*vor der Passionszeit", "{}-sonntag-vor-der-passionszeit"),
+    ]
+    for pat, tmpl in patterns:
+        m = re.match(pat, n, re.I)
+        if m:
+            return tmpl.format(m.group(1))
+    if re.match(r"Letzter\s*(?:Sonntag|So\.?)\s*(?:nach|n\.?)\s*Epiphanias", n, re.I):
+        return "letzter-sonntag-nach-epiphanias"
+    return None
 
 
 def de_long(d: date) -> str:
     return f"{d.day}. {MON[d.month - 1]} {d.year}"
 
 
-def tage_zwischen(von: date, bis: date):
-    d = von
-    while d <= bis:
-        yield d
-        d += timedelta(days=1)
+# --------------------------------------------------------------------------- #
+#  Übersicht (Datum -> Name)
+# --------------------------------------------------------------------------- #
+def overview_rows() -> dict[str, str]:
+    """ISO-Datum -> Sonntags-/Feiertagsname aus der freien Predigttexte-Übersicht."""
+    seen: dict[str, str] = {}
+    for tab in ("upcoming", "archive"):
+        html = fetch(OVERVIEW_URL.format(tab=tab))
+        if not html:
+            continue
+        txt = strip_tags(html)
+        for m in re.finditer(
+                r"(\d{1,2})\.\s+([A-Za-zäöüÄÖÜ]+)\s+(\d{4}):\s*([^|]+?)\s*\|\s*"
+                r"\d{1,2}\.\d{1,2}\.\d{4}", txt):
+            mon = m.group(2)
+            if mon not in MON_NR:
+                continue
+            iso = date(int(m.group(3)), MON_NR[mon], int(m.group(1))).isoformat()
+            seen[iso] = m.group(4).strip()
+    return seen
 
 
+# --------------------------------------------------------------------------- #
+#  Bestand laden / speichern
+# --------------------------------------------------------------------------- #
 def lade_bestand(pfad: str) -> dict:
     if os.path.exists(pfad):
         try:
@@ -146,137 +240,32 @@ def speichere(pfad: str, daten: dict) -> None:
     os.replace(tmp, pfad)
 
 
-async def hole_seite(context, url: str, js: str):
-    """Lädt eine Seite und liest sie aus. None, wenn es keinen Eintrag gibt."""
-    page = await context.new_page()
-    try:
-        await page.goto(url, wait_until="domcontentloaded", timeout=20000)
-        try:
-            await page.wait_for_selector("span.verse", timeout=PROBE_TIMEOUT_MS)
-        except Exception:
-            return None  # kein Leseplan-Eintrag für dieses Datum
-        await page.wait_for_timeout(500)
-        return await page.evaluate(js)
-    except Exception as e:  # noqa: BLE001
-        print(f"    Fehler ({url}): {e}")
-        return None
-    finally:
-        await page.close()
+def tage_zwischen(von: date, bis: date):
+    d = von
+    while d <= bis:
+        yield d
+        d += timedelta(days=1)
 
 
-async def verarbeite(context, items, url_von, js, semaphore):
-    async def eins(item):
-        async with semaphore:
-            iso = item.isoformat()
-            res = await hole_seite(context, url_von(iso), js)
-            return item, res
-    return await asyncio.gather(*(eins(i) for i in items))
+# --------------------------------------------------------------------------- #
+#  Bibeltext holen (mit Kapitel-Cache)
+# --------------------------------------------------------------------------- #
+class Reader:
+    def __init__(self):
+        self._cache: dict[str, dict[int, str]] = {}
+
+    def verse(self, book: str, chap: int, nummern: list[int]) -> list[list]:
+        key = f"{book}.{chap}"
+        if key not in self._cache:
+            html = fetch(READER_URL.format(book=book, chap=chap))
+            self._cache[key] = chapter_verses(html, book, chap) if html else {}
+        kap = self._cache[key]
+        return [[n, kap[n]] for n in nummern if n in kap and kap[n]]
 
 
-async def main_async(args) -> int:
-    heute = date.today()
-    von = datetime.strptime(args.von, "%Y-%m-%d").date()
-    bis = datetime.strptime(args.bis, "%Y-%m-%d").date()
-    if bis < von:
-        print("Fehler: --bis liegt vor --von")
-        return 1
-
-    daten = lade_bestand(args.out)
-
-    offene_tage = [d for d in tage_zwischen(von, bis)
-                   if d.isoformat() not in daten["tage"]]
-    sonntage = sorted({(d - timedelta(days=(d.weekday() + 1) % 7))
-                       for d in tage_zwischen(von, bis)})
-    offene_sonntage = [d for d in sonntage if d.isoformat() not in daten["sonntage"]]
-
-    print(f"Zeitraum {von} bis {bis} (Ende wird automatisch erkannt)")
-    print(f"  Tageslesen zu prüfen : {len(offene_tage)}")
-    print(f"  Sonntage zu prüfen   : {len(offene_sonntage)}")
-    if not offene_tage and not offene_sonntage:
-        print("Nichts zu tun – alles bereits vorhanden.")
-        return 0
-
-    from playwright.async_api import async_playwright
-
-    begonnen = time.time()
-    semaphore = asyncio.Semaphore(CONCURRENCY)
-
-    async with async_playwright() as pw:
-        browser = await pw.chromium.launch()
-        context = await browser.new_context(locale="de-DE")
-
-        # --- Sonntage zuerst (wenige, wichtig) ---
-        leere_abschnitte = 0
-        verarbeitet = 0
-        for start in range(0, len(offene_sonntage), CHUNK):
-            chunk = offene_sonntage[start:start + CHUNK]
-            ergebnisse = await verarbeite(
-                context, chunk, lambda i: PREDIGT_URL.format(d=i), _JS_SONNTAG, semaphore)
-            treffer = 0
-            for d, res in ergebnisse:
-                verarbeitet += 1
-                if not res or not res.get("name") or not res.get("predigtVerse"):
-                    continue
-                daten["sonntage"][d.isoformat()] = {
-                    "name": res["name"],
-                    "datum": res.get("datum") or de_long(d),
-                    "spruch": {"text": res.get("spruchText", ""),
-                               "cite": res.get("spruchCite", "")},
-                    "predigt": {"ref": res.get("predigtRef", ""),
-                                "verse": [[int(n), t] for n, t in res.get("predigtVerse", []) if t]},
-                    "psalm": {"ref": res.get("psalmRef", ""),
-                              "verse": [[int(n), t] for n, t in res.get("psalmVerse", []) if t]},
-                }
-                treffer += 1
-            print(f"  Sonntage [{verarbeitet}/{len(offene_sonntage)}] "
-                  f"{treffer}/{len(chunk)} Treffer in diesem Abschnitt")
-            speichere(args.out, daten)
-            leere_abschnitte = 0 if treffer else leere_abschnitte + 1
-            if leere_abschnitte >= LEER_ABSCHNITTE_STOPP:
-                print("  Ende des veröffentlichten Sonntagsplans erreicht.")
-                break
-
-        # --- Tageslesen ---
-        leere_abschnitte = 0
-        verarbeitet = 0
-        for start in range(0, len(offene_tage), CHUNK):
-            chunk = offene_tage[start:start + CHUNK]
-            ergebnisse = await verarbeite(
-                context, chunk, lambda i: OEAB_URL.format(d=i), _JS_TAGESLESE, semaphore)
-            treffer = 0
-            for d, res in ergebnisse:
-                verarbeitet += 1
-                if not res or not res.get("ref") or not res.get("verse"):
-                    continue
-                daten["tage"][d.isoformat()] = {
-                    "ref": res["ref"],
-                    "verse": [[int(n), t] for n, t in res["verse"] if t],
-                }
-                treffer += 1
-            speichere(args.out, daten)
-            verstrichen = time.time() - begonnen
-            print(f"  Tageslesen [{verarbeitet}/{len(offene_tage)}] "
-                  f"{treffer}/{len(chunk)} Treffer ({verstrichen/60:.1f} min)")
-            leere_abschnitte = 0 if treffer else leere_abschnitte + 1
-            if leere_abschnitte >= LEER_ABSCHNITTE_STOPP:
-                print("  Ende des veröffentlichten Tagesplans erreicht.")
-                break
-
-        await context.close()
-        await browser.close()
-
-    speichere(args.out, daten)
-
-    groesse = os.path.getsize(args.out) / 1024
-    letzter_tag = max(daten["tage"]) if daten["tage"] else "–"
-    print()
-    print(f"Fertig in {(time.time()-begonnen)/60:.1f} Minuten.")
-    print(f"  Tageslesen : {len(daten['tage'])}  (bis {letzter_tag})")
-    print(f"  Sonntage   : {len(daten['sonntage'])}")
-    print(f"  Datei      : {args.out} ({groesse:.0f} KB)")
-    return 0
-
-
+# --------------------------------------------------------------------------- #
+#  Hauptlauf
+# --------------------------------------------------------------------------- #
 def main() -> int:
     heute = date.today()
     p = argparse.ArgumentParser()
@@ -284,7 +273,136 @@ def main() -> int:
     p.add_argument("--bis", default=(heute + timedelta(days=1100)).isoformat())
     p.add_argument("--out", default=os.path.abspath(OUT_PATH))
     args = p.parse_args()
-    return asyncio.run(main_async(args))
+
+    von = datetime.strptime(args.von, "%Y-%m-%d").date()
+    bis = datetime.strptime(args.bis, "%Y-%m-%d").date()
+    if bis < von:
+        print("Fehler: --bis liegt vor --von")
+        return 1
+
+    with open(PERIKOPEN_PATH, "r", encoding="utf-8") as f:
+        perikopen = json.load(f)
+
+    daten = lade_bestand(args.out)
+    reader = Reader()
+    begonnen = time.time()
+
+    offene_tage = [d for d in tage_zwischen(von, bis) if d.isoformat() not in daten["tage"]]
+    sonntage = sorted({d - timedelta(days=(d.weekday() + 1) % 7) for d in tage_zwischen(von, bis)})
+    offene_sonntage = [d for d in sonntage if d.isoformat() not in daten["sonntage"]]
+
+    print(f"Zeitraum {von} bis {bis}")
+    print(f"  Tageslesen zu prüfen : {len(offene_tage)}")
+    print(f"  Sonntage zu prüfen   : {len(offene_sonntage)}")
+
+    fehlende_tabelle: list[str] = []
+
+    # ----- Sonntage -------------------------------------------------------- #
+    if offene_sonntage:
+        plan = overview_rows()
+        max_bekannt = max(plan) if plan else None
+        treffer = 0
+        for d in offene_sonntage:
+            iso = d.isoformat()
+            if max_bekannt and iso > max_bekannt:
+                print(f"  Ende des veröffentlichten Sonntagsplans erreicht (ab {iso}).")
+                break
+            name = plan.get(iso)
+            if not name:
+                # Einzellücke (z. B. die laufende Woche fehlt in der Übersicht)
+                print(f"  Hinweis: {iso} fehlt in der Übersicht – übersprungen (später erneut versuchen).")
+                continue
+            slug = slugify(name)
+            eintrag = perikopen.get(slug) if slug else None
+            if not eintrag:
+                fehlende_tabelle.append(f"{iso}  {name!r}  (Slug {slug})")
+                continue
+            reihe = reihe_fuer(d)
+            pred = (eintrag.get("predigt") or {}).get(reihe)
+            psal = eintrag.get("psalm")
+            if not pred or not pred.get("verses"):
+                fehlende_tabelle.append(f"{iso}  {name!r}  (Predigttext Reihe {reihe} fehlt in der Tabelle)")
+                continue
+            pv = reader.verse(pred["book"], pred["chapter"], pred["verses"])
+            sv = reader.verse(psal["book"], psal["chapter"], psal["verses"]) if psal and psal.get("verses") else []
+            spruch = eintrag.get("spruch") or {}
+            daten["sonntage"][iso] = {
+                "name": name,
+                "datum": de_long(d),
+                "spruch": {"text": spruch.get("text", ""), "cite": spruch.get("cite", "")},
+                "predigt": {"ref": pred.get("ref", ""), "verse": pv},
+                "psalm": {"ref": (psal or {}).get("ref", ""), "verse": sv},
+            }
+            treffer += 1
+            print(f"  Sonntag {iso} [{reihe}] {name}: Predigt {pred.get('ref')} ({len(pv)} V.), "
+                  f"Psalm {(psal or {}).get('ref')} ({len(sv)} V.)")
+            speichere(args.out, daten)
+        print(f"  Sonntage neu: {treffer}")
+
+    # ----- Tageslesen (ökumenische Bibellese) ------------------------------ #
+    leere = 0
+    verarbeitet = 0
+    for start in range(0, len(offene_tage), CHUNK):
+        chunk = offene_tage[start:start + CHUNK]
+        treffer = 0
+        for d in chunk:
+            verarbeitet += 1
+            html = fetch(OEAB_URL.format(d=d.isoformat()))
+            if not html:
+                continue
+            refs = [strip_tags(x) for x in re.findall(
+                r'class="[^"]*text-grayLight[^"]*"[^>]*>(.*?)</span>', html, re.S)]
+            ref = next((r for r in refs if re.search(r"[A-Za-zÄÖÜäöü].*\d+,\d", r)), "")
+            verse_map: dict[int, str] = {}
+            for m in re.finditer(r'<span\b[^>]*\bclass="([^"]*\bverse\b[^"]*)"[^>]*>', html):
+                cm = re.search(r"LU17\.([A-Z0-9]+)\.(\d+)\.(\d+)", m.group(1))
+                if not cm:
+                    continue
+                n = int(cm.group(3))
+                s2 = m.end()
+                depth, end = 1, s2
+                for tm in re.finditer(r"<(/?)span\b[^>]*>", html[s2:]):
+                    depth += -1 if tm.group(1) else 1
+                    if depth == 0:
+                        end = s2 + tm.start()
+                        break
+                inner = strip_tags(html[s2:end])
+                if inner:
+                    verse_map[n] = (verse_map[n] + " " + inner).strip() if n in verse_map else inner
+            if not ref or not verse_map:
+                continue
+            daten["tage"][d.isoformat()] = {
+                "ref": ref,
+                "verse": [[n, verse_map[n]] for n in sorted(verse_map)],
+            }
+            treffer += 1
+        speichere(args.out, daten)
+        verstrichen = (time.time() - begonnen) / 60
+        print(f"  Tageslesen [{verarbeitet}/{len(offene_tage)}] "
+              f"{treffer}/{len(chunk)} Treffer ({verstrichen:.1f} min)")
+        leere = 0 if treffer else leere + 1
+        if leere >= LEER_ABSCHNITTE_STOPP:
+            print("  Ende des veröffentlichten Tagesplans erreicht.")
+            break
+
+    speichere(args.out, daten)
+
+    groesse = os.path.getsize(args.out) / 1024
+    letzter_tag = max(daten["tage"]) if daten["tage"] else "–"
+    print()
+    print(f"Fertig in {(time.time() - begonnen) / 60:.1f} Minuten.")
+    print(f"  Tageslesen : {len(daten['tage'])}  (bis {letzter_tag})")
+    print(f"  Sonntage   : {len(daten['sonntage'])}")
+    print(f"  Datei      : {args.out} ({groesse:.0f} KB)")
+
+    if fehlende_tabelle:
+        print()
+        print("ACHTUNG – für folgende Sonntage fehlt eine Zeile in perikopen.json:")
+        for z in fehlende_tabelle:
+            print("   " + z)
+        print("Bitte perikopen.json ergänzen (scripts/build_perikopen.py neu erzeugen) "
+              "und das Skript erneut laufen lassen.")
+    return 0
 
 
 if __name__ == "__main__":

@@ -1,0 +1,6326 @@
+{
+ "1-advent": {
+  "predigt": {
+   "I": {
+    "book": "MAT",
+    "chapter": 21,
+    "ref": "Mt 21,1-11",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "II": {
+    "book": "ROM",
+    "chapter": 13,
+    "ref": "Röm 13,8-12",
+    "verses": [
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "III": {
+    "book": "ZEC",
+    "chapter": 9,
+    "ref": "Sach 9,9-10",
+    "verses": [
+     9,
+     10
+    ]
+   },
+   "IV": {
+    "book": "JER",
+    "chapter": 23,
+    "ref": "Jer 23,5-8",
+    "verses": [
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "V": {
+    "book": "REV",
+    "chapter": 3,
+    "ref": "Offb 3,14-22",
+    "verses": [
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22
+    ]
+   },
+   "VI": {
+    "book": "PSA",
+    "chapter": null,
+    "ref": "Ps 24",
+    "verses": null
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 24,
+   "ref": "Ps 24,1-10",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "spruch": {
+   "cite": "Sach 9,9b",
+   "text": "Siehe, dein König kommt zu dir, ein Gerechter und ein Helfer."
+  }
+ },
+ "1-sonntag-nach-christfest": {
+  "predigt": {
+   "I": {
+    "book": "MAT",
+    "chapter": 2,
+    "ref": "Mt 2,13-18(19-23)",
+    "verses": [
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ]
+   },
+   "II": {
+    "book": "JOB",
+    "chapter": 42,
+    "ref": "Hiob 42,1-6",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   },
+   "III": {
+    "book": "LUK",
+    "chapter": 2,
+    "ref": "Lk 2,(22-24)25-38(39-40)",
+    "verses": [
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37,
+     38
+    ]
+   },
+   "IV": {
+    "book": "1JN",
+    "chapter": 1,
+    "ref": "1. Joh 1,1-4",
+    "verses": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "V": {
+    "book": "ISA",
+    "chapter": 49,
+    "ref": "Jes 49,13-16",
+    "verses": [
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "VI": {
+    "book": "JHN",
+    "chapter": 12,
+    "ref": "Joh 12,44-50",
+    "verses": [
+     44,
+     45,
+     46,
+     47,
+     48,
+     49,
+     50
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 71,
+   "ref": "Ps 71,1-3.12.14-18",
+   "verses": [
+    1,
+    2,
+    3,
+    12,
+    14,
+    15,
+    16,
+    17,
+    18
+   ]
+  },
+  "spruch": {
+   "cite": "Joh 1,14b",
+   "text": "Wir sahen seine Herrlichkeit, eine Herrlichkeit als des eingeborenen Sohnes vom Vater, voller Gnade und Wahrheit."
+  }
+ },
+ "1-sonntag-nach-epiphanias": {
+  "predigt": {
+   "I": {
+    "book": "JOS",
+    "chapter": 3,
+    "ref": "Jos 3,5-11.17",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     17
+    ]
+   },
+   "II": {
+    "book": "MAT",
+    "chapter": 3,
+    "ref": "Mt 3,13-17",
+    "verses": [
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "III": {
+    "book": "ROM",
+    "chapter": 12,
+    "ref": "Röm 12,1-8",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "IV": {
+    "book": "ISA",
+    "chapter": 42,
+    "ref": "Jes 42,1-9",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "V": {
+    "book": "JHN",
+    "chapter": 1,
+    "ref": "Joh 1,29-34",
+    "verses": [
+     29,
+     30,
+     31,
+     32,
+     33,
+     34
+    ]
+   },
+   "VI": {
+    "book": "1CO",
+    "chapter": 1,
+    "ref": "1. Kor 1,26-31",
+    "verses": [
+     26,
+     27,
+     28,
+     29,
+     30,
+     31
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 89,
+   "ref": "Ps 89,2-5.27-30",
+   "verses": [
+    2,
+    3,
+    4,
+    5,
+    27,
+    28,
+    29,
+    30
+   ]
+  },
+  "spruch": {
+   "cite": "Röm 8,14",
+   "text": "Welche der Geist Gottes treibt, die sind Gottes Kinder."
+  }
+ },
+ "1-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 5,
+    "ref": "Joh 5,39-47",
+    "verses": [
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47
+    ]
+   },
+   "II": {
+    "book": "ACT",
+    "chapter": 4,
+    "ref": "Apg 4,32-37",
+    "verses": [
+     32,
+     33,
+     34,
+     35,
+     36,
+     37
+    ]
+   },
+   "III": {
+    "book": "JON",
+    "chapter": 1,
+    "ref": "Jona 1,1-2,2(3-10)11 [+]",
+    "verses": null
+   },
+   "IV": {
+    "book": "LUK",
+    "chapter": 16,
+    "ref": "Lk 16,19-31",
+    "verses": [
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31
+    ]
+   },
+   "V": {
+    "book": "1JN",
+    "chapter": 4,
+    "ref": "1. Joh 4,(13-16a)16b-21",
+    "verses": [
+     16,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   "VI": {
+    "book": "JER",
+    "chapter": 23,
+    "ref": "Jer 23,16-29",
+    "verses": [
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 34,
+   "ref": "Ps 34,2-11",
+   "verses": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  "spruch": {
+   "cite": "Lk 10,16a",
+   "text": "Wer euch hört, der hört mich; und wer euch verachtet, der verachtet mich."
+  }
+ },
+ "10-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "LUK",
+    "chapter": 19,
+    "ref": "Lk 19,41-48",
+    "verses": [
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47,
+     48
+    ]
+   },
+   "II": {
+    "book": "ROM",
+    "chapter": 9,
+    "ref": "Röm 9,1-5",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   "III": {
+    "book": "ISA",
+    "chapter": 27,
+    "ref": "Jes 27,2-9",
+    "verses": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "IV": {
+    "book": "LAM",
+    "chapter": 5,
+    "ref": "Klgl 5,1-22",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22
+    ]
+   },
+   "V": {
+    "book": "ROM",
+    "chapter": 11,
+    "ref": "Röm 11,17-24",
+    "verses": [
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24
+    ]
+   },
+   "VI": {
+    "book": "DEU",
+    "chapter": 30,
+    "ref": "5. Mose 30,1-6",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   }
+  },
+  "psalm": null,
+  "spruch": {
+   "cite": "Ps 33,12",
+   "text": "Wohl dem Volk, dessen Gott der HERR ist, dem Volk, das er zum Erbe erwählt hat!"
+  }
+ },
+ "11-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "JOB",
+    "chapter": null,
+    "ref": "Hiob 23",
+    "verses": null
+   },
+   "II": {
+    "book": "LUK",
+    "chapter": 18,
+    "ref": "Lk 18,9-14",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   "III": {
+    "book": "EPH",
+    "chapter": 2,
+    "ref": "Eph 2,4-10",
+    "verses": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "IV": {
+    "book": "2SA",
+    "chapter": 12,
+    "ref": "2. Sam 12,1-10.13-15a",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     13,
+     14,
+     15
+    ]
+   },
+   "V": {
+    "book": "LUK",
+    "chapter": 7,
+    "ref": "Lk 7,36-50",
+    "verses": [
+     36,
+     37,
+     38,
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47,
+     48,
+     49,
+     50
+    ]
+   },
+   "VI": {
+    "book": "GAL",
+    "chapter": 2,
+    "ref": "Gal 2,16-21",
+    "verses": [
+     16,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 145,
+   "ref": "Ps 145,1-2.14.17-21",
+   "verses": [
+    1,
+    2,
+    14,
+    17,
+    18,
+    19,
+    20,
+    21
+   ]
+  },
+  "spruch": {
+   "cite": "1. Petr 5,5b",
+   "text": "Gott widersteht den Hochmütigen, aber den Demütigen gibt er Gnade."
+  }
+ },
+ "12-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "ACT",
+    "chapter": 3,
+    "ref": "Apg 3,1-10",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "II": {
+    "book": "1CO",
+    "chapter": 3,
+    "ref": "1. Kor 3,9-17",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "III": {
+    "book": "MRK",
+    "chapter": 7,
+    "ref": "Mk 7,31-37",
+    "verses": [
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37
+    ]
+   },
+   "IV": {
+    "book": "ACT",
+    "chapter": 9,
+    "ref": "Apg 9,1-20",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20
+    ]
+   },
+   "V": {
+    "book": "ISA",
+    "chapter": 29,
+    "ref": "Jes 29,17-24",
+    "verses": [
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24
+    ]
+   },
+   "VI": {
+    "book": "LUK",
+    "chapter": 13,
+    "ref": "Lk 13,10-17",
+    "verses": [
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 147,
+   "ref": "Ps 147,1-6.11",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    11
+   ]
+  },
+  "spruch": {
+   "cite": "Jes 42,3a",
+   "text": "Das geknickte Rohr wird er nicht zerbrechen, und den glimmenden Docht wird er nicht auslöschen."
+  }
+ },
+ "13-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "MRK",
+    "chapter": 3,
+    "ref": "Mk 3,31-35",
+    "verses": [
+     31,
+     32,
+     33,
+     34,
+     35
+    ]
+   },
+   "II": {
+    "book": "ACT",
+    "chapter": 6,
+    "ref": "Apg 6,1-7",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "III": {
+    "book": "GEN",
+    "chapter": 4,
+    "ref": "1. Mose 4,1-16a",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "IV": {
+    "book": "LUK",
+    "chapter": 10,
+    "ref": "Lk 10,25-37",
+    "verses": [
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37
+    ]
+   },
+   "V": {
+    "book": "1JN",
+    "chapter": 4,
+    "ref": "1. Joh 4,7-12",
+    "verses": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "VI": {
+    "book": "LEV",
+    "chapter": 19,
+    "ref": "3. Mose 19,1-3.13-18.33-34",
+    "verses": [
+     1,
+     2,
+     3,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     33,
+     34
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 112,
+   "ref": "Ps 112,1-10",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "spruch": {
+   "cite": "Mt 25,40b",
+   "text": "Christus spricht: Was ihr getan habt einem von diesen meinen geringsten Brüdern, das habt ihr mir getan."
+  }
+ },
+ "14-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "GEN",
+    "chapter": 28,
+    "ref": "1. Mose 28,10-19a(19b-22)",
+    "verses": [
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19
+    ]
+   },
+   "II": {
+    "book": "LUK",
+    "chapter": 19,
+    "ref": "Lk 19,1-10",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "III": {
+    "book": "1TH",
+    "chapter": 5,
+    "ref": "1. Thess 5,14-24",
+    "verses": [
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24
+    ]
+   },
+   "IV": {
+    "book": "ISA",
+    "chapter": 12,
+    "ref": "Jes 12,1-6",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   },
+   "V": {
+    "book": "LUK",
+    "chapter": 17,
+    "ref": "Lk 17,11-19",
+    "verses": [
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19
+    ]
+   },
+   "VI": {
+    "book": "ROM",
+    "chapter": 8,
+    "ref": "Röm 8,14-17",
+    "verses": [
+     14,
+     15,
+     16,
+     17
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 146,
+   "ref": "Ps 146,1-10",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "spruch": {
+   "cite": "Ps 103,2",
+   "text": "Lobe den HERRN, meine Seele, und vergiss nicht, was er dir Gutes getan hat."
+  }
+ },
+ "15-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "1PE",
+    "chapter": 5,
+    "ref": "1. Petr 5,5b-11",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "II": {
+    "book": "GEN",
+    "chapter": 2,
+    "ref": "1. Mose 2,4b-9(10-14)15(18-25)",
+    "verses": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     15
+    ]
+   },
+   "III": {
+    "book": "LUK",
+    "chapter": 17,
+    "ref": "Lk 17,5-6",
+    "verses": [
+     5,
+     6
+    ]
+   },
+   "IV": {
+    "book": "GAL",
+    "chapter": 5,
+    "ref": "Gal 5,25-6,10",
+    "verses": null
+   },
+   "V": {
+    "book": "GEN",
+    "chapter": 15,
+    "ref": "1. Mose 15,1-6",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   },
+   "VI": {
+    "book": "MAT",
+    "chapter": 6,
+    "ref": "Mt 6,25-34",
+    "verses": [
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 127,
+   "ref": "Ps 127,1-2",
+   "verses": [
+    1,
+    2
+   ]
+  },
+  "spruch": {
+   "cite": "1. Petr 5,7",
+   "text": "Alle eure Sorge werft auf ihn; denn er sorgt für euch."
+  }
+ },
+ "16-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 11,
+    "ref": "Joh 11,1(2)3.17-27(28-38a)38b-45",
+    "verses": [
+     1,
+     3,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     38,
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45
+    ]
+   },
+   "II": {
+    "book": "2TI",
+    "chapter": 1,
+    "ref": "2. Tim 1,7-10",
+    "verses": [
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "III": {
+    "book": "LAM",
+    "chapter": 3,
+    "ref": "Klgl 3,22-26.31-32",
+    "verses": [
+     22,
+     23,
+     24,
+     25,
+     26,
+     31,
+     32
+    ]
+   },
+   "IV": {
+    "book": "LUK",
+    "chapter": 7,
+    "ref": "Lk 7,11-17",
+    "verses": [
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "V": {
+    "book": "HEB",
+    "chapter": 10,
+    "ref": "Hebr 10,35-36(37-38)39",
+    "verses": [
+     35,
+     36,
+     39
+    ]
+   },
+   "VI": {
+    "book": "PSA",
+    "chapter": 16,
+    "ref": "Ps 16,(1-4)5-11",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 68,
+   "ref": "Ps 68,4-7.20-21.35-36",
+   "verses": [
+    4,
+    5,
+    6,
+    7,
+    20,
+    21,
+    35,
+    36
+   ]
+  },
+  "spruch": {
+   "cite": "2. Tim 1,10b",
+   "text": "Christus Jesus hat dem Tode die Macht genommen und das Leben und ein unvergängliches Wesen ans Licht gebracht durch das Evangelium."
+  }
+ },
+ "17-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "JOS",
+    "chapter": 2,
+    "ref": "Jos 2,1-21",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   "II": {
+    "book": "MAT",
+    "chapter": 15,
+    "ref": "Mt 15,21-28",
+    "verses": [
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28
+    ]
+   },
+   "III": {
+    "book": "ROM",
+    "chapter": 10,
+    "ref": "Röm 10,9-17(18)",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "IV": {
+    "book": "ISA",
+    "chapter": 49,
+    "ref": "Jes 49,1-6",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   },
+   "V": {
+    "book": "MRK",
+    "chapter": 9,
+    "ref": "Mk 9,17-27",
+    "verses": [
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27
+    ]
+   },
+   "VI": {
+    "book": "GAL",
+    "chapter": 3,
+    "ref": "Gal 3,26-29",
+    "verses": [
+     26,
+     27,
+     28,
+     29
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 138,
+   "ref": "Ps 138,1-8",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "spruch": {
+   "cite": "1. Joh 5,4c",
+   "text": "Unser Glaube ist der Sieg, der die Welt überwunden hat."
+  }
+ },
+ "18-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "JAS",
+    "chapter": 2,
+    "ref": "Jak 2,14-26",
+    "verses": [
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26
+    ]
+   },
+   "II": {
+    "book": "DEU",
+    "chapter": 30,
+    "ref": "5. Mose 30,11-14",
+    "verses": [
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   "III": {
+    "book": "MRK",
+    "chapter": 10,
+    "ref": "Mk 10,17-27",
+    "verses": [
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27
+    ]
+   },
+   "IV": {
+    "book": "EPH",
+    "chapter": 5,
+    "ref": "Eph 5,15-20",
+    "verses": [
+     15,
+     16,
+     17,
+     18,
+     19,
+     20
+    ]
+   },
+   "V": {
+    "book": "EXO",
+    "chapter": 20,
+    "ref": "2. Mose 20,1-17",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "VI": {
+    "book": "1PE",
+    "chapter": 4,
+    "ref": "1. Petr 4,7-11",
+    "verses": [
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 1,
+   "ref": "Ps 1,1-6",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "spruch": {
+   "cite": "1. Joh 4,21",
+   "text": "Dies Gebot haben wir von ihm, dass, wer Gott liebt, dass der auch seinen Bruder liebe."
+  }
+ },
+ "19-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 5,
+    "ref": "Joh 5,1-16",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "II": {
+    "book": "EPH",
+    "chapter": 4,
+    "ref": "Eph 4,22-32",
+    "verses": [
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32
+    ]
+   },
+   "III": {
+    "book": "ISA",
+    "chapter": 38,
+    "ref": "Jes 38,9-20",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20
+    ]
+   },
+   "IV": {
+    "book": "MRK",
+    "chapter": 2,
+    "ref": "Mk 2,1-12",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "V": {
+    "book": "JAS",
+    "chapter": 5,
+    "ref": "Jak 5,13-16",
+    "verses": [
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "VI": {
+    "book": "EXO",
+    "chapter": 34,
+    "ref": "2. Mose 34,4-10",
+    "verses": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 32,
+   "ref": "Ps 32,1-7",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "spruch": {
+   "cite": "Jer 17,14",
+   "text": "Heile du mich, Herr, so werde ich heil; hilf du mir, so ist mir geholfen."
+  }
+ },
+ "2-advent": {
+  "predigt": {
+   "I": {
+    "book": "ISA",
+    "chapter": 35,
+    "ref": "Jes 35,3-10",
+    "verses": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "II": {
+    "book": "LUK",
+    "chapter": 21,
+    "ref": "Lk 21,25-33",
+    "verses": [
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33
+    ]
+   },
+   "III": {
+    "book": "JAS",
+    "chapter": 5,
+    "ref": "Jak 5,7-8(9-11)",
+    "verses": [
+     7,
+     8
+    ]
+   },
+   "IV": {
+    "book": "ISA",
+    "chapter": 63,
+    "ref": "Jes 63,15-64,3",
+    "verses": null
+   },
+   "V": {
+    "book": "SNG",
+    "chapter": 2,
+    "ref": "Hld 2,8-13",
+    "verses": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   },
+   "VI": {
+    "book": "REV",
+    "chapter": 3,
+    "ref": "Offb 3,7-13",
+    "verses": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 80,
+   "ref": "Ps 80,2.3b.5-6.15-16.19-20",
+   "verses": [
+    2,
+    3,
+    5,
+    6,
+    15,
+    16,
+    19,
+    20
+   ]
+  },
+  "spruch": {
+   "cite": "Lk 21,28b",
+   "text": "Seht auf und erhebt eure Häupter, weil sich eure Erlösung naht."
+  }
+ },
+ "2-sonntag-nach-christfest": {
+  "predigt": {
+   "I": {
+    "book": "1JN",
+    "chapter": 5,
+    "ref": "1. Joh 5,11-13",
+    "verses": [
+     11,
+     12,
+     13
+    ]
+   },
+   "II": {
+    "book": "ISA",
+    "chapter": 61,
+    "ref": "Jes 61,1-3(4.9)10-11",
+    "verses": [
+     1,
+     2,
+     3,
+     10,
+     11
+    ]
+   },
+   "III": {
+    "book": "LUK",
+    "chapter": 2,
+    "ref": "Lk 2,41-52",
+    "verses": [
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47,
+     48,
+     49,
+     50,
+     51,
+     52
+    ]
+   },
+   "IV": {
+    "book": "1JN",
+    "chapter": 5,
+    "ref": "1. Joh 5,11-13",
+    "verses": [
+     11,
+     12,
+     13
+    ]
+   },
+   "V": {
+    "book": "ISA",
+    "chapter": 61,
+    "ref": "Jes 61,1-3(4.9)10.11",
+    "verses": [
+     1,
+     2,
+     3,
+     10,
+     11
+    ]
+   },
+   "VI": {
+    "book": "LUK",
+    "chapter": 2,
+    "ref": "Lk 2,41-52",
+    "verses": [
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47,
+     48,
+     49,
+     50,
+     51,
+     52
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": null,
+   "ref": "Ps 100",
+   "verses": null
+  },
+  "spruch": {
+   "cite": "Joh 1,14b",
+   "text": "Wir sahen seine Herrlichkeit, eine Herrlichkeit als des eingeborenen Sohnes vom Vater, voller Gnade und Wahrheit."
+  }
+ },
+ "2-sonntag-nach-epiphanias": {
+  "predigt": {
+   "I": {
+    "book": "ROM",
+    "chapter": 12,
+    "ref": "Röm 12,9-16",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "II": {
+    "book": "JER",
+    "chapter": 14,
+    "ref": "Jer 14, 1(2)3-4(5-6)7-9",
+    "verses": [
+     1,
+     3,
+     4,
+     7,
+     8,
+     9
+    ]
+   },
+   "III": {
+    "book": "JHN",
+    "chapter": 2,
+    "ref": "Joh 2,1-11",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "IV": {
+    "book": "1CO",
+    "chapter": 2,
+    "ref": "1. Kor 2,1-10",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "V": {
+    "book": "EXO",
+    "chapter": 33,
+    "ref": "2. Mose 33,18-23",
+    "verses": [
+     18,
+     19,
+     20,
+     21,
+     22,
+     23
+    ]
+   },
+   "VI": {
+    "book": "HEB",
+    "chapter": 12,
+    "ref": "Hebr 12,12-18(19-21)22-25a",
+    "verses": [
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     22,
+     23,
+     24,
+     25
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 105,
+   "ref": "Ps 105,1-8",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "spruch": {
+   "cite": "Joh 1,16",
+   "text": "Von seiner Fülle haben wir alle genommen Gnade um Gnade."
+  }
+ },
+ "2-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "ISA",
+    "chapter": 55,
+    "ref": "Jes 55,1-5",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   "II": {
+    "book": "MAT",
+    "chapter": 11,
+    "ref": "Mt 11,25-30",
+    "verses": [
+     25,
+     26,
+     27,
+     28,
+     29,
+     30
+    ]
+   },
+   "III": {
+    "book": "1CO",
+    "chapter": 14,
+    "ref": "1. Kor 14,1-12(23-25)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "IV": {
+    "book": "JON",
+    "chapter": 3,
+    "ref": "Jona 3,1-10 [+]",
+    "verses": null
+   },
+   "V": {
+    "book": "LUK",
+    "chapter": 14,
+    "ref": "Lk 14,(15)16-24",
+    "verses": [
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24
+    ]
+   },
+   "VI": {
+    "book": "EPH",
+    "chapter": 2,
+    "ref": "Eph 2,(11-16)17-22",
+    "verses": [
+     17,
+     18,
+     19,
+     20,
+     21,
+     22
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 36,
+   "ref": "Ps 36,6-10",
+   "verses": [
+    6,
+    7,
+    8,
+    9,
+    10
+   ]
+  },
+  "spruch": {
+   "cite": "Mt 11,28",
+   "text": "Kommt her zu mir, alle, die ihr mühselig und beladen seid; ich will euch erquicken."
+  }
+ },
+ "20-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "GEN",
+    "chapter": null,
+    "ref": "1. Mose 8,18-22; 9,12-17",
+    "verses": null
+   },
+   "II": {
+    "book": "MRK",
+    "chapter": 2,
+    "ref": "Mk 2,23-28",
+    "verses": [
+     23,
+     24,
+     25,
+     26,
+     27,
+     28
+    ]
+   },
+   "III": {
+    "book": "ECC",
+    "chapter": 12,
+    "ref": "Pred 12,1-7",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "IV": {
+    "book": "SNG",
+    "chapter": 8,
+    "ref": "Hld 8,6b-7",
+    "verses": [
+     6,
+     7
+    ]
+   },
+   "V": {
+    "book": "MRK",
+    "chapter": 10,
+    "ref": "Mk 10,2-9(10-12)13-16",
+    "verses": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "VI": {
+    "book": "2CO",
+    "chapter": 3,
+    "ref": "2. Kor 3,3-6(7-9)",
+    "verses": [
+     3,
+     4,
+     5,
+     6
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 119,
+   "ref": "Ps 119,1-8.17-18",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    17,
+    18
+   ]
+  },
+  "spruch": {
+   "cite": "Micha 6,8",
+   "text": "Es ist dir gesagt, Mensch, was gut ist und was der HERR von dir fordert: nichts als Gottes Wort halten und Liebe üben und demütig sein vor deinem Gott."
+  }
+ },
+ "21-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "EPH",
+    "chapter": 6,
+    "ref": "Eph 6,10-17",
+    "verses": [
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "II": {
+    "book": "JER",
+    "chapter": 29,
+    "ref": "Jer 29,1.4-7(8-9)10-14",
+    "verses": [
+     1,
+     4,
+     5,
+     6,
+     7,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   "III": {
+    "book": "MAT",
+    "chapter": 10,
+    "ref": "Mt 10,34-39",
+    "verses": [
+     34,
+     35,
+     36,
+     37,
+     38,
+     39
+    ]
+   },
+   "IV": {
+    "book": "JHN",
+    "chapter": 15,
+    "ref": "Joh 15,9-12(13-17)",
+    "verses": [
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "V": {
+    "book": "GEN",
+    "chapter": 13,
+    "ref": "1. Mose 13,1-12(13-18)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "VI": {
+    "book": "MAT",
+    "chapter": 5,
+    "ref": "Mt 5,38-48",
+    "verses": [
+     38,
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47,
+     48
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 19,
+   "ref": "Ps 19,8-14",
+   "verses": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  "spruch": {
+   "cite": "Röm 12,21",
+   "text": "Lass dich nicht vom Bösen überwinden, sondern überwinde das Böse mit Gutem."
+  }
+ },
+ "22-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "MAT",
+    "chapter": 18,
+    "ref": "Mt 18,21-35",
+    "verses": [
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35
+    ]
+   },
+   "II": {
+    "book": "ROM",
+    "chapter": 7,
+    "ref": "Röm 7,14-25a",
+    "verses": [
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25
+    ]
+   },
+   "III": {
+    "book": "ISA",
+    "chapter": 44,
+    "ref": "Jes 44,21-23",
+    "verses": [
+     21,
+     22,
+     23
+    ]
+   },
+   "IV": {
+    "book": "MAT",
+    "chapter": 18,
+    "ref": "Mt 18,15-20",
+    "verses": [
+     15,
+     16,
+     17,
+     18,
+     19,
+     20
+    ]
+   },
+   "V": {
+    "book": "1JN",
+    "chapter": 2,
+    "ref": "1. Joh 2,12-14",
+    "verses": [
+     12,
+     13,
+     14
+    ]
+   },
+   "VI": {
+    "book": "MIC",
+    "chapter": 6,
+    "ref": "Mi 6,1-8",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 143,
+   "ref": "Ps 143,1-9",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "spruch": {
+   "cite": "Ps 130,4",
+   "text": "Bei dir ist die Vergebung, dass man dich fürchte."
+  }
+ },
+ "23-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "AMO",
+    "chapter": 7,
+    "ref": "Am 7,10-17",
+    "verses": [
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "II": {
+    "book": "MAT",
+    "chapter": 22,
+    "ref": "Mt 22,15-22",
+    "verses": [
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22
+    ]
+   },
+   "III": {
+    "book": "PHP",
+    "chapter": 3,
+    "ref": "Phil 3,17-21",
+    "verses": [
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   "IV": {
+    "book": "EXO",
+    "chapter": 1,
+    "ref": "2. Mose 1,8-20",
+    "verses": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20
+    ]
+   },
+   "V": {
+    "book": "MAT",
+    "chapter": 5,
+    "ref": "Mt 5,33-37",
+    "verses": [
+     33,
+     34,
+     35,
+     36,
+     37
+    ]
+   },
+   "VI": {
+    "book": "ROM",
+    "chapter": 13,
+    "ref": "Röm 13,1-7",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 33,
+   "ref": "Ps 33,13-22",
+   "verses": [
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
+   ]
+  },
+  "spruch": {
+   "cite": "1. Tim 6,15b.16a.c",
+   "text": "Dem König aller Könige und HERRN aller Herren, der allein Unsterblichkeit hat, dem sei Ehre und ewige Macht!"
+  }
+ },
+ "3-advent": {
+  "predigt": {
+   "I": {
+    "book": "ROM",
+    "chapter": 15,
+    "ref": "Röm 15,4-13",
+    "verses": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   },
+   "II": {
+    "book": "LUK",
+    "chapter": 3,
+    "ref": "Lk 3,(1-2)3-14(15-17)18(19-20)",
+    "verses": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     18
+    ]
+   },
+   "III": {
+    "book": "LUK",
+    "chapter": 1,
+    "ref": "Lk 1,67-79",
+    "verses": [
+     67,
+     68,
+     69,
+     70,
+     71,
+     72,
+     73,
+     74,
+     75,
+     76,
+     77,
+     78,
+     79
+    ]
+   },
+   "IV": {
+    "book": "1CO",
+    "chapter": 4,
+    "ref": "1. Kor 4,1-5",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   "V": {
+    "book": "ISA",
+    "chapter": 40,
+    "ref": "Jes 40,1-11",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "VI": {
+    "book": "MAT",
+    "chapter": 11,
+    "ref": "Mt 11,2-10",
+    "verses": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 85,
+   "ref": "Ps 85,2-8",
+   "verses": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  "spruch": {
+   "cite": "Jes 40,3.10",
+   "text": "Bereitet dem HERRN den Weg; denn siehe, der HERR kommt gewaltig."
+  }
+ },
+ "3-sonntag-nach-epiphanias": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 4,
+    "ref": "Joh 4,5-14",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   "II": {
+    "book": "ACT",
+    "chapter": 10,
+    "ref": "Apg 10,21-35",
+    "verses": [
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35
+    ]
+   },
+   "III": {
+    "book": "RUT",
+    "chapter": 1,
+    "ref": "Rut 1,1-19a",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19
+    ]
+   },
+   "IV": {
+    "book": "MAT",
+    "chapter": 8,
+    "ref": "Mt 8,5-13",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   },
+   "V": {
+    "book": "ROM",
+    "chapter": 1,
+    "ref": "Röm 1,13-17",
+    "verses": [
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "VI": {
+    "book": "2KI",
+    "chapter": 5,
+    "ref": "2. Kön 5,(1-8)9-15(16-18)19a",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     19
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 86,
+   "ref": "Ps 86,1-2.5-11",
+   "verses": [
+    1,
+    2,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+   ]
+  },
+  "spruch": {
+   "cite": "Lk 13,29",
+   "text": "Es werden kommen von Osten und von Westen, von Norden und von Süden, die zu Tisch sitzen werden im Reich Gottes."
+  }
+ },
+ "3-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "1TI",
+    "chapter": 1,
+    "ref": "1. Tim 1,12-17",
+    "verses": [
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "II": {
+    "book": "MIC",
+    "chapter": 7,
+    "ref": "Mi 7,18-20",
+    "verses": [
+     18,
+     19,
+     20
+    ]
+   },
+   "III": {
+    "book": "LUK",
+    "chapter": 15,
+    "ref": "Lk 15,1-10",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "IV": {
+    "book": "EZK",
+    "chapter": 18,
+    "ref": "Hes 18,1-4.21-24.30-32",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     21,
+     22,
+     23,
+     24,
+     30,
+     31,
+     32
+    ]
+   },
+   "V": {
+    "book": "JON",
+    "chapter": 3,
+    "ref": "Jona (3,10)4,1-11 [+]",
+    "verses": null
+   },
+   "VI": {
+    "book": "LUK",
+    "chapter": 15,
+    "ref": "Lk 15,1-3.11b-32",
+    "verses": [
+     1,
+     2,
+     3,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 103,
+   "ref": "Ps 103,1-13",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+   ]
+  },
+  "spruch": {
+   "cite": "Lk 19,10",
+   "text": "Der Menschensohn ist gekommen, zu suchen und selig zu machen, was verloren ist."
+  }
+ },
+ "4-advent": {
+  "predigt": {
+   "I": {
+    "book": "LUK",
+    "chapter": 1,
+    "ref": "Lk 1,(26-38)39-56",
+    "verses": [
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47,
+     48,
+     49,
+     50,
+     51,
+     52,
+     53,
+     54,
+     55,
+     56
+    ]
+   },
+   "II": {
+    "book": "2CO",
+    "chapter": 1,
+    "ref": "2. Kor 1,18-22",
+    "verses": [
+     18,
+     19,
+     20,
+     21,
+     22
+    ]
+   },
+   "III": {
+    "book": "GEN",
+    "chapter": 18,
+    "ref": "1. Mose 18,1-2.9-15",
+    "verses": [
+     1,
+     2,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   "IV": {
+    "book": "LUK",
+    "chapter": 1,
+    "ref": "Lk 1,26-38(39-56)",
+    "verses": [
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37,
+     38
+    ]
+   },
+   "V": {
+    "book": "PHP",
+    "chapter": 4,
+    "ref": "Phil 4,4-7",
+    "verses": [
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "VI": {
+    "book": "ISA",
+    "chapter": 62,
+    "ref": "Jes 62,1-5",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 102,
+   "ref": "Ps 102,13-14.16-18.20-23",
+   "verses": [
+    13,
+    14,
+    16,
+    17,
+    18,
+    20,
+    21,
+    22,
+    23
+   ]
+  },
+  "spruch": {
+   "cite": "Phil 4,4.5b",
+   "text": "Freuet euch in dem Herrn allewege, und abermals sage ich: Freuet euch! Der Herr ist nahe!"
+  }
+ },
+ "4-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "LUK",
+    "chapter": 6,
+    "ref": "Lk 6,36-42",
+    "verses": [
+     36,
+     37,
+     38,
+     39,
+     40,
+     41,
+     42
+    ]
+   },
+   "II": {
+    "book": "ROM",
+    "chapter": 12,
+    "ref": "Röm 12,17-21",
+    "verses": [
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   "III": {
+    "book": "GEN",
+    "chapter": 50,
+    "ref": "1. Mose 50,15-21",
+    "verses": [
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   "IV": {
+    "book": "JHN",
+    "chapter": 8,
+    "ref": "Joh 8,3-11",
+    "verses": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "V": {
+    "book": "1PE",
+    "chapter": 3,
+    "ref": "1. Petr 3,8-17",
+    "verses": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "VI": {
+    "book": "1SA",
+    "chapter": 24,
+    "ref": "1. Sam 24,1-20",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 42,
+   "ref": "Ps 42,2-6",
+   "verses": [
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "spruch": {
+   "cite": "Gal 6,2",
+   "text": "Einer trage des andern Last, so werdet ihr das Gesetz Christi erfüllen."
+  }
+ },
+ "4-sonntag-vor-der-passionszeit": {
+  "predigt": {
+   "I": {
+    "book": "MRK",
+    "chapter": 4,
+    "ref": "Mk 4,35-41",
+    "verses": [
+     35,
+     36,
+     37,
+     38,
+     39,
+     40,
+     41
+    ]
+   },
+   "II": {
+    "book": "2CO",
+    "chapter": 1,
+    "ref": "2. Kor 1,8-11",
+    "verses": [
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "III": {
+    "book": "ISA",
+    "chapter": 51,
+    "ref": "Jes 51,9-16",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "IV": {
+    "book": "MAT",
+    "chapter": 14,
+    "ref": "Mt 14,22-33",
+    "verses": [
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33
+    ]
+   },
+   "V": {
+    "book": "MRK",
+    "chapter": 5,
+    "ref": "Mk 5,24b-34",
+    "verses": [
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34
+    ]
+   },
+   "VI": {
+    "book": "GEN",
+    "chapter": 8,
+    "ref": "1. Mose 8,1-12",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 107,
+   "ref": "Ps 107,1-2.23-32",
+   "verses": [
+    1,
+    2,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32
+   ]
+  },
+  "spruch": {
+   "cite": "Ps 66,5",
+   "text": "Kommt her und sehet an die Werke Gottes, der so wunderbar ist in seinem Tun an den Menschenkindern."
+  }
+ },
+ "5-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "MAT",
+    "chapter": 9,
+    "ref": "Mt 9,35-10,1(2-4)5-10",
+    "verses": null
+   },
+   "II": {
+    "book": "LUK",
+    "chapter": 5,
+    "ref": "Lk 5,1-11",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "III": {
+    "book": "1CO",
+    "chapter": 1,
+    "ref": "1. Kor 1,18-25",
+    "verses": [
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25
+    ]
+   },
+   "IV": {
+    "book": "GEN",
+    "chapter": 12,
+    "ref": "1. Mose 12,1-4a",
+    "verses": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "V": {
+    "book": "JHN",
+    "chapter": 1,
+    "ref": "Joh 1,35-51",
+    "verses": [
+     35,
+     36,
+     37,
+     38,
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47,
+     48,
+     49,
+     50,
+     51
+    ]
+   },
+   "VI": {
+    "book": "2CO",
+    "chapter": null,
+    "ref": "2. Kor (11,18.23b-30); 12,1-10",
+    "verses": null
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 73,
+   "ref": "Ps 73, 1-3.8-10.23-26",
+   "verses": [
+    1,
+    2,
+    3,
+    8,
+    9,
+    10,
+    23,
+    24,
+    25,
+    26
+   ]
+  },
+  "spruch": {
+   "cite": "Eph 2,8",
+   "text": "Aus Gnade seid ihr gerettet durch Glauben, und das nicht aus euch: Gottes Gabe ist es."
+  }
+ },
+ "6-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "1PE",
+    "chapter": 2,
+    "ref": "1. Petr 2,2-10",
+    "verses": [
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "II": {
+    "book": "DEU",
+    "chapter": 7,
+    "ref": "5. Mose 7,6-12",
+    "verses": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "III": {
+    "book": "MAT",
+    "chapter": 28,
+    "ref": "Mt 28,16-20",
+    "verses": [
+     16,
+     17,
+     18,
+     19,
+     20
+    ]
+   },
+   "IV": {
+    "book": "ROM",
+    "chapter": 6,
+    "ref": "Röm 6,3-8(9-11)",
+    "verses": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "V": {
+    "book": "ISA",
+    "chapter": 43,
+    "ref": "Jes 43,1-7",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "VI": {
+    "book": "ACT",
+    "chapter": 8,
+    "ref": "Apg 8,26-39",
+    "verses": [
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37,
+     38,
+     39
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 139,
+   "ref": "Ps 139,1-12",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "spruch": {
+   "cite": "Jes 43,1",
+   "text": "So spricht der HERR, der dich geschaffen hat, Jakob, und dich gemacht hat, Israel: Fürchte dich nicht, denn ich habe dich erlöst; ich habe dich bei deinem Namen gerufen; du bist mein!"
+  }
+ },
+ "7-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 6,
+    "ref": "Joh 6,30-35",
+    "verses": [
+     30,
+     31,
+     32,
+     33,
+     34,
+     35
+    ]
+   },
+   "II": {
+    "book": "HEB",
+    "chapter": 13,
+    "ref": "Hebr 13,1-3",
+    "verses": [
+     1,
+     2,
+     3
+    ]
+   },
+   "III": {
+    "book": "1KI",
+    "chapter": 17,
+    "ref": "1. Kön 17,1-16",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "IV": {
+    "book": "JHN",
+    "chapter": 6,
+    "ref": "Joh 6,1-15",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   "V": {
+    "book": "ACT",
+    "chapter": 2,
+    "ref": "Apg 2,41-47",
+    "verses": [
+     41,
+     42,
+     43,
+     44,
+     45,
+     46,
+     47
+    ]
+   },
+   "VI": {
+    "book": "EXO",
+    "chapter": 16,
+    "ref": "2. Mose 16,2-3.11-18",
+    "verses": [
+     2,
+     3,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 107,
+   "ref": "Ps 107,1-9",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "spruch": {
+   "cite": "Eph 2,19",
+   "text": "So seid ihr nun nicht mehr Gäste und Fremdlinge, sondern Mitbürger der Heiligen und Gottes Hausgenossen."
+  }
+ },
+ "8-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "ISA",
+    "chapter": 2,
+    "ref": "Jes 2,1-5",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   "II": {
+    "book": "JHN",
+    "chapter": 9,
+    "ref": "Joh 9,1-7",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "III": {
+    "book": "1CO",
+    "chapter": 6,
+    "ref": "1. Kor 6,9-14(15-18)19-20",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     19,
+     20
+    ]
+   },
+   "IV": {
+    "book": "MRK",
+    "chapter": 12,
+    "ref": "Mk 12,41-44",
+    "verses": [
+     41,
+     42,
+     43,
+     44
+    ]
+   },
+   "V": {
+    "book": "MAT",
+    "chapter": 5,
+    "ref": "Mt 5,13-16",
+    "verses": [
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "VI": {
+    "book": "EPH",
+    "chapter": 5,
+    "ref": "Eph 5,8b-14",
+    "verses": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 48,
+   "ref": "Ps 48,2-3a.9-15",
+   "verses": [
+    2,
+    3,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+   ]
+  },
+  "spruch": {
+   "cite": "Eph 5,8b.9",
+   "text": "Wandelt als Kinder des Lichts; die Frucht des Lichts ist lauter Güte und Gerechtigkeit und Wahrheit."
+  }
+ },
+ "9-sonntag-nach-trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "PHP",
+    "chapter": 3,
+    "ref": "Phil 3,(4b-6)7-14",
+    "verses": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   "II": {
+    "book": "JER",
+    "chapter": 1,
+    "ref": "Jer 1,4-10",
+    "verses": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "III": {
+    "book": "MAT",
+    "chapter": 7,
+    "ref": "Mt 7,24-27",
+    "verses": [
+     24,
+     25,
+     26,
+     27
+    ]
+   },
+   "IV": {
+    "book": "MAT",
+    "chapter": 25,
+    "ref": "Mt 25,14-30",
+    "verses": [
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30
+    ]
+   },
+   "V": {
+    "book": "1KI",
+    "chapter": 3,
+    "ref": "1. Kön 3,5-15(16-28)",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   "VI": {
+    "book": "MAT",
+    "chapter": 13,
+    "ref": "Mt 13,44-46",
+    "verses": [
+     44,
+     45,
+     46
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 63,
+   "ref": "Ps 63,2-9",
+   "verses": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "spruch": {
+   "cite": "Lk 12,48b",
+   "text": "Wem viel gegeben ist, bei dem wird man viel suchen; und wem viel anvertraut ist, von dem wird man umso mehr fordern."
+  }
+ },
+ "drittletzter-sonntag-des-kirchenjahres": {
+  "predigt": {
+   "I": {
+    "book": "LUK",
+    "chapter": 6,
+    "ref": "Lk 6,27-38",
+    "verses": [
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37,
+     38
+    ]
+   },
+   "II": {
+    "book": "1TH",
+    "chapter": 5,
+    "ref": "1. Thess 5,1-6(7-11)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   },
+   "III": {
+    "book": "PSA",
+    "chapter": null,
+    "ref": "Ps 85",
+    "verses": null
+   },
+   "IV": {
+    "book": "LUK",
+    "chapter": 17,
+    "ref": "Lk 17,20-24(25-30)",
+    "verses": [
+     20,
+     21,
+     22,
+     23,
+     24
+    ]
+   },
+   "V": {
+    "book": "ROM",
+    "chapter": 8,
+    "ref": "Röm 8,18-25",
+    "verses": [
+     18,
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25
+    ]
+   },
+   "VI": {
+    "book": "MIC",
+    "chapter": 4,
+    "ref": "Mi 4,1-5(7b)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 85,
+   "ref": "Ps 85,9-14",
+   "verses": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  "spruch": {
+   "cite": "Mt 5,9",
+   "text": "Selig sind, die Frieden stiften; denn sie werden Gottes Kinder heißen."
+  }
+ },
+ "erntedank": {
+  "predigt": {
+   "I": {
+    "book": "ISA",
+    "chapter": 58,
+    "ref": "Jes 58,7-12",
+    "verses": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "II": {
+    "book": "MRK",
+    "chapter": 8,
+    "ref": "Mk 8,1-9",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "III": {
+    "book": "2CO",
+    "chapter": 9,
+    "ref": "2. Kor 9,6-15",
+    "verses": [
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   "IV": {
+    "book": "DEU",
+    "chapter": 8,
+    "ref": "5. Mose 8,7-18",
+    "verses": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ]
+   },
+   "V": {
+    "book": "LUK",
+    "chapter": 12,
+    "ref": "Lk 12,(13-14)15-21",
+    "verses": [
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   "VI": {
+    "book": "1TI",
+    "chapter": 4,
+    "ref": "1. Tim 4,4-5",
+    "verses": [
+     4,
+     5
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 104,
+   "ref": "Ps 104,1a.10-15.27-30.33",
+   "verses": [
+    1,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    27,
+    28,
+    29,
+    30,
+    33
+   ]
+  },
+  "spruch": {
+   "cite": "Ps 145,15",
+   "text": "Aller Augen warten auf dich, und du gibst ihnen ihre Speise zur rechten Zeit."
+  }
+ },
+ "estomihi": {
+  "predigt": {
+   "I": {
+    "book": "LUK",
+    "chapter": 10,
+    "ref": "Lk 10,38-42",
+    "verses": [
+     38,
+     39,
+     40,
+     41,
+     42
+    ]
+   },
+   "II": {
+    "book": "LUK",
+    "chapter": 18,
+    "ref": "Lk 18,31-43",
+    "verses": [
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37,
+     38,
+     39,
+     40,
+     41,
+     42,
+     43
+    ]
+   },
+   "III": {
+    "book": "ISA",
+    "chapter": 58,
+    "ref": "Jes 58,1-9a",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "IV": {
+    "book": "MRK",
+    "chapter": 8,
+    "ref": "Mk 8,31-38",
+    "verses": [
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37,
+     38
+    ]
+   },
+   "V": {
+    "book": "1CO",
+    "chapter": 13,
+    "ref": "1. Kor 13,1-13",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   },
+   "VI": {
+    "book": "AMO",
+    "chapter": 5,
+    "ref": "Amos 5,21-24",
+    "verses": [
+     21,
+     22,
+     23,
+     24
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 31,
+   "ref": "Ps 31,2-6.8-9.16-17",
+   "verses": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    9,
+    16,
+    17
+   ]
+  },
+  "spruch": {
+   "cite": "Lk 18,31",
+   "text": "Seht, wir gehen hinauf nach Jerusalem, und es wird alles vollendet werden, was geschrieben ist durch die Propheten von dem Menschensohn."
+  }
+ },
+ "ewigkeitssonntag": {
+  "predigt": {
+   "I": {
+    "book": "MAT",
+    "chapter": 25,
+    "ref": "Mt 25,1-13",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   },
+   "II": {
+    "book": "REV",
+    "chapter": 21,
+    "ref": "Offb 21,1-7",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "III": {
+    "book": "ISA",
+    "chapter": 65,
+    "ref": "Jes 65,17-19(20-22)23-25",
+    "verses": [
+     17,
+     18,
+     19,
+     23,
+     24,
+     25
+    ]
+   },
+   "IV": {
+    "book": "MRK",
+    "chapter": 13,
+    "ref": "Mk 13,28-37",
+    "verses": [
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37
+    ]
+   },
+   "V": {
+    "book": "2PE",
+    "chapter": 3,
+    "ref": "2. Petr 3,(3-7)8-13",
+    "verses": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   },
+   "VI": {
+    "book": "PSA",
+    "chapter": null,
+    "ref": "Ps 126",
+    "verses": null
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 126,
+   "ref": "Ps 126,1-6",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "spruch": {
+   "cite": "Lk 12,35",
+   "text": "Lasst eure Lenden umgürtet sein und eure Lichter brennen."
+  }
+ },
+ "exaudi": {
+  "predigt": {
+   "I": {
+    "book": "EPH",
+    "chapter": 3,
+    "ref": "Eph 3,14-21",
+    "verses": [
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   "II": {
+    "book": "JER",
+    "chapter": 31,
+    "ref": "Jer 31,31-34",
+    "verses": [
+     31,
+     32,
+     33,
+     34
+    ]
+   },
+   "III": {
+    "book": "JHN",
+    "chapter": 7,
+    "ref": "Joh 7,37-39",
+    "verses": [
+     37,
+     38,
+     39
+    ]
+   },
+   "IV": {
+    "book": "ROM",
+    "chapter": 8,
+    "ref": "Röm 8,26-30",
+    "verses": [
+     26,
+     27,
+     28,
+     29,
+     30
+    ]
+   },
+   "V": {
+    "book": "1SA",
+    "chapter": 3,
+    "ref": "1. Sam 3,1-10",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "VI": {
+    "book": "JHN",
+    "chapter": 16,
+    "ref": "Joh 16,5-15",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 27,
+   "ref": "Ps 27,1.7-14",
+   "verses": [
+    1,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  "spruch": {
+   "cite": "Joh 12,32",
+   "text": "Christus spricht: Wenn ich erhöht werde von der Erde, so will ich alle zu mir ziehen."
+  }
+ },
+ "invokavit": {
+  "predigt": {
+   "I": {
+    "book": "HEB",
+    "chapter": 4,
+    "ref": "Hebr 4,14-16",
+    "verses": [
+     14,
+     15,
+     16
+    ]
+   },
+   "II": {
+    "book": "GEN",
+    "chapter": 3,
+    "ref": "1. Mose 3,1-19(20-24)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19
+    ]
+   },
+   "III": {
+    "book": "JHN",
+    "chapter": 13,
+    "ref": "Joh 13,21-30 [+]",
+    "verses": null
+   },
+   "IV": {
+    "book": "2CO",
+    "chapter": 6,
+    "ref": "2. Kor 6,1-10",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "V": {
+    "book": "JOB",
+    "chapter": 2,
+    "ref": "Hiob 2,1-13",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   },
+   "VI": {
+    "book": "MAT",
+    "chapter": 4,
+    "ref": "Mt 4,1-11",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 91,
+   "ref": "Ps 91,1-6.9-12",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "spruch": {
+   "cite": "1. Joh 3,8b",
+   "text": "Dazu ist erschienen der Sohn Gottes, dass er die Werke des Teufels zerstöre."
+  }
+ },
+ "jubilate": {
+  "predigt": {
+   "I": {
+    "book": "PRO",
+    "chapter": 8,
+    "ref": "Spr 8,22-36",
+    "verses": [
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35,
+     36
+    ]
+   },
+   "II": {
+    "book": "JHN",
+    "chapter": 15,
+    "ref": "Joh 15,1-8",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "III": {
+    "book": "ACT",
+    "chapter": 17,
+    "ref": "Apg 17,22-34",
+    "verses": [
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34
+    ]
+   },
+   "IV": {
+    "book": "GEN",
+    "chapter": null,
+    "ref": "1. Mose 1,1-4a(4b-25)26-28(29-30)31a(31b); 2,1-4a",
+    "verses": null
+   },
+   "V": {
+    "book": "JHN",
+    "chapter": 16,
+    "ref": "Joh 16,16-23a",
+    "verses": [
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23
+    ]
+   },
+   "VI": {
+    "book": "2CO",
+    "chapter": 4,
+    "ref": "2. Kor 4,14-18",
+    "verses": [
+     14,
+     15,
+     16,
+     17,
+     18
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 66,
+   "ref": "Ps 66,1-9",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "spruch": {
+   "cite": "2. Kor 5,17",
+   "text": "Ist jemand in Christus, so ist er eine neue Kreatur; das Alte ist vergangen, siehe, Neues ist geworden."
+  }
+ },
+ "judika": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 18,
+    "ref": "Joh 18,28-19,5 [+]",
+    "verses": null
+   },
+   "II": {
+    "book": "HEB",
+    "chapter": 13,
+    "ref": "Hebr 13,12-14",
+    "verses": [
+     12,
+     13,
+     14
+    ]
+   },
+   "III": {
+    "book": "JOB",
+    "chapter": 19,
+    "ref": "Hiob 19,19-27",
+    "verses": [
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27
+    ]
+   },
+   "IV": {
+    "book": "MRK",
+    "chapter": 10,
+    "ref": "Mk 10,35-45",
+    "verses": [
+     35,
+     36,
+     37,
+     38,
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45
+    ]
+   },
+   "V": {
+    "book": "HEB",
+    "chapter": 5,
+    "ref": "Hebr 5,(1-6)7-9(10)",
+    "verses": [
+     7,
+     8,
+     9
+    ]
+   },
+   "VI": {
+    "book": "GEN",
+    "chapter": 22,
+    "ref": "1. Mose 22,1-14(15-19)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 43,
+   "ref": "Ps 43,1-5",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  "spruch": {
+   "cite": "Mt 20,28",
+   "text": "Der Menschensohn ist nicht gekommen, dass er sich dienen lasse, sondern dass er diene und gebe sein Leben als Lösegeld für viele."
+  }
+ },
+ "kantate": {
+  "predigt": {
+   "I": {
+    "book": "ACT",
+    "chapter": 16,
+    "ref": "Apg 16,23-34",
+    "verses": [
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34
+    ]
+   },
+   "II": {
+    "book": "2CH",
+    "chapter": 5,
+    "ref": "2. Chr 5,2-5(6-11)12-14",
+    "verses": [
+     2,
+     3,
+     4,
+     5,
+     12,
+     13,
+     14
+    ]
+   },
+   "III": {
+    "book": "LUK",
+    "chapter": 19,
+    "ref": "Lk 19,37-40",
+    "verses": [
+     37,
+     38,
+     39,
+     40
+    ]
+   },
+   "IV": {
+    "book": "COL",
+    "chapter": 3,
+    "ref": "Kol 3,12-17",
+    "verses": [
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   },
+   "V": {
+    "book": "1SA",
+    "chapter": 16,
+    "ref": "1. Sam 16,14-23",
+    "verses": [
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21,
+     22,
+     23
+    ]
+   },
+   "VI": {
+    "book": "REV",
+    "chapter": 15,
+    "ref": "Offb 15,2-4",
+    "verses": [
+     2,
+     3,
+     4
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 98,
+   "ref": "Ps 98,1-9",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "spruch": {
+   "cite": "Ps 98,1",
+   "text": "Singet dem HERRN ein neues Lied, denn er tut Wunder."
+  }
+ },
+ "kirche-und-israel": {
+  "predigt": {
+   "I": {
+    "book": "MRK",
+    "chapter": 12,
+    "ref": "Mk 12,28-34",
+    "verses": [
+     28,
+     29,
+     30,
+     31,
+     32,
+     33,
+     34
+    ]
+   },
+   "II": {
+    "book": "ROM",
+    "chapter": 11,
+    "ref": "Röm 11,25-32",
+    "verses": [
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32
+    ]
+   },
+   "III": {
+    "book": "EXO",
+    "chapter": 19,
+    "ref": "2. Mose 19,1-6",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   },
+   "IV": {
+    "book": "MAT",
+    "chapter": 5,
+    "ref": "Mt 5,17-20",
+    "verses": [
+     17,
+     18,
+     19,
+     20
+    ]
+   },
+   "V": {
+    "book": "DEU",
+    "chapter": 4,
+    "ref": "5. Mose 4,5-20",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20
+    ]
+   },
+   "VI": {
+    "book": "ZEC",
+    "chapter": 8,
+    "ref": "Sach 8,20-23",
+    "verses": [
+     20,
+     21,
+     22,
+     23
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 122,
+   "ref": "Ps 122,1-9",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "spruch": {
+   "cite": "Ps 33,12",
+   "text": "Wohl dem Volk, dessen Gott der HERR ist, dem Volk, das er zum Erbe erwählt hat!"
+  }
+ },
+ "laetare": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 6,
+    "ref": "Joh 6,47-51",
+    "verses": [
+     47,
+     48,
+     49,
+     50,
+     51
+    ]
+   },
+   "II": {
+    "book": "ISA",
+    "chapter": 66,
+    "ref": "Jes 66,10-14",
+    "verses": [
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   "III": {
+    "book": "JHN",
+    "chapter": 12,
+    "ref": "Joh 12,20-24",
+    "verses": [
+     20,
+     21,
+     22,
+     23,
+     24
+    ]
+   },
+   "IV": {
+    "book": "2CO",
+    "chapter": 1,
+    "ref": "2. Kor 1,3-7",
+    "verses": [
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "V": {
+    "book": "ISA",
+    "chapter": 54,
+    "ref": "Jes 54,7-10",
+    "verses": [
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "VI": {
+    "book": "LUK",
+    "chapter": 22,
+    "ref": "Lk 22,54-62 [+]",
+    "verses": null
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 84,
+   "ref": "Ps 84,2-13",
+   "verses": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+   ]
+  },
+  "spruch": {
+   "cite": "Joh 12,24",
+   "text": "Wenn das Weizenkorn nicht in die Erde fällt und erstirbt, bleibt es allein; wenn es aber erstirbt, bringt es viel Frucht."
+  }
+ },
+ "letzter-sonntag-nach-epiphanias": {
+  "predigt": {
+   "I": {
+    "book": "EXO",
+    "chapter": 3,
+    "ref": "2. Mose 3,1-8a(8b.9)10(11-12)13-14(15)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     10,
+     13,
+     14
+    ]
+   },
+   "II": {
+    "book": "REV",
+    "chapter": 1,
+    "ref": "Offb 1,9-18",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ]
+   },
+   "III": {
+    "book": "2PE",
+    "chapter": 1,
+    "ref": "2. Petr 1,16-19(20-21)",
+    "verses": [
+     16,
+     17,
+     18,
+     19
+    ]
+   },
+   "IV": {
+    "book": "EXO",
+    "chapter": 34,
+    "ref": "2. Mose 34,29-35",
+    "verses": [
+     29,
+     30,
+     31,
+     32,
+     33,
+     34,
+     35
+    ]
+   },
+   "V": {
+    "book": "MAT",
+    "chapter": 17,
+    "ref": "Mt 17,1-9",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "VI": {
+    "book": "2CO",
+    "chapter": 4,
+    "ref": "2. Kor 4,6-10",
+    "verses": [
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 97,
+   "ref": "Ps 97,1-12",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+   ]
+  },
+  "spruch": {
+   "cite": "Jes 60,2b",
+   "text": "Über dir geht auf der HERR, und seine Herrlichkeit erscheint über dir."
+  }
+ },
+ "miserikordias-domini": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 10,
+    "ref": "Joh 10,11-16(27-30)",
+    "verses": [
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "II": {
+    "book": "1PE",
+    "chapter": 2,
+    "ref": "1. Petr 2,21b-25",
+    "verses": [
+     21,
+     22,
+     23,
+     24,
+     25
+    ]
+   },
+   "III": {
+    "book": "EZK",
+    "chapter": 34,
+    "ref": "Hes 34,1-2(3-9)10-16.31",
+    "verses": [
+     1,
+     2,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     31
+    ]
+   },
+   "IV": {
+    "book": "JHN",
+    "chapter": 21,
+    "ref": "Joh 21,15-19",
+    "verses": [
+     15,
+     16,
+     17,
+     18,
+     19
+    ]
+   },
+   "V": {
+    "book": "1PE",
+    "chapter": 5,
+    "ref": "1. Petr 5,1-4",
+    "verses": [
+     1,
+     2,
+     3,
+     4
+    ]
+   },
+   "VI": {
+    "book": "GEN",
+    "chapter": 16,
+    "ref": "1. Mose 16,1-16",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 23,
+   "ref": "Ps 23,1-6",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "spruch": {
+   "cite": "Joh 10,11a.27-28a",
+   "text": "Christus spricht: Ich bin der gute Hirte. Meine Schafe hören meine Stimme, und ich kenne sie und sie folgen mir; und ich gebe ihnen das ewige Leben."
+  }
+ },
+ "okuli": {
+  "predigt": {
+   "I": {
+    "book": "JER",
+    "chapter": 20,
+    "ref": "Jer 20,7-11a(11b-13)",
+    "verses": [
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "II": {
+    "book": "LUK",
+    "chapter": 9,
+    "ref": "Lk 9,57-62",
+    "verses": [
+     57,
+     58,
+     59,
+     60,
+     61,
+     62
+    ]
+   },
+   "III": {
+    "book": "EPH",
+    "chapter": 5,
+    "ref": "Eph 5,1-2(3-7)8-9",
+    "verses": [
+     1,
+     2,
+     8,
+     9
+    ]
+   },
+   "IV": {
+    "book": "1KI",
+    "chapter": 19,
+    "ref": "1. Kön 19,1-8(9-13a)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "V": {
+    "book": "LUK",
+    "chapter": 22,
+    "ref": "Lk 22,47-53 [+]",
+    "verses": null
+   },
+   "VI": {
+    "book": "1PE",
+    "chapter": 1,
+    "ref": "1. Petr 1,(13-17)18-21",
+    "verses": [
+     18,
+     19,
+     20,
+     21
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 34,
+   "ref": "Ps 34,16-23",
+   "verses": [
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+   ]
+  },
+  "spruch": {
+   "cite": "Lk 9,62",
+   "text": "Wer die Hand an den Pflug legt und sieht zurück, der ist nicht geschickt für das Reich Gottes."
+  }
+ },
+ "ostersonntag": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 20,
+    "ref": "Joh 20,11-18",
+    "verses": [
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18
+    ]
+   },
+   "II": {
+    "book": "1CO",
+    "chapter": 15,
+    "ref": "1. Kor 15,(12-18)19-28",
+    "verses": [
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28
+    ]
+   },
+   "III": {
+    "book": "EXO",
+    "chapter": null,
+    "ref": "2. Mose 14,8-14.19-23.28-30a;15,20f.",
+    "verses": null
+   },
+   "IV": {
+    "book": "MRK",
+    "chapter": 16,
+    "ref": "Mk 16,1-8",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "V": {
+    "book": "1CO",
+    "chapter": 15,
+    "ref": "1. Kor 15,1-11",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   },
+   "VI": {
+    "book": "1SA",
+    "chapter": 2,
+    "ref": "1. Sam 2,1-8a",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 118,
+   "ref": "Ps 118,14-24",
+   "verses": [
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+   ]
+  },
+  "spruch": {
+   "cite": "Offb 1,18",
+   "text": "Christus spricht: Ich war tot, und siehe, ich bin lebendig von Ewigkeit zu Ewigkeit und habe die Schlüssel des Todes und der Hölle."
+  }
+ },
+ "palmsonntag": {
+  "predigt": {
+   "I": {
+    "book": "ISA",
+    "chapter": 50,
+    "ref": "Jes 50,4-9",
+    "verses": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "II": {
+    "book": "MRK",
+    "chapter": 14,
+    "ref": "Mk 14,(1-2)3-9",
+    "verses": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "III": {
+    "book": "HEB",
+    "chapter": null,
+    "ref": "Hebr 11,1-2(8-12.39-40); 12,1-3",
+    "verses": null
+   },
+   "IV": {
+    "book": "JHN",
+    "chapter": 17,
+    "ref": "Joh 17,1-8",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "V": {
+    "book": "JHN",
+    "chapter": 12,
+    "ref": "Joh 12,12-19",
+    "verses": [
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19
+    ]
+   },
+   "VI": {
+    "book": "PHP",
+    "chapter": 2,
+    "ref": "Phil 2,5-11",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 69,
+   "ref": "Ps 69,2-4.8-10.14.21b.22.30",
+   "verses": [
+    2,
+    3,
+    4,
+    8,
+    9,
+    10,
+    14,
+    21,
+    22,
+    30
+   ]
+  },
+  "spruch": {
+   "cite": "Joh 3,14b.15",
+   "text": "Der Menschensohn muss erhöht werden, auf dass alle, die an ihn glauben, das ewige Leben haben."
+  }
+ },
+ "pfingstsonntag": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 14,
+    "ref": "Joh 14,15-19(20-23a)23b-27",
+    "verses": [
+     15,
+     16,
+     17,
+     18,
+     19,
+     23,
+     24,
+     25,
+     26,
+     27
+    ]
+   },
+   "II": {
+    "book": "ACT",
+    "chapter": 2,
+    "ref": "Apg 2,1-21",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   "III": {
+    "book": "GEN",
+    "chapter": 11,
+    "ref": "1. Mose 11,1-9",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "IV": {
+    "book": "ROM",
+    "chapter": 8,
+    "ref": "Röm 8,1-2(3-9)10-11",
+    "verses": [
+     1,
+     2,
+     10,
+     11
+    ]
+   },
+   "V": {
+    "book": "1CO",
+    "chapter": 2,
+    "ref": "1. Kor 2,12-16",
+    "verses": [
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "VI": {
+    "book": "EZK",
+    "chapter": 37,
+    "ref": "Hes 37,1-14",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 118,
+   "ref": "Ps 118,24-29",
+   "verses": [
+    24,
+    25,
+    26,
+    27,
+    28,
+    29
+   ]
+  },
+  "spruch": {
+   "cite": "Sach 4,6b",
+   "text": "Es soll nicht durch Heer oder Kraft, sondern durch meinen Geist geschehen, spricht der HERR Zebaoth."
+  }
+ },
+ "quasimodogeniti": {
+  "predigt": {
+   "I": {
+    "book": "1PE",
+    "chapter": 1,
+    "ref": "1. Petr 1,3-9",
+    "verses": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   },
+   "II": {
+    "book": "ISA",
+    "chapter": 40,
+    "ref": "Jes 40,26-31",
+    "verses": [
+     26,
+     27,
+     28,
+     29,
+     30,
+     31
+    ]
+   },
+   "III": {
+    "book": "JHN",
+    "chapter": 21,
+    "ref": "Joh 21,1-14",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   },
+   "IV": {
+    "book": "COL",
+    "chapter": 2,
+    "ref": "Kol 2,12-15",
+    "verses": [
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   "V": {
+    "book": "GEN",
+    "chapter": 32,
+    "ref": "1. Mose 32,23-32",
+    "verses": [
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32
+    ]
+   },
+   "VI": {
+    "book": "JHN",
+    "chapter": 20,
+    "ref": "Joh 20,19-20(21-23)24-29",
+    "verses": [
+     19,
+     20,
+     24,
+     25,
+     26,
+     27,
+     28,
+     29
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 116,
+   "ref": "Ps 116,1-9.13",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    13
+   ]
+  },
+  "spruch": {
+   "cite": "1. Petr 1,3",
+   "text": "Gelobt sei Gott, der Vater unseres Herrn Jesus Christus, der uns nach seiner großen Barmherzigkeit wiedergeboren hat zu einer lebendigen Hoffnung durch die Auferstehung Jesu Christi von den Toten."
+  }
+ },
+ "reminiszere": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 3,
+    "ref": "Joh 3,14-21",
+    "verses": [
+     14,
+     15,
+     16,
+     17,
+     18,
+     19,
+     20,
+     21
+    ]
+   },
+   "II": {
+    "book": "ROM",
+    "chapter": 5,
+    "ref": "Röm 5,1-5(6-11)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ]
+   },
+   "III": {
+    "book": "ISA",
+    "chapter": 5,
+    "ref": "Jes 5,1-7",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7
+    ]
+   },
+   "IV": {
+    "book": "MAT",
+    "chapter": 26,
+    "ref": "Mt 26,36-46 [+]",
+    "verses": null
+   },
+   "V": {
+    "book": "MRK",
+    "chapter": 12,
+    "ref": "Mk 12,1-12",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "VI": {
+    "book": "NUM",
+    "chapter": 21,
+    "ref": "4. Mose 21,4-9",
+    "verses": [
+     4,
+     5,
+     6,
+     7,
+     8,
+     9
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 25,
+   "ref": "Ps 25,1-9",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "spruch": {
+   "cite": "Röm 5,8",
+   "text": "Gott erweist seine Liebe zu uns darin, dass Christus für uns gestorben ist, als wir noch Sünder waren."
+  }
+ },
+ "rogate": {
+  "predigt": {
+   "I": {
+    "book": "JHN",
+    "chapter": 16,
+    "ref": "Joh 16,23b-28(29-32)33",
+    "verses": [
+     23,
+     24,
+     25,
+     26,
+     27,
+     28,
+     33
+    ]
+   },
+   "II": {
+    "book": "MAT",
+    "chapter": 6,
+    "ref": "Mt 6,5-15",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   "III": {
+    "book": "SIR",
+    "chapter": null,
+    "ref": "Sir 35,16-22a; Daniel 9,4-5.16-19",
+    "verses": null
+   },
+   "IV": {
+    "book": "LUK",
+    "chapter": 11,
+    "ref": "Lk 11,(1-4)5-13",
+    "verses": [
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   },
+   "V": {
+    "book": "1TI",
+    "chapter": 2,
+    "ref": "1. Tim 2,1-6a",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ]
+   },
+   "VI": {
+    "book": "EXO",
+    "chapter": 32,
+    "ref": "2. Mose 32,7-14",
+    "verses": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 95,
+   "ref": "Ps 95,1-7a",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  "spruch": {
+   "cite": "Ps 66,20",
+   "text": "Gelobt sei Gott, der mein Gebet nicht verwirft noch seine Güte von mir wendet."
+  }
+ },
+ "septuagesimae": {
+  "predigt": {
+   "I": {
+    "book": "ECC",
+    "chapter": 7,
+    "ref": "Pred 7,15-18",
+    "verses": [
+     15,
+     16,
+     17,
+     18
+    ]
+   },
+   "II": {
+    "book": "MAT",
+    "chapter": 20,
+    "ref": "Mt 20,1-16",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   },
+   "III": {
+    "book": "PHP",
+    "chapter": 2,
+    "ref": "Phil 2,12-13",
+    "verses": [
+     12,
+     13
+    ]
+   },
+   "IV": {
+    "book": "JER",
+    "chapter": 9,
+    "ref": "Jer 9,22-23",
+    "verses": [
+     22,
+     23
+    ]
+   },
+   "V": {
+    "book": "MAT",
+    "chapter": 9,
+    "ref": "Mt 9,9-13",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   },
+   "VI": {
+    "book": "1CO",
+    "chapter": 9,
+    "ref": "1. Kor 9,19-27",
+    "verses": [
+     19,
+     20,
+     21,
+     22,
+     23,
+     24,
+     25,
+     26,
+     27
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 31,
+   "ref": "Ps 31,20-25",
+   "verses": [
+    20,
+    21,
+    22,
+    23,
+    24,
+    25
+   ]
+  },
+  "spruch": {
+   "cite": "Dan 9,18",
+   "text": "Wir liegen vor dir mit unserm Gebet und vertrauen nicht auf unsre Gerechtigkeit, sondern auf deine große Barmherzigkeit."
+  }
+ },
+ "sexagesimae": {
+  "predigt": {
+   "I": {
+    "book": "ACT",
+    "chapter": 16,
+    "ref": "Apg 16,9-15",
+    "verses": [
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   },
+   "II": {
+    "book": "EZK",
+    "chapter": null,
+    "ref": "Hes 2,1-5(6-7)8-10; 3,1-3",
+    "verses": null
+   },
+   "III": {
+    "book": "LUK",
+    "chapter": 8,
+    "ref": "Lk 8,4-8(9-15)",
+    "verses": [
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "IV": {
+    "book": "HEB",
+    "chapter": 4,
+    "ref": "Hebr 4,12-13",
+    "verses": [
+     12,
+     13
+    ]
+   },
+   "V": {
+    "book": "ISA",
+    "chapter": 55,
+    "ref": "Jes 55,(6-7)8-12a",
+    "verses": [
+     8,
+     9,
+     10,
+     11,
+     12
+    ]
+   },
+   "VI": {
+    "book": "MRK",
+    "chapter": 4,
+    "ref": "Mk 4,26-29",
+    "verses": [
+     26,
+     27,
+     28,
+     29
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 119,
+   "ref": "Ps 119,89-92.103-105.116",
+   "verses": [
+    89,
+    90,
+    91,
+    92,
+    103,
+    104,
+    105,
+    116
+   ]
+  },
+  "spruch": {
+   "cite": "Hebr 3,15",
+   "text": "Heute, wenn ihr seine Stimme hört, so verstockt eure Herzen nicht."
+  }
+ },
+ "trinitatis": {
+  "predigt": {
+   "I": {
+    "book": "2CO",
+    "chapter": 13,
+    "ref": "2. Kor 13,11-13",
+    "verses": [
+     11,
+     12,
+     13
+    ]
+   },
+   "II": {
+    "book": "NUM",
+    "chapter": 6,
+    "ref": "4. Mose 6,22-27",
+    "verses": [
+     22,
+     23,
+     24,
+     25,
+     26,
+     27
+    ]
+   },
+   "III": {
+    "book": "JHN",
+    "chapter": 3,
+    "ref": "Joh 3,1-8(9-13)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "IV": {
+    "book": "ROM",
+    "chapter": 11,
+    "ref": "Röm 11,(32)33-36",
+    "verses": [
+     33,
+     34,
+     35,
+     36
+    ]
+   },
+   "V": {
+    "book": "ISA",
+    "chapter": 6,
+    "ref": "Jes 6,1-8(9-13)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "VI": {
+    "book": "EPH",
+    "chapter": 1,
+    "ref": "Eph 1,3-14",
+    "verses": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 113,
+   "ref": "Ps 113,1-9",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+   ]
+  },
+  "spruch": {
+   "cite": "2. Kor 13,13",
+   "text": "Die Gnade unseres Herrn Jesus Christus und die Liebe Gottes und die Gemeinschaft des Heiligen Geistes sei mit euch allen."
+  }
+ },
+ "vorletzter-sonntag-des-kirchenjahres": {
+  "predigt": {
+   "I": {
+    "book": "JOB",
+    "chapter": 14,
+    "ref": "Hiob 14,1-6(7-12)13(14)15-17",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     13,
+     15,
+     16,
+     17
+    ]
+   },
+   "II": {
+    "book": "LUK",
+    "chapter": 16,
+    "ref": "Lk 16,1-8(9)",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "III": {
+    "book": "2CO",
+    "chapter": 5,
+    "ref": "2. Kor 5,1-10",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   },
+   "IV": {
+    "book": "LUK",
+    "chapter": 18,
+    "ref": "Lk 18,1-8",
+    "verses": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   "V": {
+    "book": "MAT",
+    "chapter": 25,
+    "ref": "Mt 25,31-46",
+    "verses": [
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37,
+     38,
+     39,
+     40,
+     41,
+     42,
+     43,
+     44,
+     45,
+     46
+    ]
+   },
+   "VI": {
+    "book": "ROM",
+    "chapter": 14,
+    "ref": "Röm 14,(1-6)7-13",
+    "verses": [
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   }
+  },
+  "psalm": {
+   "book": "PSA",
+   "chapter": 50,
+   "ref": "Ps 50,1-6.14-15.23",
+   "verses": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    14,
+    15,
+    23
+   ]
+  },
+  "spruch": {
+   "cite": "2. Kor 5,10a",
+   "text": "Wir müssen alle offenbar werden vor dem Richterstuhl Christi."
+  }
+ }
+}
